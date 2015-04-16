@@ -33,7 +33,7 @@ var SampleCard = function() {
 
 // create an new instance of a pixi stage with a grey background
 var stage = new PIXI.Stage(0x888888);
-// create a renderer instance width=640 height=480
+// create a renderer instance 
 var renderer = PIXI.autoDetectRenderer(960,960);
 // create empty containers for each logical unit
 var gameContainer = new PIXI.DisplayObjectContainer();
