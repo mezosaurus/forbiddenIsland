@@ -6,13 +6,33 @@
 /*
  * CARD CLASSES(Planning on breaking these into separate files eventually)
  */
-var SampleCard = function() {
+var HelicopterLiftCard = function() {
   this.card = new PIXI.DisplayObjectContainer();
   this.type = "Sample Card";
 
   //SAMPLE card creation
   sampleCardSquare = new PIXI.Graphics();
-  sampleCardText = new PIXI.Text("Sample", {font: '10px Arial'});
+  sampleCardText = new PIXI.Text("HelicopterLift", {font: '10px Arial'});
+  sampleCardSquare.beginFill(0xFFFFFF);
+  sampleCardSquare.lineStyle(5, 0x000000);
+  sampleCardSquare.drawRect(0, 0, 80, 150);
+  sampleCardSquare.position.x = 20;
+  sampleCardSquare.position.y = 800;
+  sampleCardText.position.x = 30;
+  sampleCardText.position.y = 850;
+
+  this.card.addChild(sampleCardSquare);
+  this.card.addChild(sampleCardText);
+
+};
+
+var TreasureCard = function() {
+  this.card = new PIXI.DisplayObjectContainer();
+  this.type = "Sample Card";
+
+  //SAMPLE card creation
+  sampleCardSquare = new PIXI.Graphics();
+  sampleCardText = new PIXI.Text("Treasure", {font: '10px Arial'});
   sampleCardSquare.beginFill(0xFFFFFF);
   sampleCardSquare.lineStyle(5, 0x000000);
   sampleCardSquare.drawRect(0, 0, 80, 150);
@@ -33,7 +53,7 @@ var SampleCard = function() {
 
 // create an new instance of a pixi stage with a grey background
 var stage = new PIXI.Stage(0x888888);
-// create a renderer instance 
+// create a renderer instance
 var renderer = PIXI.autoDetectRenderer(960,960);
 // create empty containers for each logical unit
 var gameContainer = new PIXI.DisplayObjectContainer();
@@ -43,7 +63,8 @@ var waterMeter = new PIXI.DisplayObjectContainer();
 
 //Keeps track of where the water level is
 var waterLevel = 0;
-var sampleCard = new SampleCard();
+var sampleCard = new HelicopterLiftCard();
+var treasureCard = new TreasureCard();
 
 // add the containers to the stage
 stage.addChild(gameContainer);
@@ -158,6 +179,8 @@ treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
   {
     alert("Waters Rise card has been revealed - Water level has risen!");
     gameContainer.addChild(sampleCard.card);
+    treasureCard.card.position.x = 100;
+    gameContainer.addChild(treasureCard.card);
     currentWaterLine.position.y = currentWaterLine.position.y - 35;
     waterLevel++;
   }
