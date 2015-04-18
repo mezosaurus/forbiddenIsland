@@ -1,3 +1,11 @@
+$(function(){
+    $('body').on('tileClick', function(event, x, y, name){
+        console.log('tileX: ', x);
+        console.log('tileY: ', y);
+        console.log('tileName: ', name);
+    });
+});
+
 // pixi stage with grey background
 var stage = new PIXI.Stage(0x888888);
 // renderer instance with height 640 width 480
@@ -37,27 +45,8 @@ for (var i = 0; i < 6; i++) {
 		if ((i == 5 && j == 0) || (i == 5 && j == 1) || (i == 5 && j == 4) || (i == 5 && j == 5)) {
 			continue;
 		}
-		var tile = new PIXI.Sprite(texture);
-		tile.buttonMode = true;
-		tile.interactive = true;
-		tile.isSelected = false;
-		tile.position.x = 225+i*80;
-		tile.position.y = 225+j*80;
-		tile.tint = 0x000000;
-		tile.alpha = 0.5;
+		var tile = new Tile(texture, texture, i, j, 'tile_' + i + '_' + j);
 		gameContainer.addChild(tile);
-		tile.mousedown = tile.touchstart = function(data) {
-			if (!this.isSelected) {
-				this.isSelected = true;
-				this.tint = 0xffffff;
-				this.alpha = 1;
-			}
-			else {
-				this.isSelected = false;
-				this.tint = 0x000000;
-				this.alpha = 0.5;
-			}
-		}
 	}
 }
 
@@ -83,6 +72,11 @@ requestAnimFrame(animate);
 
 function animate() {
 	requestAnimFrame(animate);
+    var tiles = gameContainer.children;
+    for(var i = 0; i < tiles.length; i++){
+        var tile = tiles[i];
+        tile.animate();
+    }
 	// render the stage
 	renderer.render(stage);
 }
