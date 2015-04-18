@@ -19,7 +19,6 @@ function Tile(normalTexture, floodedTexture, x, y, name){
     this.alpha = 1;
     
     this.flip = function(){
-        console.log('flipping');
         if(this.state === 'flooded'){
             this.state = 'shoring';
         }else if(this.state === 'normal'){
