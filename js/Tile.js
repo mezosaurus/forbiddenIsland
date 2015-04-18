@@ -1,46 +1,84 @@
-function Tile(x, y){
-    this.x = x;
-    this.y = y;
+function Tile(normalTexture, floodedTexture, x, y, name){
+    PIXI.Sprite.call(this, normalTexture);
+    this.flooded = floodedTexture;
+    this.name = name;
+    this.normal = normalTexture;
+    this.xIndex = x;
+    this.yIndex = y;
     this.state = 'normal';
-    this.landTexture = PIXI.Texture.fromImage("img/tile.png");
-    this.floodedTexture = PIXI.Texture.fromImage("img/floodTile.png");
-    this.tileSprite = new PIXI.Sprite(landTexture);
-    tileSprite.tint = 0xffffff;
-    tileSprite.alpha = 1;
-    tileSprite.position.x = 225+x*80;
-    tileSprite.position.y = 225+y*80;
-    tileSprite.anchor.x = 0.5;
-    tileSprite.anchor.y = 0.5;
-    tileSprite.tint = 0xffffff;
-    tileSprite.alpha = 1;
+    this.buttonMode = true;
+    this.interactive = true;
+//    this.tileSprite = new PIXI.Sprite(landTexture);
+    this.tint = 0xffffff;
+    this.alpha = 1;
+    this.position.x = 225+x*80;
+    this.position.y = 225+y*80;
+    this.anchor.x = 0.5;
+    this.anchor.y = 0.5;
+    this.tint = 0xffffff;
+    this.alpha = 1;
     
-    
-    tileSprite.mousedown = tile.touchstart = function(data) {
-        console.log('x: ' + this.x);
-        console.log('y: ' + this.y);
-        if (!(this.state === 'flooded' || this.state === 'flooding')) {
+    this.flip = function(){
+        console.log('flipping');
+        if(this.state === 'flooded'){
+            this.state = 'shoring';
+        }else if(this.state === 'normal'){
             this.state = 'flooding';
-        }
-        else {
-            gameContainer.removeChild(this);
-
         }
     }
     
-    function animate(){
-        if(this.state = 'flooding';){
-            if(tileSprite.width > 0){
-                tileSprite.width -= 10;
+    this.mousedown = this.touchstart = function(data){
+        $('body').trigger('tileClick', [this.xIndex, this.yIndex, this.name]);
+    }
+    
+    
+    this.sink = function(){
+        this.state = 'sinking';
+        this.buttonMode = false;
+        this.interactive - false;
+    }
+    
+    this.highlight = function(){
+        this.tint = 0x00ff00;
+    }
+    
+    this.animate = function(){
+        if(this.state === 'flooding'){
+            if(this.width > 0){
+                this.width -= 10;
             }
             else{
                 this.state = 'flooded';
-                tileSprite.setTexture(floodedTexture);
+                this.setTexture(this.flooded);
             }
 
-        }		
-        else if(tileSprite.width < floodedTexture.width){	
-            tileSprite.width += 10;
+        }
+        else if(this.state === 'shoring'){
+            if(this.width > 0){
+                this.width -= 10;
+            }
+            else{
+                this.state = 'normal';
+                this.setTexture(this.normal);
+            }
 
         }
+        else if(this.state === 'sinking'){
+            if(this.alpha > 0){
+                this.alpha -= .01;
+            }
+            else{
+                this.state = 'sunk';
+            }
+        }		
+        else if(this.state === 'normal' && this.width < this.normal.width){	
+            this.width += 10;
+        }		
+        else if(this.state === 'flooded' && this.width < this.flooded.width){	
+            this.width += 10;
+        }
+        
     }
 }
+Tile.constructor = Tile;
+Tile.prototype = Object.create(PIXI.Sprite.prototype);
