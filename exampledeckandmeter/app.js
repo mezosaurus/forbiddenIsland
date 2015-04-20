@@ -16,10 +16,8 @@ var HelicopterLiftCard = function() {
   sampleCardSquare.beginFill(0xFFFFFF);
   sampleCardSquare.lineStyle(5, 0x000000);
   sampleCardSquare.drawRect(0, 0, 80, 150);
-  sampleCardSquare.position.x = 20;
-  sampleCardSquare.position.y = 800;
-  sampleCardText.position.x = 30;
-  sampleCardText.position.y = 850;
+  sampleCardText.position.x = this.card.position.x + 15;
+  sampleCardText.position.y = this.card.position.y + 20;
 
   this.card.addChild(sampleCardSquare);
   this.card.addChild(sampleCardText);
@@ -36,10 +34,8 @@ var TreasureCard = function() {
   sampleCardSquare.beginFill(0xFFFFFF);
   sampleCardSquare.lineStyle(5, 0x000000);
   sampleCardSquare.drawRect(0, 0, 80, 150);
-  sampleCardSquare.position.x = 20;
-  sampleCardSquare.position.y = 800;
-  sampleCardText.position.x = 30;
-  sampleCardText.position.y = 850;
+  sampleCardText.position.x = this.card.position.x + 20;
+  sampleCardText.position.y = this.card.position.y + 20;
 
   this.card.addChild(sampleCardSquare);
   this.card.addChild(sampleCardText);
@@ -54,7 +50,9 @@ var TreasureCard = function() {
 // create an new instance of a pixi stage with a grey background
 var stage = new PIXI.Stage(0x888888);
 // create a renderer instance
-var renderer = PIXI.autoDetectRenderer(960,960);
+var width = $(window).width();
+var height = $(window).height();
+var renderer = PIXI.autoDetectRenderer(width, height);
 // create empty containers for each logical unit
 var gameContainer = new PIXI.DisplayObjectContainer();
 var treasureDeck = new PIXI.DisplayObjectContainer();
@@ -83,10 +81,10 @@ treasureSquare.beginFill(0x6B0000);
 treasureSquare.lineStyle(5, 0xFF0000);
 treasureSquare.drawRect(0, 0, 80, 150);
 treasureSquare.hitArea = treasureSquare.getBounds();
-treasureSquare.position.x = 870;
-treasureSquare.position.y = 200;
-treasureSquareText.position.x = 860;
-treasureSquareText.position.y = 185;
+treasureSquare.position.x = width - 100;
+treasureSquare.position.y = (height/2) - 160;
+treasureSquareText.position.x = width - 110;
+treasureSquareText.position.y = (height/2) - 180;
 treasureSquare.buttonMode = true;
 treasureSquare.interactive = true;
 treasureDeck.addChild(treasureSquare);
@@ -106,10 +104,10 @@ floodSquare.beginFill(0x00006E);
 floodSquare.lineStyle(5, 0x1919BF);
 floodSquare.drawRect(0, 0, 80, 150);
 floodSquare.hitArea = floodSquare.getBounds();
-floodSquare.position.x = 870;
-floodSquare.position.y = 390;
-floodSquareText.position.x = 870;
-floodSquareText.position.y = 375;
+floodSquare.position.x = width - 100;
+floodSquare.position.y = (height/2) + 20;
+floodSquareText.position.x = width - 110;
+floodSquareText.position.y = (height/2);
 floodSquare.buttonMode = true;
 floodSquare.interactive = true;
 floodDeck.addChild(floodSquare);
@@ -122,6 +120,8 @@ floodDeck.addChild(floodSquareText);
 /*
  * WATER METER
  */
+var waterMeterY = waterMeter.position.y;
+var waterMeterX = waterMeter.position.x;
 var mainWaterLine = new PIXI.Graphics();
 var currentWaterLine = new PIXI.Graphics();
 var level1Text  = new PIXI.Text('2', {font: "15px Arial"});
@@ -133,42 +133,44 @@ var captionText  = new PIXI.Text('Water Level', {font: "15px Arial"});
 
 mainWaterLine.beginFill(0x000000);
 mainWaterLine.drawRect(0, 0, 10, 160);
-mainWaterLine.position.x = 20;
-mainWaterLine.position.y = 275;
+mainWaterLine.position.x = waterMeterX;
+mainWaterLine.position.y = waterMeterY + 5;
 
-captionText.position.x = 10;
-captionText.position.y = 250;
+captionText.position.x = waterMeterX - 20;
+captionText.position.y = waterMeterY - 20;
 waterMeter.addChild(captionText);
 
-level1Text.position.x = 50;
-level1Text.position.y = 415;
+level1Text.position.x = waterMeterX + 30 ;
+level1Text.position.y = waterMeterY + 140;
 waterMeter.addChild(level1Text);
 
-level2Text.position.x = 50;
-level2Text.position.y = 380;
+level2Text.position.x = waterMeterX + 30;
+level2Text.position.y = waterMeterY + 110;
 waterMeter.addChild(level2Text);
 
-level3Text.position.x = 50;
-level3Text.position.y = 345;
+level3Text.position.x = waterMeterX + 30;
+level3Text.position.y = waterMeterY + 80;
 waterMeter.addChild(level3Text);
 
-level4Text.position.x = 50;
-level4Text.position.y = 310;
+level4Text.position.x = waterMeterX + 30;
+level4Text.position.y = waterMeterX + 50;
 waterMeter.addChild(level4Text);
 
-level5Text.position.x = 50;
-level5Text.position.y = 275;
+level5Text.position.x = waterMeterX + 30;
+level5Text.position.y = waterMeterX + 20;
 waterMeter.addChild(level5Text);
 
 
 currentWaterLine.beginFill(0xB80000);
 currentWaterLine.drawRect(0, 0, 40, 5);
-currentWaterLine.position.x = 5;
-currentWaterLine.position.y = 420;
+currentWaterLine.position.x = waterMeterX - 15;
+currentWaterLine.position.y = waterMeterY + 145;
 
 waterMeter.addChild(mainWaterLine);
 waterMeter.addChild(currentWaterLine);
 
+waterMeter.position.x = width - (width - 20);
+waterMeter.position.y = (height/2) - 100;
 /*
  * END WATER METER
  */
@@ -178,10 +180,13 @@ treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
   if (waterLevel != 4)
   {
     alert("Waters Rise card has been revealed - Water level has risen!");
+    sampleCard.card.position.x = width - (width - 100);
+    sampleCard.card.position.y = height - 160;
     gameContainer.addChild(sampleCard.card);
-    treasureCard.card.position.x = 100;
+    treasureCard.card.position.x = width - (width - 5);
+    treasureCard.card.position.y = height - 160;
     gameContainer.addChild(treasureCard.card);
-    currentWaterLine.position.y = currentWaterLine.position.y - 35;
+    currentWaterLine.position.y = currentWaterLine.position.y - 30;
     waterLevel++;
   }
 };
