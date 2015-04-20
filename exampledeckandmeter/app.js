@@ -3,57 +3,21 @@
  * Simple example of decks and how the water meter operates
  */
 
-/*
- * CARD CLASSES(Planning on breaking these into separate files eventually)
- */
-var HelicopterLiftCard = function() {
-  this.card = new PIXI.DisplayObjectContainer();
-  this.type = "Sample Card";
-
-  //SAMPLE card creation
-  sampleCardSquare = new PIXI.Graphics();
-  sampleCardText = new PIXI.Text("HelicopterLift", {font: '10px Arial'});
-  sampleCardSquare.beginFill(0xFFFFFF);
-  sampleCardSquare.lineStyle(5, 0x000000);
-  sampleCardSquare.drawRect(0, 0, 80, 150);
-  sampleCardText.position.x = this.card.position.x + 15;
-  sampleCardText.position.y = this.card.position.y + 20;
-
-  this.card.addChild(sampleCardSquare);
-  this.card.addChild(sampleCardText);
-
-};
-
-var TreasureCard = function() {
-  this.card = new PIXI.DisplayObjectContainer();
-  this.type = "Sample Card";
-
-  //SAMPLE card creation
-  sampleCardSquare = new PIXI.Graphics();
-  sampleCardText = new PIXI.Text("Treasure", {font: '10px Arial'});
-  sampleCardSquare.beginFill(0xFFFFFF);
-  sampleCardSquare.lineStyle(5, 0x000000);
-  sampleCardSquare.drawRect(0, 0, 80, 150);
-  sampleCardText.position.x = this.card.position.x + 20;
-  sampleCardText.position.y = this.card.position.y + 20;
-
-  this.card.addChild(sampleCardSquare);
-  this.card.addChild(sampleCardText);
-
-};
-
-/*
- * END CARD CLASSES
- */
-
-
 // create an new instance of a pixi stage with a grey background
 var stage = new PIXI.Stage(0x888888);
-// create a renderer instance
+
+//Player Creation
+var player1 = new Player("player 1", "test");
+var player2 = new Player("player 2", "test");
+var player3 = new Player("player 3", "test");
+var player4 = new Player("player 4", "test");
+
+// create a renderer instance with the viewports width and height
 var width = $(window).width();
 var height = $(window).height();
 var renderer = PIXI.autoDetectRenderer(width, height);
-// create empty containers for each logical unit
+
+// create empty containers for the decks and water meter
 var gameContainer = new PIXI.DisplayObjectContainer();
 var treasureDeck = new PIXI.DisplayObjectContainer();
 var floodDeck = new PIXI.DisplayObjectContainer();
@@ -61,6 +25,8 @@ var waterMeter = new PIXI.DisplayObjectContainer();
 
 //Keeps track of where the water level is
 var waterLevel = 0;
+
+//Initialize cards
 var sampleCard = new HelicopterLiftCard();
 var treasureCard = new TreasureCard();
 
@@ -69,6 +35,12 @@ stage.addChild(gameContainer);
 stage.addChild(treasureDeck);
 stage.addChild(floodDeck);
 stage.addChild(waterMeter);
+stage.addChild(player1);
+
+player1.position.x = width - (width - 5);
+player1.position.y = height - 160;
+
+
  // add the renderer view element to the DOM
 document.body.appendChild(renderer.view);
 
@@ -180,12 +152,8 @@ treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
   if (waterLevel != 4)
   {
     alert("Waters Rise card has been revealed - Water level has risen!");
-    sampleCard.card.position.x = width - (width - 100);
-    sampleCard.card.position.y = height - 160;
-    gameContainer.addChild(sampleCard.card);
-    treasureCard.card.position.x = width - (width - 5);
-    treasureCard.card.position.y = height - 160;
-    gameContainer.addChild(treasureCard.card);
+    player1.addCard(new HelicopterLiftCard());
+    player1.addCard(new TreasureCard());
     currentWaterLine.position.y = currentWaterLine.position.y - 30;
     waterLevel++;
   }
