@@ -1,4 +1,4 @@
-var TreasureCard = function() {
+var TreasureCard2 = function() {
   PIXI.DisplayObjectContainer.call(this);
   this.type = "Treasure Card";
 
@@ -13,28 +13,30 @@ var TreasureCard = function() {
   sampleCardSquare.interactive = true;
   sampleCardSquare.hitArea = sampleCardSquare.getBounds();
 
+    // create a new graphics object
+  var pentagon = new PIXI.Graphics();
 
-  // draw a diamond (a square rotated to stand on one corner).
-  var diamond = new PIXI.Graphics();
-  diamond.lineStyle(0, 0xFFFF66);
-  diamond.beginFill(0xFFFF66);
-  diamond.drawRect(0, 0, 50, 50);
-      // This defines the center.
-  diamond.position.x = this.position.x + 5;
-  diamond.position.y = this.position.y + 80;
-      // This says to pivot around the center.
-  diamond.pivot = new PIXI.Point(this.position.x, this.position.y);
-      // This rotates the square 45 degrees, so that it becomes a diamond standing on its point.
-  diamond.rotation = 62.05;
+  // begin a green fill..
+  pentagon.beginFill(0x00FF00);
+
+  // draw a triangle using lines
+  pentagon.moveTo(0,0);
+  pentagon.lineTo(-40, 50);
+  pentagon.lineTo(40, 50);
+  pentagon.lineTo(40, 100);
+  //pentagon.lineTo(-40,100);
+
+  // end the fill
+  pentagon.endFill();
 
   this.addChild(sampleCardSquare);
   this.addChild(sampleCardText);
-  this.addChild(diamond);
+  this.addChild(pentagon);
 
   sampleCardSquare.mousedown = sampleCardSquare.touchstart = function(data) {
     alert("You clicked a treasure card!");
   };
 };
 
-TreasureCard.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
-TreasureCard.constructor = TreasureCard;
+TreasureCard2.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+TreasureCard2.constructor = TreasureCard2;

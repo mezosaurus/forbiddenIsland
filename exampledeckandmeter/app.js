@@ -26,20 +26,18 @@ var waterMeter = new PIXI.DisplayObjectContainer();
 //Keeps track of where the water level is
 var waterLevel = 0;
 
-//Initialize cards
-var sampleCard = new HelicopterLiftCard();
-var treasureCard = new TreasureCard();
-
 // add the containers to the stage
 stage.addChild(gameContainer);
 stage.addChild(treasureDeck);
 stage.addChild(floodDeck);
 stage.addChild(waterMeter);
 stage.addChild(player1);
+stage.addChild(player2);
 
 player1.position.x = width - (width - 5);
 player1.position.y = height - 160;
-
+player2.position.x = width - 490;
+player2.position.y = height - 160;
 
  // add the renderer view element to the DOM
 document.body.appendChild(renderer.view);
@@ -154,6 +152,8 @@ treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
     alert("Waters Rise card has been revealed - Water level has risen!");
     player1.addCard(new HelicopterLiftCard());
     player1.addCard(new TreasureCard());
+    player2.addCard(new HelicopterLiftCard());
+    player2.addCard(new TreasureCard());
     currentWaterLine.position.y = currentWaterLine.position.y - 30;
     waterLevel++;
   }
