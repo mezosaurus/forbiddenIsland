@@ -1,6 +1,6 @@
-var TreasureCard = function() {
+var CupcakeCard = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.type = "Treasure Card";
+  this.type = "Donut";
 
   //SAMPLE card creation
   treasureCardSquare = new PIXI.Graphics();
@@ -32,9 +32,9 @@ var TreasureCard = function() {
   this.addChild(diamond);
 
   treasureCardSquare.mousedown = treasureCardSquare.touchstart = function(data) {
-    alert("You clicked a treasure card!");
+    $('body').trigger('cardClick', [this.type]);
   };
 };
 
-TreasureCard.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
-TreasureCard.constructor = TreasureCard;
+CupcakeCard.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+CupcakeCard.constructor = TreasureCard;
