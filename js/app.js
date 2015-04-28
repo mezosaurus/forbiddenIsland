@@ -192,9 +192,9 @@ function drawTreasures(gameContainer) {
   // Create a container for all of the treasure stuff
   var treasureContainer = new PIXI.DisplayObjectContainer();
   var treasureContainerWidth = 300;
-  var treasureContainerHeight = 80;
-  treasureContainer.position.x = width/2 - treasureContainerWidth/2;
-  treasureContainer.position.y = 10;
+  var treasureContainerHeight = 90;
+  treasureContainer.position.x = 580 + treasureContainerWidth/2;
+  treasureContainer.position.y = 150;
   
   // Make a container box for the treasures
   var treasureSquare = new PIXI.Graphics();
@@ -208,12 +208,12 @@ function drawTreasures(gameContainer) {
   // Make some labels for treasure stacks
   var treasureText  = new PIXI.Text('Treasures', {font: "15px Arial"});
   treasureText.position.x = treasureContainerWidth/2 - 20;
-  treasureText.position.y = 5;
+  treasureText.position.y = 0;
   
   // Create the treaures and display them
   var treasure1 = new Treasure(pizzaTexture, pizzaObtainableTexture, pizzaEatenTexture);
-  treasure1.x = 35;
-  treasure1.y = 45;
+  treasure1.x = 40;
+  treasure1.y = treasureContainerHeight - 40;
   
   // Add everything to the containers
   treasureContainer.addChild(treasureSquare);
