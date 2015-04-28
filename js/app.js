@@ -14,8 +14,8 @@ while(gameBoard.push([]) < 6);
 // pixi stage with grey background
 var stage = new PIXI.Stage(0x888888);
 // renderer instance with height 640 width 480
-var width = $(window).width();
-var height = $(window).height();
+var width = 800;
+var height = 600;
 var renderer = PIXI.autoDetectRenderer(width, height);
 // empty container
 var gameContainer = new PIXI.DisplayObjectContainer();
