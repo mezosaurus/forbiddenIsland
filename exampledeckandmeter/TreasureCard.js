@@ -3,15 +3,15 @@ var TreasureCard = function() {
   this.type = "Treasure Card";
 
   //SAMPLE card creation
-  sampleCardSquare = new PIXI.Graphics();
-  sampleCardText = new PIXI.Text("Treasure", {font: '10px Arial'});
-  sampleCardSquare.beginFill(0xFFFFFF);
-  sampleCardSquare.lineStyle(5, 0x000000);
-  sampleCardSquare.drawRect(0, 0, 80, 150);
-  sampleCardText.position.x = this.position.x + 20;
-  sampleCardText.position.y = this.position.y + 20;
-  sampleCardSquare.interactive = true;
-  sampleCardSquare.hitArea = sampleCardSquare.getBounds();
+  treasureCardSquare = new PIXI.Graphics();
+  treasureCardText = new PIXI.Text("Treasure", {font: '10px Arial'});
+  treasureCardSquare.beginFill(0xFFFFFF);
+  treasureCardSquare.lineStyle(5, 0x000000);
+  treasureCardSquare.drawRect(0, 0, 80, 150);
+  treasureCardText.position.x = this.position.x + 20;
+  treasureCardText.position.y = this.position.y + 20;
+  treasureCardSquare.interactive = true;
+  treasureCardSquare.hitArea = treasureCardSquare.getBounds();
 
 
   // draw a diamond (a square rotated to stand on one corner).
@@ -27,11 +27,11 @@ var TreasureCard = function() {
       // This rotates the square 45 degrees, so that it becomes a diamond standing on its point.
   diamond.rotation = 62.05;
 
-  this.addChild(sampleCardSquare);
-  this.addChild(sampleCardText);
+  this.addChild(treasureCardSquare);
+  this.addChild(treasureCardText);
   this.addChild(diamond);
 
-  sampleCardSquare.mousedown = sampleCardSquare.touchstart = function(data) {
+  treasureCardSquare.mousedown = treasureCardSquare.touchstart = function(data) {
     alert("You clicked a treasure card!");
   };
 };

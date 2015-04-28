@@ -60,6 +60,8 @@ treasureSquare.interactive = true;
 treasureDeck.addChild(treasureSquare);
 treasureDeck.addChild(treasureSquareText);
 
+//TODO: Add Deck formation with given card classes and then shuffle
+
 /*
  * END TREASURE DECK
  */
@@ -82,6 +84,8 @@ floodSquare.buttonMode = true;
 floodSquare.interactive = true;
 floodDeck.addChild(floodSquare);
 floodDeck.addChild(floodSquareText);
+
+//TODO: Add Deck formation with given card classes and then shuffle
 
 /*
  * END FLOOD DECK
