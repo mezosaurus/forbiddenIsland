@@ -14,7 +14,9 @@ while(gameBoard.push([]) < 6);
 // pixi stage with grey background
 var stage = new PIXI.Stage(0x888888);
 // renderer instance with height 640 width 480
-var renderer = PIXI.autoDetectRenderer(960, 960);
+var width = $(window).width();
+var height = $(window).height();
+var renderer = PIXI.autoDetectRenderer(width, height);
 // empty container
 var gameContainer = new PIXI.DisplayObjectContainer();
 stage.addChild(gameContainer);
@@ -133,7 +135,7 @@ function drawTreasureDeck(gameContainer) {
   treasureSquare.interactive = true;
   treasureDeck.addChild(treasureSquare);
   treasureDeck.addChild(treasureSquareText);
-  
+
   gameContainer.addChild(treasureDeck);
   //TODO: Add Deck formation with given card classes and then shuffle
 }
