@@ -3,21 +3,21 @@ var HelicopterLiftCard = function() {
   this.type = "Helicopter Lift Card";
 
   //SAMPLE card creation
-  sampleCardSquare = new PIXI.Graphics();
-  sampleCardText = new PIXI.Text("HelicopterLift", {font: '10px Arial'});
-  sampleCardSquare.beginFill(0xFFFFFF);
-  sampleCardSquare.lineStyle(5, 0x000000);
-  sampleCardSquare.drawRect(0, 0, 80, 150);
-  sampleCardText.position.x = this.position.x + 15;
-  sampleCardText.position.y = this.position.y + 20;
-  sampleCardSquare.interactive = true;
-  sampleCardSquare.hitArea = sampleCardSquare.getBounds();
+  helicopterCardSquare = new PIXI.Graphics();
+  helicopterCardText = new PIXI.Text("HelicopterLift", {font: '10px Arial'});
+  helicopterCardSquare.beginFill(0xFFFFFF);
+  helicopterCardSquare.lineStyle(5, 0x000000);
+  helicopterCardSquare.drawRect(0, 0, 80, 110);
+  helicopterCardText.position.x = this.position.x + 15;
+  helicopterCardText.position.y = this.position.y + 20;
+  helicopterCardSquare.interactive = true;
+  helicopterCardSquare.hitArea = helicopterCardSquare.getBounds();
 
-  this.addChild(sampleCardSquare);
-  this.addChild(sampleCardText);
+  this.addChild(helicopterCardSquare);
+  this.addChild(helicopterCardText);
 
-  sampleCardSquare.mousedown = sampleCardSquare.touchstart = function(data) {
-    alert("You clicked a helicopter card!");
+  helicopterCardSquare.mousedown = helicopterCardSquare.touchstart = function(data) {
+    $('body').trigger('cardClick', [this.type]);
   };
 
 };

@@ -35,9 +35,9 @@ stage.addChild(player1);
 stage.addChild(player2);
 
 player1.position.x = width - (width - 5);
-player1.position.y = height - 160;
+player1.position.y = height - 115;
 player2.position.x = width - 490;
-player2.position.y = height - 160;
+player2.position.y = height - 180;
 
  // add the renderer view element to the DOM
 document.body.appendChild(renderer.view);
@@ -49,7 +49,7 @@ var treasureSquare = new PIXI.Graphics();
 var treasureSquareText  = new PIXI.Text('Treasure Deck', {font: "15px Arial"});
 treasureSquare.beginFill(0x6B0000);
 treasureSquare.lineStyle(5, 0xFF0000);
-treasureSquare.drawRect(0, 0, 80, 150);
+treasureSquare.drawRect(0, 0, 80, 110);
 treasureSquare.hitArea = treasureSquare.getBounds();
 treasureSquare.position.x = width - 100;
 treasureSquare.position.y = (height/2) - 160;
@@ -74,7 +74,7 @@ var floodSquareText  = new PIXI.Text('Flood Deck', {font: "15px Arial"});
 
 floodSquare.beginFill(0x00006E);
 floodSquare.lineStyle(5, 0x1919BF);
-floodSquare.drawRect(0, 0, 80, 150);
+floodSquare.drawRect(0, 0, 80, 110);
 floodSquare.hitArea = floodSquare.getBounds();
 floodSquare.position.x = width - 100;
 floodSquare.position.y = (height/2) + 20;

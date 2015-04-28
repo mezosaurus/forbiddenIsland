@@ -23,13 +23,28 @@ var Player = function(name, role) {
 
   this.discardCard = function(card) {
     //Search the entire array for the card
-    for (var i =0; i < this.hand.length; i++)
-     if (this.hand[i].type === card.type) {
-        someArray.splice(i,1);
-        this.removeChild(card);
-        break;
-     }
+    for (var i =0; i < this.hand.length; i++) {
+       if (this.hand[i].type === card.type) {
+          someArray.splice(i,1);
+          this.removeChild(card);
+          break;
+       }
+    }
   };
+
+  this.hasCard = function(card) {
+    //Search the entire array for the card
+    var contains = false;
+
+    for (var i =0; i < this.hand.length; i++) {
+       if (this.hand[i].type === card.type) {
+          contains = true;
+          break;
+       }
+    }
+    return contains;
+  };
+
 };
 
 Player.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);

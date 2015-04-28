@@ -35,6 +35,10 @@ document.body.appendChild(renderer.view);
 var texture = PIXI.Texture.fromImage("img/tile.png");
 // Get flooded texture
 
+var pizzaTexture = PIXI.Texture.fromImage("img/pizza.png");
+var pizzaObtainableTexture = PIXI.Texture.fromImage("img/pizza.png");
+var pizzaEatenTexture = PIXI.Texture.fromImage("img/pizzaeaten.png");
+
 /* TILE GRID
 *   ABCDEF
 * 1   xx
@@ -50,6 +54,7 @@ drawTileGrid(gameContainer, texture, texture);
 
 // Draw player name text, 5 px padding
 drawPlayerHands(stage, 4);
+drawTresures(stage);
 
 // Draw card decks
 drawFloodDeck(stage);
@@ -140,7 +145,7 @@ function drawTreasureDeck(gameContainer) {
   var treasureSquareText  = new PIXI.Text('Treasure Deck', {font: "15px Arial"});
   treasureSquare.beginFill(0x6B0000);
   treasureSquare.lineStyle(5, 0xFF0000);
-  treasureSquare.drawRect(0, 0, 80, 150);
+  treasureSquare.drawRect(0, 0, 80, 110);
   treasureSquare.hitArea = treasureSquare.getBounds();
   treasureSquare.position.x = width - 100;
   treasureSquare.position.y = (height/2) - 160;
@@ -165,7 +170,7 @@ function drawFloodDeck(gameContainer) {
 
   floodSquare.beginFill(0x00006E);
   floodSquare.lineStyle(5, 0x1919BF);
-  floodSquare.drawRect(0, 0, 80, 150);
+  floodSquare.drawRect(0, 0, 80, 110);
   floodSquare.hitArea = floodSquare.getBounds();
   floodSquare.position.x = width - 100;
   floodSquare.position.y = (height/2) + 20;
@@ -182,6 +187,32 @@ function drawFloodDeck(gameContainer) {
 /*
 * Function responsible for drawing treasures
 */
-function drawTreasures(gameContainer) {
 
+function drawTreasures(gameContainer) {
+  // Create a container for all of the treasure stuff
+  var treasureContainer = new PIXI.DisplayObjectContainer();
+  
+  // Make a container box for the treasures
+  var treasureSquare = new PIXI.Graphics();
+  treasureSquare.beginFill(0xFFFF6E);
+  treasureSquare.lineStyle(5, 0xFFFFCC);
+  treasureSquare.drawRect(0, 0, 300, 100);
+  treasureSquare.hitArea = treasureSquare.getBounds();
+  treasureSquare.position.x = width/2 - 150;
+  treasureSquare.position.y = 10;
+  
+  // Make some labels for treasure stacks
+  var treasureText  = new PIXI.Text('Treasures', {font: "15px Arial"});
+  treasureText.position.x = width/2 - 30;
+  treasureText.position.y = 10;
+  
+  // Create the treaures and display them
+  var treasure1 = new Treasure(pizzaTexture, pizzaObtainableTexture, pizzaEatenTexture);
+  
+  // Add everything to the containers
+  treasureContainer.addChild(treasureSquare);
+  treasureContainer.addChild(treasure1);
+  treasureContainer.addChild(treasureText);
+
+  gameContainer.addChild(treasureContainer);
 }
