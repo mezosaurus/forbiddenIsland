@@ -47,6 +47,7 @@ drawTileGrid(gameContainer, texture);
 
 // Draw player name text, 5 px padding
 drawPlayerHands(stage, 4);
+drawTresures(stage);
 
 
 requestAnimFrame(animate);
@@ -177,5 +178,26 @@ function drawFloodDeck(gameContainer) {
 * Function responsible for drawing treasures
 */
 function drawTresures(gameContainer) {
+  // Create a container for all of the treasure stuff
+  var floodDeck = new PIXI.DisplayObjectContainer();
+  
+  // Make a container box for the treasures
+  var treasureSquare = new PIXI.Graphics();
+  treasureSquare.beginFill(0xFFFF6E);
+  treasureSquare.lineStyle(5, 0xFFFFCC);
+  treasureSquare.drawRect(0, 0, 300, 100);
+  treasureSquare.hitArea = treasureSquare.getBounds();
+  treasureSquare.position.x = width/2 - 150;
+  treasureSquare.position.y = 10;
+  
+  // Make some labels for treasure stacks
+  var treasureText  = new PIXI.Text('Treasures', {font: "15px Arial"});
+  treasureText.position.x = width/2 - 30;
+  treasureText.position.y = 10;
+  
+  // Add everything to the containers
+  floodDeck.addChild(treasureSquare);
+  floodDeck.addChild(treasureText);
 
+  gameContainer.addChild(floodDeck);
 }
