@@ -54,7 +54,7 @@ drawTileGrid(gameContainer, texture, texture);
 
 // Draw player name text, 5 px padding
 drawPlayerHands(stage, 4);
-drawTresures(stage);
+drawTreasures(stage);
 
 // Draw card decks
 drawFloodDeck(stage);
