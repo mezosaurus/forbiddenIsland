@@ -32,6 +32,10 @@ document.body.appendChild(renderer.view);
 var texture = PIXI.Texture.fromImage("img/tile.png");
 // Get flooded texture
 
+var pizzaTexture = PIXI.Texture.fromImage("img/pizza.png");
+var pizzaObtainableTexture = PIXI.Texture.fromImage("img/pizza.png");
+var pizzaEatenTexture = PIXI.Texture.fromImage("img/pizzaeaten.png");
+
 /* TILE GRID
 *   ABCDEF
 * 1   xx
@@ -179,7 +183,7 @@ function drawFloodDeck(gameContainer) {
 */
 function drawTresures(gameContainer) {
   // Create a container for all of the treasure stuff
-  var floodDeck = new PIXI.DisplayObjectContainer();
+  var treasureContainer = new PIXI.DisplayObjectContainer();
   
   // Make a container box for the treasures
   var treasureSquare = new PIXI.Graphics();
@@ -195,9 +199,13 @@ function drawTresures(gameContainer) {
   treasureText.position.x = width/2 - 30;
   treasureText.position.y = 10;
   
+  // Create the treaures and display them
+  var treasure1 = new Treasure(pizzaTexture, pizzaObtainableTexture, pizzaEatenTexture);
+  
   // Add everything to the containers
-  floodDeck.addChild(treasureSquare);
-  floodDeck.addChild(treasureText);
+  treasureContainer.addChild(treasureSquare);
+  treasureContainer.addChild(treasure1);
+  treasureContainer.addChild(treasureText);
 
-  gameContainer.addChild(floodDeck);
+  gameContainer.addChild(treasureContainer);
 }

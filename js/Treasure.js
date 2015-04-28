@@ -1,16 +1,15 @@
-function Treasure(normalTexture, obtainableTexture, obtainedTexture, type){
-    PIXI.Sprite.call( this, normalTexture );
+function Treasure(normalTexture, obtainableTexture, obtainedTexture){
+    PIXI.Sprite.call(this, normalTexture);
     this.normal = normalTexture;
     this.obtainable = obtainableTexture;
     this.obtained = obtainedTexture;
-    this.type = type;
     this.state = 'normal';
     this.buttonMode = true;
     this.interactive = true;
     this.tint = 0xffffff;
     this.alpha = 1;
-    this.position.x = 225+type*80;
-    this.position.y = 225+type*80;
+    this.position.x = 0;
+    this.position.y = 0;
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
     
@@ -23,7 +22,6 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture, type){
     this.mousedown = this.touchstart = function(data){
         $('body').trigger('tileClick', [this.xIndex, this.yIndex, this.name]);
     }
-    
     
     this.sink = function(){
         this.state = 'sinking';
@@ -73,5 +71,5 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture, type){
         
     }
 }
-Tile.constructor = Tile;
-Tile.prototype = Object.create(PIXI.Sprite.prototype);
+Treasure.constructor = Treasure;
+Treasure.prototype = Object.create(PIXI.Sprite.prototype);
