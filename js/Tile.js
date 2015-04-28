@@ -11,8 +11,8 @@ function Tile(normalTexture, floodedTexture, x, y, name){
 //    this.tileSprite = new PIXI.Sprite(landTexture);
     this.tint = 0xffffff;
     this.alpha = 1;
-    this.position.x = x*80;
-    this.position.y = y*80;
+    this.position.x = 180+x*70;
+    this.position.y = 120+y*70;
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
     this.tint = 0xffffff;
@@ -27,7 +27,8 @@ function Tile(normalTexture, floodedTexture, x, y, name){
     }
     
     this.mousedown = this.touchstart = function(data){
-        $('body').trigger('tileClick', [this.xIndex, this.yIndex, this.name]);
+        var eventWhich = data.originalEvent.which;
+        $('body').trigger('tileClick', [this.xIndex, this.yIndex, this.name, eventWhich]);
     }
     
     

@@ -3,13 +3,14 @@
 * Authors: Ethan Hayes, Colton Lillywhite, Devon Winkler, Logan Gore
 */
 $(function(){
-    $('body').on('tileClick', function(event, x, y, name){
-        console.log('tileX: ', x);
-        console.log('tileY: ', y);
-        console.log('tileName: ', name);
+    $('body').on('tileClick', function(event, x, y, name, which){
+        tileClickListener(x, y, name, which);
     });
 });
 
+/** GLOBAL VARS **/
+// Turn - integer for each player
+var turn = 0;
 var height = 600;
 var width = 800;
 
@@ -17,6 +18,8 @@ var width = 800;
 var gameBoard = [];
 // Init empty 6x6 2D Array
 while(gameBoard.push([]) < 6);
+
+/***************/
 
 // pixi stage with grey background
 var stage = new PIXI.Stage(0x888888);
@@ -43,11 +46,14 @@ var texture = PIXI.Texture.fromImage("img/tile.png");
 */
 
 // Generate tile grid
-drawTileGrid(gameContainer, texture);
+drawTileGrid(gameContainer, texture, texture);
 
 // Draw player name text, 5 px padding
 drawPlayerHands(stage, 4);
 
+// Draw card decks
+drawFloodDeck(stage);
+drawTreasureDeck(stage);
 
 requestAnimFrame(animate);
 
@@ -176,6 +182,6 @@ function drawFloodDeck(gameContainer) {
 /*
 * Function responsible for drawing treasures
 */
-function drawTresures(gameContainer) {
+function drawTreasures(gameContainer) {
 
 }

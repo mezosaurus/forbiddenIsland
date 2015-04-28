@@ -1,0 +1,6 @@
+#mode-buttons {
+	position: absolute;
+	top: 605px;
+	left: 175px;
+	z-index: 100;
+}
