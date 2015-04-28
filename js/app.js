@@ -12,7 +12,7 @@ $(function(){
 // Turn - integer for each player
 var turn = 0;
 var height = 600;
-var width = 800;
+var width = 1280;
 
 // GAME BOARD
 var gameBoard = [];
