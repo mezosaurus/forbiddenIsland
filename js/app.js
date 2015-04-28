@@ -1,3 +1,7 @@
+/*
+* Main application functions
+* Authors: Ethan Hayes, Colton Lillywhite, Devon Winkler, Logan Gore
+*/
 $(function(){
     $('body').on('tileClick', function(event, x, y, name){
         console.log('tileX: ', x);
@@ -6,6 +10,9 @@ $(function(){
     });
 });
 
+var viewportHeight = 600;
+var viewportWidth = 800;
+
 // GAME BOARD
 var gameBoard = [];
 // Init empty 6x6 2D Array
@@ -13,8 +20,8 @@ while(gameBoard.push([]) < 6);
 
 // pixi stage with grey background
 var stage = new PIXI.Stage(0x888888);
-// renderer instance with height 640 width 480
-var renderer = PIXI.autoDetectRenderer(960, 960);
+// renderer instance with viewportHeight and viewportWidth
+var renderer = PIXI.autoDetectRenderer(viewportWidth, viewportHeight);
 // empty container
 var gameContainer = new PIXI.DisplayObjectContainer();
 stage.addChild(gameContainer);
@@ -25,12 +32,13 @@ var texture = PIXI.Texture.fromImage("img/tile.png");
 // Get flooded texture
 
 /* TILE GRID
-*   xx
-*  xxxx
-* xxxxxx
-* xxxxxx
-*  xxxx
-*   xx
+*   ABCDEF
+* 1   xx
+* 2  xxxx
+* 3 xxxxxx
+* 4 xxxxxx
+* 5  xxxx
+* 6   xx
 */
 
 // Generate tile grid
@@ -86,7 +94,9 @@ function drawTileGrid(gameContainer, normalTexture, floodedTexture) {
 /*
 * Function responsible for drawing player indicators above tiles
 */
-function drawPlayerPositions(gameContainer, )
+function drawPlayerPositions() {
+
+}
 
 /*
 * Function responsible for drawing player hands in the corners
@@ -100,14 +110,14 @@ function drawPlayerHands(gameContainer, numPlayers) {
 	p3text.position.x = 5;
 	p3text.position.y = 5;
 	var p4text = new PIXI.Text("Player 4", {font:"20px Arial", fill:"red"});
-	p4text.position.x = 955-p4text.width;
+	p4text.position.x = viewportWidth-p4text.width;
 	p4text.position.y = 5;
 	var p1text = new PIXI.Text("Player 1", {font:"20px Arial", fill:"red"});
 	p1text.position.x = 5;
-	p1text.position.y = 955-p1text.height;
+	p1text.position.y = viewportHeight-p1text.height;
 	var p2text = new PIXI.Text("Player 2", {font:"20px Arial", fill:"red"});
-	p2text.position.x = 955-p2text.width;
-	p2text.position.y = 955-p2text.height;
+	p2text.position.x = viewportWidth-p2text.width;
+	p2text.position.y = viewportHeight-p2text.height;
 	gameContainer.addChild(p1text);
 	gameContainer.addChild(p2text);
 	gameContainer.addChild(p3text);
