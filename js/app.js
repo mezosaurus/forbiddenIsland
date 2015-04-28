@@ -184,23 +184,29 @@ function drawFloodDeck(gameContainer) {
 function drawTresures(gameContainer) {
   // Create a container for all of the treasure stuff
   var treasureContainer = new PIXI.DisplayObjectContainer();
+  var treasureContainerWidth = 300;
+  var treasureContainerHeight = 80;
+  treasureContainer.position.x = width/2 - treasureContainerWidth/2;
+  treasureContainer.position.y = 10;
   
   // Make a container box for the treasures
   var treasureSquare = new PIXI.Graphics();
   treasureSquare.beginFill(0xFFFF6E);
   treasureSquare.lineStyle(5, 0xFFFFCC);
-  treasureSquare.drawRect(0, 0, 300, 100);
+  treasureSquare.drawRect(0, 0, treasureContainerWidth, treasureContainerHeight);
   treasureSquare.hitArea = treasureSquare.getBounds();
-  treasureSquare.position.x = width/2 - 150;
-  treasureSquare.position.y = 10;
+  treasureSquare.position.x = 0;
+  treasureSquare.position.y = 0;
   
   // Make some labels for treasure stacks
   var treasureText  = new PIXI.Text('Treasures', {font: "15px Arial"});
-  treasureText.position.x = width/2 - 30;
-  treasureText.position.y = 10;
+  treasureText.position.x = treasureContainerWidth/2 - 20;
+  treasureText.position.y = 5;
   
   // Create the treaures and display them
   var treasure1 = new Treasure(pizzaTexture, pizzaObtainableTexture, pizzaEatenTexture);
+  treasure1.x = 35;
+  treasure1.y = 45;
   
   // Add everything to the containers
   treasureContainer.addChild(treasureSquare);
