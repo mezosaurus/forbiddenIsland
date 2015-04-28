@@ -7,11 +7,16 @@ function tileClickListener(x, y, name, which) {
 	if (which == 1) {
 		// Left mouse event
 		var tile = gameBoard[x][y];
-		tile.flip();
+		// Handle actions for each mode
+		if (actionMode == "move") {
+			
+		}
+		else if (actionMode == "shore") {
+			tile.flip();
+		}
 	}
 	// Get current player turn
 
-	// 
 }
 
 function cardClickListener() {
