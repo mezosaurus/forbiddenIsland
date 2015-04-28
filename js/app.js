@@ -10,8 +10,8 @@ $(function(){
     });
 });
 
-var viewportHeight = 600;
-var viewportWidth = 800;
+var height = 600;
+var width = 800;
 
 // GAME BOARD
 var gameBoard = [];
@@ -20,8 +20,9 @@ while(gameBoard.push([]) < 6);
 
 // pixi stage with grey background
 var stage = new PIXI.Stage(0x888888);
-// renderer instance with viewportHeight and viewportWidth
-var renderer = PIXI.autoDetectRenderer(viewportWidth, viewportHeight);
+// renderer instance with height and width
+var renderer = PIXI.autoDetectRenderer(width, height);
+
 // empty container
 var gameContainer = new PIXI.DisplayObjectContainer();
 stage.addChild(gameContainer);
@@ -110,14 +111,14 @@ function drawPlayerHands(gameContainer, numPlayers) {
 	p3text.position.x = 5;
 	p3text.position.y = 5;
 	var p4text = new PIXI.Text("Player 4", {font:"20px Arial", fill:"red"});
-	p4text.position.x = viewportWidth-p4text.width;
+	p4text.position.x = width-p4text.width;
 	p4text.position.y = 5;
 	var p1text = new PIXI.Text("Player 1", {font:"20px Arial", fill:"red"});
 	p1text.position.x = 5;
-	p1text.position.y = viewportHeight-p1text.height;
+	p1text.position.y = height-p1text.height;
 	var p2text = new PIXI.Text("Player 2", {font:"20px Arial", fill:"red"});
-	p2text.position.x = viewportWidth-p2text.width;
-	p2text.position.y = viewportHeight-p2text.height;
+	p2text.position.x = width-p2text.width;
+	p2text.position.y = height-p2text.height;
 	gameContainer.addChild(p1text);
 	gameContainer.addChild(p2text);
 	gameContainer.addChild(p3text);
@@ -128,14 +129,48 @@ function drawPlayerHands(gameContainer, numPlayers) {
 * Function responsible for drawing treasure deck
 */
 function drawTreasureDeck(gameContainer) {
+  var treasureDeck = new PIXI.DisplayObjectContainer();
+  var treasureSquare = new PIXI.Graphics();
+  var treasureSquareText  = new PIXI.Text('Treasure Deck', {font: "15px Arial"});
+  treasureSquare.beginFill(0x6B0000);
+  treasureSquare.lineStyle(5, 0xFF0000);
+  treasureSquare.drawRect(0, 0, 80, 150);
+  treasureSquare.hitArea = treasureSquare.getBounds();
+  treasureSquare.position.x = width - 100;
+  treasureSquare.position.y = (height/2) - 160;
+  treasureSquareText.position.x = width - 110;
+  treasureSquareText.position.y = (height/2) - 180;
+  treasureSquare.buttonMode = true;
+  treasureSquare.interactive = true;
+  treasureDeck.addChild(treasureSquare);
+  treasureDeck.addChild(treasureSquareText);
 
+  gameContainer.addChild(treasureDeck);
+  //TODO: Add Deck formation with given card classes and then shuffle
 }
 
 /*
 * Function responsible for drawing flood deck
 */
 function drawFloodDeck(gameContainer) {
+  var floodDeck = new PIXI.DisplayObjectContainer();
+  var floodSquare = new PIXI.Graphics();
+  var floodSquareText  = new PIXI.Text('Flood Deck', {font: "15px Arial"});
 
+  floodSquare.beginFill(0x00006E);
+  floodSquare.lineStyle(5, 0x1919BF);
+  floodSquare.drawRect(0, 0, 80, 150);
+  floodSquare.hitArea = floodSquare.getBounds();
+  floodSquare.position.x = width - 100;
+  floodSquare.position.y = (height/2) + 20;
+  floodSquareText.position.x = width - 110;
+  floodSquareText.position.y = (height/2);
+  floodSquare.buttonMode = true;
+  floodSquare.interactive = true;
+  floodDeck.addChild(floodSquare);
+  floodDeck.addChild(floodSquareText);
+
+  gameContainer.addChild(floodDeck);
 }
 
 /*
