@@ -7,9 +7,9 @@ var TreasureCard = function() {
   treasureCardText = new PIXI.Text("Treasure", {font: '10px Arial'});
   treasureCardSquare.beginFill(0xFFFFFF);
   treasureCardSquare.lineStyle(5, 0x000000);
-  treasureCardSquare.drawRect(0, 0, 80, 110);
+  treasureCardSquare.drawRect(0, 0, 70, 90);
   treasureCardText.position.x = this.position.x + 20;
-  treasureCardText.position.y = this.position.y + 20;
+  treasureCardText.position.y = this.position.y + 5;
   treasureCardSquare.interactive = true;
   treasureCardSquare.hitArea = treasureCardSquare.getBounds();
 

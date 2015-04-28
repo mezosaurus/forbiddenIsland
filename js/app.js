@@ -148,9 +148,9 @@ function drawTreasureDeck(gameContainer) {
   treasureSquare.drawRect(0, 0, 80, 110);
   treasureSquare.hitArea = treasureSquare.getBounds();
   treasureSquare.position.x = width - 100;
-  treasureSquare.position.y = (height/2) - 160;
+  treasureSquare.position.y = (height/2) - 120;
   treasureSquareText.position.x = width - 110;
-  treasureSquareText.position.y = (height/2) - 180;
+  treasureSquareText.position.y = (height/2) - 140;
   treasureSquare.buttonMode = true;
   treasureSquare.interactive = true;
   treasureDeck.addChild(treasureSquare);
@@ -195,7 +195,7 @@ function drawTreasures(gameContainer) {
   var treasureContainerHeight = 80;
   treasureContainer.position.x = width/2 - treasureContainerWidth/2;
   treasureContainer.position.y = 10;
-  
+
   // Make a container box for the treasures
   var treasureSquare = new PIXI.Graphics();
   treasureSquare.beginFill(0xFFFF6E);
@@ -204,17 +204,17 @@ function drawTreasures(gameContainer) {
   treasureSquare.hitArea = treasureSquare.getBounds();
   treasureSquare.position.x = 0;
   treasureSquare.position.y = 0;
-  
+
   // Make some labels for treasure stacks
   var treasureText  = new PIXI.Text('Treasures', {font: "15px Arial"});
   treasureText.position.x = treasureContainerWidth/2 - 20;
   treasureText.position.y = 5;
-  
+
   // Create the treaures and display them
   var treasure1 = new Treasure(pizzaTexture, pizzaObtainableTexture, pizzaEatenTexture);
   treasure1.x = 35;
   treasure1.y = 45;
-  
+
   // Add everything to the containers
   treasureContainer.addChild(treasureSquare);
   treasureContainer.addChild(treasure1);
