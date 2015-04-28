@@ -35,9 +35,22 @@ document.body.appendChild(renderer.view);
 var texture = PIXI.Texture.fromImage("img/tile.png");
 // Get flooded texture
 
+// Get the tresure images
+var cupcakeTexture = PIXI.Texture.fromImage("img/cupcake.png");
+var cupcakeObtainableTexture = PIXI.Texture.fromImage("img/cupcake.png");
+var cupcakeEatenTexture = PIXI.Texture.fromImage("img/cupcakeeaten.png");
+
 var pizzaTexture = PIXI.Texture.fromImage("img/pizza.png");
 var pizzaObtainableTexture = PIXI.Texture.fromImage("img/pizza.png");
 var pizzaEatenTexture = PIXI.Texture.fromImage("img/pizzaeaten.png");
+
+var sodaTexture = PIXI.Texture.fromImage("img/soda.png");
+var sodaObtainableTexture = PIXI.Texture.fromImage("img/soda.png");
+var sodaEatenTexture = PIXI.Texture.fromImage("img/sodaeaten.png");
+
+var donutTexture = PIXI.Texture.fromImage("img/donut.png");
+var donutObtainableTexture = PIXI.Texture.fromImage("img/donut.png");
+var donutEatenTexture = PIXI.Texture.fromImage("img/donuteaten.png");
 
 /* TILE GRID
 *   ABCDEF
@@ -191,7 +204,7 @@ function drawFloodDeck(gameContainer) {
 function drawTreasures(gameContainer) {
   // Create a container for all of the treasure stuff
   var treasureContainer = new PIXI.DisplayObjectContainer();
-  var treasureContainerWidth = 300;
+  var treasureContainerWidth = 290;
   var treasureContainerHeight = 90;
   treasureContainer.position.x = 580 + treasureContainerWidth/2;
   treasureContainer.position.y = 150;
@@ -211,13 +224,28 @@ function drawTreasures(gameContainer) {
   treasureText.position.y = 0;
   
   // Create the treaures and display them
-  var treasure1 = new Treasure(pizzaTexture, pizzaObtainableTexture, pizzaEatenTexture);
+  var treasure1 = new Treasure(cupcakeTexture, cupcakeObtainableTexture, cupcakeEatenTexture);
   treasure1.x = 40;
   treasure1.y = treasureContainerHeight - 40;
+  
+  var treasure2 = new Treasure(pizzaTexture, pizzaObtainableTexture, pizzaEatenTexture);
+  treasure2.x = 110;
+  treasure2.y = treasureContainerHeight - 40;
+  
+  var treasure3 = new Treasure(sodaTexture, sodaObtainableTexture, sodaEatenTexture);
+  treasure3.x = 180;
+  treasure3.y = treasureContainerHeight - 40;
+  
+  var treasure4 = new Treasure(donutTexture, donutObtainableTexture, donutEatenTexture);
+  treasure4.x = 250;
+  treasure4.y = treasureContainerHeight - 40;
   
   // Add everything to the containers
   treasureContainer.addChild(treasureSquare);
   treasureContainer.addChild(treasure1);
+  treasureContainer.addChild(treasure2);
+  treasureContainer.addChild(treasure3);
+  treasureContainer.addChild(treasure4);
   treasureContainer.addChild(treasureText);
 
   gameContainer.addChild(treasureContainer);
