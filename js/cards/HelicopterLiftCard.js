@@ -7,7 +7,7 @@ var HelicopterLiftCard = function() {
   sampleCardText = new PIXI.Text("HelicopterLift", {font: '10px Arial'});
   sampleCardSquare.beginFill(0xFFFFFF);
   sampleCardSquare.lineStyle(5, 0x000000);
-  sampleCardSquare.drawRect(0, 0, 80, 150);
+  sampleCardSquare.drawRect(0, 0, 80, 110);
   sampleCardText.position.x = this.position.x + 15;
   sampleCardText.position.y = this.position.y + 20;
   sampleCardSquare.interactive = true;

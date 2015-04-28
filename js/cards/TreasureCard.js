@@ -7,7 +7,7 @@ var TreasureCard = function() {
   treasureCardText = new PIXI.Text("Treasure", {font: '10px Arial'});
   treasureCardSquare.beginFill(0xFFFFFF);
   treasureCardSquare.lineStyle(5, 0x000000);
-  treasureCardSquare.drawRect(0, 0, 80, 150);
+  treasureCardSquare.drawRect(0, 0, 80, 110);
   treasureCardText.position.x = this.position.x + 20;
   treasureCardText.position.y = this.position.y + 20;
   treasureCardSquare.interactive = true;
@@ -21,7 +21,7 @@ var TreasureCard = function() {
   diamond.drawRect(0, 0, 50, 50);
       // This defines the center.
   diamond.position.x = this.position.x + 5;
-  diamond.position.y = this.position.y + 80;
+  diamond.position.y = this.position.y + 70;
       // This says to pivot around the center.
   diamond.pivot = new PIXI.Point(this.position.x, this.position.y);
       // This rotates the square 45 degrees, so that it becomes a diamond standing on its point.

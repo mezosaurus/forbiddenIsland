@@ -134,7 +134,7 @@ function drawTreasureDeck(gameContainer) {
   var treasureSquareText  = new PIXI.Text('Treasure Deck', {font: "15px Arial"});
   treasureSquare.beginFill(0x6B0000);
   treasureSquare.lineStyle(5, 0xFF0000);
-  treasureSquare.drawRect(0, 0, 80, 150);
+  treasureSquare.drawRect(0, 0, 80, 110);
   treasureSquare.hitArea = treasureSquare.getBounds();
   treasureSquare.position.x = width - 100;
   treasureSquare.position.y = (height/2) - 160;
@@ -159,7 +159,7 @@ function drawFloodDeck(gameContainer) {
 
   floodSquare.beginFill(0x00006E);
   floodSquare.lineStyle(5, 0x1919BF);
-  floodSquare.drawRect(0, 0, 80, 150);
+  floodSquare.drawRect(0, 0, 80, 110);
   floodSquare.hitArea = floodSquare.getBounds();
   floodSquare.position.x = width - 100;
   floodSquare.position.y = (height/2) + 20;
