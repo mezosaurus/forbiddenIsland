@@ -18,7 +18,7 @@ $(function(){
 var players = [];
 var actionMode = "move";
 // Turn - integer for each player
-var turn = 0;
+var turn = 3;
 var height = 600;
 var width = 1280;
 
@@ -87,6 +87,11 @@ gameBoard[1][4].addChild(p2.sprite);
 gameBoard[4][1].addChild(p3.sprite);
 gameBoard[4][4].addChild(p4.sprite);
 
+p1.calculateValidMoveTiles();
+p2.calculateValidMoveTiles();
+p3.calculateValidMoveTiles();
+p4.calculateValidMoveTiles();
+
 // Draw player name text, 5 px padding
 drawPlayerHands(stage, 4);
 drawTreasures(stage);
@@ -117,19 +122,31 @@ function drawTileGrid(gameContainer, normalTexture, floodedTexture) {
 			var tile = new Tile(normalTexture, floodedTexture, i, j, 'tile_' + i + '_' + j);
 			// Skip tile positions on first row that need to be blank
 			if ((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 0 && j == 4) || (i == 0 && j == 5))  {
-				tile.sink();
+				tile.alpha=0;
+                tile.state = "sunk";
+                tile.buttonMode = false;
+                tile.interactive = false;
 			}
 			// Skip tile positions on second row that need to be blank
 			if ((i == 1 && j == 0) || (i == 1 && j == 5)) {
-				tile.sink();
+				tile.alpha=0;
+                tile.state = "sunk";
+                tile.buttonMode = false;
+                tile.interactive = false;
 			}
 			// Skip tile positions on fifth row that need to be blank
 			if ((i == 4 && j == 0) || (i == 4 && j == 5)) {
-				tile.sink();
+				tile.alpha=0;
+                tile.state = "sunk";
+                tile.buttonMode = false;
+                tile.interactive = false;
 			}
 			// Skip tile positions on sixth row that need to be blank
 			if ((i == 5 && j == 0) || (i == 5 && j == 1) || (i == 5 && j == 4) || (i == 5 && j == 5)) {
-				tile.sink();
+				tile.alpha=0;
+                tile.state = "sunk";
+                tile.buttonMode = false;
+                tile.interactive = false;
 			}
 			
 			// Push tile object onto gameboard 2D Array

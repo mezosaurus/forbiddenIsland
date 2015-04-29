@@ -11,10 +11,14 @@ function tileClickListener(x, y, name, which) {
 		var playerTile = gameBoard[player.x][player.y];
 		// Handle actions for each mode
 		if (actionMode == "move") {
-			
+			if(player.validMoveTiles[x][y]){
+                player.move(x, y);
+                playerTile.removeChild(player.sprite)
+                tile.addChild(player.sprite);
+            }
 		}
 		else if (actionMode == "shore") {
-			tile.flip();
+			tile.sink();
 		}
 	}
 	// Get current player turn
