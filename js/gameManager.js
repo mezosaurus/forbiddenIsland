@@ -21,8 +21,9 @@ function tileClickListener(x, y, name, which) {
 
 }
 
-function treasureClickListener(which) {
-    alert("You clicked a treasure!");
+function treasureClickListener(type, which) {
+    var treasure = treasures[type];
+    treasure.takeTreasure();
 }
 
 function cardClickListener() {

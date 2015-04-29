@@ -1,8 +1,9 @@
-function Treasure(normalTexture, obtainableTexture, obtainedTexture){
+function Treasure(normalTexture, obtainableTexture, obtainedTexture, treasureType){
     PIXI.Sprite.call(this, normalTexture);
     this.normal = normalTexture;
     this.obtainable = obtainableTexture;
     this.obtained = obtainedTexture;
+    this.type = treasureType;
     this.state = 'normal';
     this.buttonMode = true;
     this.interactive = true;
@@ -15,14 +16,26 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture){
     
     this.mousedown = this.touchstart = function(data){
         var eventWhich = data.originalEvent.which;
-        $('body').trigger('treasureClick', [eventWhich]);
+        $('body').trigger('treasureClick', [this.type, eventWhich]);
     }
     
-    this.highlight = function(){
-        this.tint = 0x00ff00;
+    this.takeTreasure = function(){
+        this.state = 'obtaining';
     }
     
     this.animate = function(){
+        if(this.state === 'obtaining'){
+            if(this.width > 0){
+                this.width -= 10;
+            }
+            else{
+                this.state = 'obtained';
+                this.setTexture(this.obtained);
+            }
+        }
+        else if(this.state === 'obtained' && this.width < this.obtained.width){	
+            this.width += 10;
+        }
     }
 }
 Treasure.constructor = Treasure;
