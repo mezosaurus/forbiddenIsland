@@ -6,9 +6,13 @@ $(function(){
     $('body').on('tileClick', function(event, x, y, name, which){
         tileClickListener(x, y, name, which);
     });
+    $('.btn').on('click', function(event) {
+    	actionMode = event.target.id;
+    });
 });
 
 /** GLOBAL VARS **/
+var actionMode = "move";
 // Turn - integer for each player
 var turn = 0;
 var height = 600;
