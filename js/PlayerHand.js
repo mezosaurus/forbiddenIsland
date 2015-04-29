@@ -1,7 +1,7 @@
 /*
- * Player class for representing player hands
+ * PlayerHand class for representing PlayerHand hands
  */
-var Player = function(name, role) {
+var PlayerHand = function(name, role) {
   PIXI.DisplayObjectContainer.call(this);
   this.role = role;
   this.name = name;
@@ -47,5 +47,5 @@ var Player = function(name, role) {
 
 };
 
-Player.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
-Player.constructor = Player;
+PlayerHand.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
+PlayerHand.constructor = PlayerHand;
