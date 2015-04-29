@@ -1,19 +1,22 @@
 function Tile(normalTexture, floodedTexture, x, y, name){
     PIXI.Sprite.call(this, normalTexture);
-    this.flooded = floodedTexture;
     this.name = name;
-    this.normal = normalTexture;
+    
+    //possible tints for tiles
+    this.flooded = 0x4985f3;
+    this.normal = 0xffffff;
+    this.highlight = 0x00ff00;
+    this.currentTint = this.normal; //this is used as the tint to switch back to from flooded
+    this.tint = this.currentTint;
     this.xIndex = x;
     this.yIndex = y;
     this.state = 'normal';
     this.buttonMode = true;
     this.interactive = true;
-//    this.tileSprite = new PIXI.Sprite(landTexture);
     this.position.x = 180+x*70;
     this.position.y = 120+y*70;
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
-    this.tint = 0xffffff;
     this.alpha = 1;
     
     this.flip = function(){
@@ -37,7 +40,13 @@ function Tile(normalTexture, floodedTexture, x, y, name){
     }
     
     this.highlight = function(){
-        this.tint = 0x00ff00;
+        this.currentTint = this.highlight;
+        this.tint = this.currentTint;
+    }
+    
+    this.unhighlight = function(){
+        this.currentTint = this.normal;
+        this.tint = this.currentTint;
     }
     
     this.animate = function(){
@@ -47,7 +56,8 @@ function Tile(normalTexture, floodedTexture, x, y, name){
             }
             else{
                 this.state = 'flooded';
-                this.setTexture(this.flooded);
+//                this.setTexture(this.flooded);
+                this.tint = this.flooded;
             }
 
         }
@@ -57,7 +67,7 @@ function Tile(normalTexture, floodedTexture, x, y, name){
             }
             else{
                 this.state = 'normal';
-                this.setTexture(this.normal);
+                this.tint = this.currentTint;
             }
 
         }
@@ -69,10 +79,7 @@ function Tile(normalTexture, floodedTexture, x, y, name){
                 this.state = 'sunk';
             }
         }		
-        else if(this.state === 'normal' && this.width < this.normal.width){	
-            this.width += 10;
-        }		
-        else if(this.state === 'flooded' && this.width < this.flooded.width){	
+        else if((this.state === 'normal' ||this.state === 'flooded') && this.width < this.texture.width){	
             this.width += 10;
         }
         

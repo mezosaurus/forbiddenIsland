@@ -18,7 +18,7 @@ function tileClickListener(x, y, name, which) {
             }
 		}
 		else if (actionMode == "shore") {
-			tile.sink();
+			tile.flip();
 		}
 	}
 	// Get current player turn
