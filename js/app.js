@@ -6,8 +6,9 @@ $(function(){
     $('body').on('tileClick', function(event, x, y, name, which){
         tileClickListener(x, y, name, which);
     });
-    $('body').on('treasureClick', function(event, x, y, name, which){
-        treasureClickListener(x, y, name, which);
+    $('body').on('treasureClick', function(event, type, which){
+        //TODO only if treasures[type].state = 'obtainable';
+        treasureClickListener(type, which);
     });
     $('.btn').on('click', function(event) {
     	actionMode = event.target.id;
@@ -16,6 +17,7 @@ $(function(){
 
 /** GLOBAL VARS **/
 var players = [];
+var treasures = [];
 var actionMode = "move";
 // Turn - integer for each player
 var turn = 3;
@@ -108,6 +110,11 @@ function animate() {
     for(var i = 0; i < tiles.length; i++){
         var tile = tiles[i];
         tile.animate();
+    }
+    
+    for(var i=0; i < treasures.length; i++){
+        var treasure = treasures[i];
+        treasure.animate();
     }
 	// render the stage
 	renderer.render(stage);
@@ -264,28 +271,32 @@ function drawTreasures(gameContainer) {
   treasureText.position.y = 5;
   
   // Create the treaures and display them
-  var treasure1 = new Treasure(cupcakeTexture, cupcakeObtainableTexture, cupcakeEatenTexture);
-  treasure1.x = 40;
+  var treasure0 = new Treasure(cupcakeTexture, cupcakeObtainableTexture, cupcakeEatenTexture, 0);
+  treasure0.x = 40;
+  treasure0.y = treasureContainerHeight - 40;
+  treasures.push(treasure0);
+  
+  var treasure1 = new Treasure(pizzaTexture, pizzaObtainableTexture, pizzaEatenTexture, 1);
+  treasure1.x = 110;
   treasure1.y = treasureContainerHeight - 40;
+  treasures.push(treasure1);
   
-  var treasure2 = new Treasure(pizzaTexture, pizzaObtainableTexture, pizzaEatenTexture);
-  treasure2.x = 110;
+  var treasure2 = new Treasure(sodaTexture, sodaObtainableTexture, sodaEatenTexture, 2);
+  treasure2.x = 180;
   treasure2.y = treasureContainerHeight - 40;
+  treasures.push(treasure2);
   
-  var treasure3 = new Treasure(sodaTexture, sodaObtainableTexture, sodaEatenTexture);
-  treasure3.x = 180;
+  var treasure3 = new Treasure(donutTexture, donutObtainableTexture, donutEatenTexture, 3);
+  treasure3.x = 250;
   treasure3.y = treasureContainerHeight - 40;
-  
-  var treasure4 = new Treasure(donutTexture, donutObtainableTexture, donutEatenTexture);
-  treasure4.x = 250;
-  treasure4.y = treasureContainerHeight - 40;
+  treasures.push(treasure3);
   
   // Add everything to the containers
   treasureContainer.addChild(treasureSquare);
+  treasureContainer.addChild(treasure0);
   treasureContainer.addChild(treasure1);
   treasureContainer.addChild(treasure2);
   treasureContainer.addChild(treasure3);
-  treasureContainer.addChild(treasure4);
   treasureContainer.addChild(treasureText);
 
   gameContainer.addChild(treasureContainer);
