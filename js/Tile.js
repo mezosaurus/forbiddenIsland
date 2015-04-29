@@ -9,8 +9,6 @@ function Tile(normalTexture, floodedTexture, x, y, name){
     this.buttonMode = true;
     this.interactive = true;
 //    this.tileSprite = new PIXI.Sprite(landTexture);
-    this.tint = 0xffffff;
-    this.alpha = 1;
     this.position.x = 180+x*70;
     this.position.y = 120+y*70;
     this.anchor.x = 0.5;

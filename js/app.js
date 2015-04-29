@@ -63,13 +63,14 @@ var donutObtainableTexture = PIXI.Texture.fromImage("img/donut.png");
 var donutEatenTexture = PIXI.Texture.fromImage("img/donuteaten.png");
 
 // Players
-var p1 = new Player(1, 1, PIXI.Sprite.fromImage("img/bunny.png"), new PlayerHand("Player 1", "Pilot"), "Pilot");
+var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
+var p1 = new Player(1, 1, new PlayerPawn(tokenTexture), new PlayerHand("Player 1", "Pilot"), "Pilot");
 players.push(p1);
-var p2 = new Player(1, 4, PIXI.Sprite.fromImage("img/bunny.png"), new PlayerHand("Player 2", "Pilot"), "Engineer");
+var p2 = new Player(1, 4, new PlayerPawn(tokenTexture), new PlayerHand("Player 2", "Pilot"), "Engineer");
 players.push(p2);
-var p3 = new Player(4, 1, PIXI.Sprite.fromImage("img/bunny.png"), new PlayerHand("Player 3", "Pilot"), "Diver");
+var p3 = new Player(4, 1, new PlayerPawn(tokenTexture), new PlayerHand("Player 3", "Pilot"), "Diver");
 players.push(p3);
-var p4 = new Player(4, 4, PIXI.Sprite.fromImage("img/bunny.png"), new PlayerHand("Player 4", "Pilot"), "Explorer");
+var p4 = new Player(4, 4, new PlayerPawn(tokenTexture), new PlayerHand("Player 4", "Pilot"), "Explorer");
 players.push(p4);
 
 /* TILE GRID
@@ -115,6 +116,11 @@ function animate() {
     for(var i=0; i < treasures.length; i++){
         var treasure = treasures[i];
         treasure.animate();
+    }
+    
+    for(var i = 0; i < players.length; i++){
+        var player = players[i];
+        player.sprite.animate();
     }
 	// render the stage
 	renderer.render(stage);
