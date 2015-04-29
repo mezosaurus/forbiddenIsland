@@ -1,11 +1,11 @@
-function PlayerPawn(texture){
+function PlayerPawn(texture, anchorX, anchorY){
     PIXI.Sprite.call(this, texture);
     this.buttonMode = true;
     this.interactive = true;
     this.state = "normal";
     this.tint = 0xffffff;
-    this.anchor.x = 0.5;
-    this.anchor.y = 0.5;
+    this.anchor.x = anchorX;
+    this.anchor.y = anchorY;
     this.alpha = 1;
     
     this.mousedown = this.touchstart = function(data){
