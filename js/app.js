@@ -12,6 +12,7 @@ $(function(){
 });
 
 /** GLOBAL VARS **/
+var players = [];
 var actionMode = "move";
 // Turn - integer for each player
 var turn = 0;
@@ -43,6 +44,16 @@ var pizzaTexture = PIXI.Texture.fromImage("img/pizza.png");
 var pizzaObtainableTexture = PIXI.Texture.fromImage("img/pizza.png");
 var pizzaEatenTexture = PIXI.Texture.fromImage("img/pizzaeaten.png");
 
+// Players
+var p1 = new Player(1, 1, PIXI.Sprite.fromImage("img/bunny.png"), new PlayerHand("Player 1", "Pilot"), "Pilot");
+players.push(p1);
+var p2 = new Player(1, 4, PIXI.Sprite.fromImage("img/bunny.png"), new PlayerHand("Player 2", "Pilot"), "Engineer");
+players.push(p2);
+var p3 = new Player(4, 1, PIXI.Sprite.fromImage("img/bunny.png"), new PlayerHand("Player 3", "Pilot"), "Diver");
+players.push(p3);
+var p4 = new Player(4, 4, PIXI.Sprite.fromImage("img/bunny.png"), new PlayerHand("Player 4", "Pilot"), "Explorer");
+players.push(p4);
+
 /* TILE GRID
 *   ABCDEF
 * 1   xx
@@ -55,6 +66,10 @@ var pizzaEatenTexture = PIXI.Texture.fromImage("img/pizzaeaten.png");
 
 // Generate tile grid
 drawTileGrid(gameContainer, texture, texture);
+gameBoard[1][1].addChild(p1.sprite);
+gameBoard[1][4].addChild(p2.sprite);
+gameBoard[4][1].addChild(p3.sprite);
+gameBoard[4][4].addChild(p4.sprite);
 
 // Draw player name text, 5 px padding
 drawPlayerHands(stage, 4);
@@ -83,23 +98,24 @@ function animate() {
 function drawTileGrid(gameContainer, normalTexture, floodedTexture) {
 	for (var i = 0; i < 6; i++) {
 		for (var j = 0; j < 6; j++) {
+			var tile = new Tile(normalTexture, floodedTexture, i, j, 'tile_' + i + '_' + j);
 			// Skip tile positions on first row that need to be blank
-			if ((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 0 && j == 4) || (i == 0 && j == 5)) {
-				continue;
+			if ((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 0 && j == 4) || (i == 0 && j == 5))  {
+				tile.sink();
 			}
 			// Skip tile positions on second row that need to be blank
 			if ((i == 1 && j == 0) || (i == 1 && j == 5)) {
-				continue;
+				tile.sink();
 			}
 			// Skip tile positions on fifth row that need to be blank
 			if ((i == 4 && j == 0) || (i == 4 && j == 5)) {
-				continue;
+				tile.sink();
 			}
 			// Skip tile positions on sixth row that need to be blank
 			if ((i == 5 && j == 0) || (i == 5 && j == 1) || (i == 5 && j == 4) || (i == 5 && j == 5)) {
-				continue;
+				tile.sink();
 			}
-			var tile = new Tile(normalTexture, floodedTexture, i, j, 'tile_' + i + '_' + j);
+			
 			// Push tile object onto gameboard 2D Array
 			gameBoard[i][j] = tile;
 			gameContainer.addChild(tile);
