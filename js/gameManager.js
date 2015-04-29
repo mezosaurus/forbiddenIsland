@@ -21,6 +21,10 @@ function tileClickListener(x, y, name, which) {
 
 }
 
+function treasureClickListener(which) {
+    alert("You clicked a treasure!");
+}
+
 function cardClickListener() {
 
 }

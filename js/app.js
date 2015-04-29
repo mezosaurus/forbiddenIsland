@@ -6,6 +6,9 @@ $(function(){
     $('body').on('tileClick', function(event, x, y, name, which){
         tileClickListener(x, y, name, which);
     });
+    $('body').on('treasureClick', function(event, x, y, name, which){
+        treasureClickListener(x, y, name, which);
+    });
     $('.btn').on('click', function(event) {
     	actionMode = event.target.id;
     });

@@ -13,20 +13,9 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture){
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
     
-    this.click = function(){
-        if( this.state === 'obtainable' ){
-            this.state = 'unobtainable';
-        }
-    }
-    
     this.mousedown = this.touchstart = function(data){
-        $('body').trigger('tileClick', [this.xIndex, this.yIndex, this.name]);
-    }
-    
-    this.sink = function(){
-        this.state = 'sinking';
-        this.buttonMode = false;
-        this.interactive - false;
+        var eventWhich = data.originalEvent.which;
+        $('body').trigger('treasureClick', [eventWhich]);
     }
     
     this.highlight = function(){
@@ -34,41 +23,6 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture){
     }
     
     this.animate = function(){
-        if(this.state === 'flooding'){
-            if(this.width > 0){
-                this.width -= 10;
-            }
-            else{
-                this.state = 'flooded';
-                this.setTexture(this.flooded);
-            }
-
-        }
-        else if(this.state === 'shoring'){
-            if(this.width > 0){
-                this.width -= 10;
-            }
-            else{
-                this.state = 'normal';
-                this.setTexture(this.normal);
-            }
-
-        }
-        else if(this.state === 'sinking'){
-            if(this.alpha > 0){
-                this.alpha -= .01;
-            }
-            else{
-                this.state = 'sunk';
-            }
-        }		
-        else if(this.state === 'normal' && this.width < this.normal.width){	
-            this.width += 10;
-        }		
-        else if(this.state === 'flooded' && this.width < this.flooded.width){	
-            this.width += 10;
-        }
-        
     }
 }
 Treasure.constructor = Treasure;
