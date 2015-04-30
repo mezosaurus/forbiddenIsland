@@ -4,7 +4,7 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture, treasureTyp
     this.obtainable = obtainableTexture;
     this.obtained = obtainedTexture;
     this.type = treasureType;
-    this.state = 'normal';
+    this.state = 'available';
     this.buttonMode = true;
     this.interactive = true;
     this.tint = 0xffffff;
