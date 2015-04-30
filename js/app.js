@@ -109,6 +109,8 @@ drawTreasures(stage);
 drawFloodDeck(stage);
 drawTreasureDeck(stage);
 
+drawWaterMeter(stage);
+
 requestAnimFrame(animate);
 
 function animate() {
@@ -338,4 +340,61 @@ function drawTreasures(gameContainer) {
   treasureContainer.addChild(treasureText);
 
   gameContainer.addChild(treasureContainer);
+}
+
+function drawWaterMeter(gameContainer) {
+  var waterMeter = new PIXI.DisplayObjectContainer();
+  var waterMeterY = waterMeter.position.y;
+  var waterMeterX = waterMeter.position.x;
+  var mainWaterLine = new PIXI.Graphics();
+  var currentWaterLine = new PIXI.Graphics();
+  var level1Text  = new PIXI.Text('2', {font: "15px Arial"});
+  var level2Text  = new PIXI.Text('-', {font: "15px Arial"});
+  var level3Text  = new PIXI.Text('3', {font: "15px Arial"});
+  var level4Text  = new PIXI.Text('-', {font: "15px Arial"});
+  var level5Text  = new PIXI.Text('4', {font: "15px Arial"});
+  var captionText  = new PIXI.Text('Water Level', {font: "15px Arial"});
+
+  mainWaterLine.beginFill(0x000000);
+  mainWaterLine.drawRect(0, 0, 10, 160);
+  mainWaterLine.position.x = waterMeterX;
+  mainWaterLine.position.y = waterMeterY + 5;
+
+  captionText.position.x = waterMeterX - 20;
+  captionText.position.y = waterMeterY - 20;
+  waterMeter.addChild(captionText);
+
+  level1Text.position.x = waterMeterX + 30 ;
+  level1Text.position.y = waterMeterY + 140;
+  waterMeter.addChild(level1Text);
+
+  level2Text.position.x = waterMeterX + 30;
+  level2Text.position.y = waterMeterY + 110;
+  waterMeter.addChild(level2Text);
+
+  level3Text.position.x = waterMeterX + 30;
+  level3Text.position.y = waterMeterY + 80;
+  waterMeter.addChild(level3Text);
+
+  level4Text.position.x = waterMeterX + 30;
+  level4Text.position.y = waterMeterX + 50;
+  waterMeter.addChild(level4Text);
+
+  level5Text.position.x = waterMeterX + 30;
+  level5Text.position.y = waterMeterX + 20;
+  waterMeter.addChild(level5Text);
+
+
+  currentWaterLine.beginFill(0xB80000);
+  currentWaterLine.drawRect(0, 0, 40, 5);
+  currentWaterLine.position.x = waterMeterX - 15;
+  currentWaterLine.position.y = waterMeterY + 145;
+
+  waterMeter.addChild(mainWaterLine);
+  waterMeter.addChild(currentWaterLine);
+
+  waterMeter.position.x = width - (width - 20);
+  waterMeter.position.y = (height/2) - 100;
+
+  gameContainer.addChild(waterMeter);
 }
