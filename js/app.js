@@ -21,7 +21,7 @@ var treasures = [];
 var actionMode = "move";
 // Turn - integer for each player
 var turn = 3;
-var height = 600;
+var height = 610;
 var width = 1280;
 
 // GAME BOARD
