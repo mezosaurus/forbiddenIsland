@@ -7,8 +7,7 @@ $(function(){
         tileClickListener(x, y, name, which);
     });
     $('body').on('treasureClick', function(event, type, which){
-        if (treasures[type].state == 'obtainable')
-            treasureClickListener(type, which);
+        treasureClickListener(type, which);
     });
     $('.btn').on('click', function(event) {
     	actionMode = event.target.id;
