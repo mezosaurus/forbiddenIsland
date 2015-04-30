@@ -1,10 +1,8 @@
 /*
  * PlayerHand class for representing PlayerHand hands
  */
-var PlayerHand = function(name, role) {
+var PlayerHand = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.role = role;
-  this.name = name;
   this.hand = [];
 
   this.addCard = function(card) {
@@ -13,7 +11,7 @@ var PlayerHand = function(name, role) {
       //Make sure the cards appear in a row and not ontop of each other
       if (this.hand.length > 0)
       {
-        card.position.x += this.hand.length * 100;
+        card.position.x += this.hand.length * 80;
       }
 
       this.hand.push(card);

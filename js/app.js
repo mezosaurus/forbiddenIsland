@@ -73,6 +73,12 @@ players.push(p3);
 var p4 = new Player(4, 4, new PlayerPawn(tokenTexture, 1, 1), new PlayerHand("Player 4", "Pilot"), "Explorer");
 players.push(p4);
 
+//Player hands
+var p1Hand = new PlayerHand();
+var p2Hand = new PlayerHand();
+var p3Hand = new PlayerHand();
+var p4Hand = new PlayerHand();
+
 /* TILE GRID
 *   ABCDEF
 * 1   xx
@@ -112,12 +118,12 @@ function animate() {
         var tile = tiles[i];
         tile.animate();
     }
-    
+
     for(var i=0; i < treasures.length; i++){
         var treasure = treasures[i];
         treasure.animate();
     }
-    
+
     for(var i = 0; i < players.length; i++){
         var player = players[i];
         player.sprite.animate();
@@ -161,7 +167,7 @@ function drawTileGrid(gameContainer, normalTexture, floodedTexture) {
                 tile.buttonMode = false;
                 tile.interactive = false;
 			}
-			
+
 			// Push tile object onto gameboard 2D Array
 			gameBoard[i][j] = tile;
 			gameContainer.addChild(tile);
@@ -196,10 +202,27 @@ function drawPlayerHands(gameContainer, numPlayers) {
 	var p2text = new PIXI.Text("Player 2", {font:"20px Arial", fill:"red"});
 	p2text.position.x = width-p2text.width;
 	p2text.position.y = height-p2text.height;
+
+  p1Hand.position.x = 100;
+  p1Hand.position.y = (height-93);
+
+  p2Hand.position.x = 10;
+  p2Hand.position.y = 5;
+
+  p3Hand.position.x = 10;
+  p3Hand.position.y = 5;
+
+  p4Hand.position.x = 10;
+  p4Hand.position.y = 5;
+
 	gameContainer.addChild(p1text);
 	gameContainer.addChild(p2text);
 	gameContainer.addChild(p3text);
 	gameContainer.addChild(p4text);
+  gameContainer.addChild(p1Hand);
+  gameContainer.addChild(p2Hand);
+  gameContainer.addChild(p3Hand);
+  gameContainer.addChild(p4Hand);
 }
 
 /*
@@ -223,6 +246,11 @@ function drawTreasureDeck(gameContainer) {
   treasureDeck.addChild(treasureSquareText);
 
   gameContainer.addChild(treasureDeck);
+
+  treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
+      p1Hand.addCard(new HelicopterLiftCard());
+      p1Hand.addCard(new CupcakeCard());
+  };
   //TODO: Add Deck formation with given card classes and then shuffle
 }
 
@@ -275,28 +303,28 @@ function drawTreasures(gameContainer) {
   var treasureText  = new PIXI.Text('Treasures', {font: "15px Arial"});
   treasureText.position.x = treasureContainerWidth/2 - 20;
   treasureText.position.y = 5;
-  
+
   // Create the treaures and display them
   var treasure0 = new Treasure(cupcakeTexture, cupcakeObtainableTexture, cupcakeEatenTexture, 0);
   treasure0.x = 40;
   treasure0.y = treasureContainerHeight - 40;
   treasures.push(treasure0);
-  
+
   var treasure1 = new Treasure(pizzaTexture, pizzaObtainableTexture, pizzaEatenTexture, 1);
   treasure1.x = 110;
   treasure1.y = treasureContainerHeight - 40;
   treasures.push(treasure1);
-  
+
   var treasure2 = new Treasure(sodaTexture, sodaObtainableTexture, sodaEatenTexture, 2);
   treasure2.x = 180;
   treasure2.y = treasureContainerHeight - 40;
   treasures.push(treasure2);
-  
+
   var treasure3 = new Treasure(donutTexture, donutObtainableTexture, donutEatenTexture, 3);
   treasure3.x = 250;
   treasure3.y = treasureContainerHeight - 40;
   treasures.push(treasure3);
-  
+
   // Add everything to the containers
   treasureContainer.addChild(treasureSquare);
   treasureContainer.addChild(treasure0);

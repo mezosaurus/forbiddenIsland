@@ -37,4 +37,4 @@ var CupcakeCard = function() {
 };
 
 CupcakeCard.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
-CupcakeCard.constructor = TreasureCard;
+CupcakeCard.constructor = CupcakeCard;
