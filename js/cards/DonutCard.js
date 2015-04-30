@@ -4,12 +4,9 @@ var DonutCard = function() {
 
   //SAMPLE card creation
   treasureCardSquare = new PIXI.Graphics();
-  treasureCardText = new PIXI.Text("Treasure", {font: '10px Arial'});
   treasureCardSquare.beginFill(0xFFFFFF);
   treasureCardSquare.lineStyle(5, 0x000000);
-  treasureCardSquare.drawRect(0, 0, 70, 90);
-  treasureCardText.position.x = this.position.x + 20;
-  treasureCardText.position.y = this.position.y + 5;
+  treasureCardSquare.drawRect(0, 0, 64, 64);
   treasureCardSquare.interactive = true;
   treasureCardSquare.hitArea = treasureCardSquare.getBounds();
 

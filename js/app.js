@@ -204,10 +204,10 @@ function drawPlayerHands(gameContainer, numPlayers) {
 	p2text.position.y = height-p2text.height;
 
   p1Hand.position.x = 100;
-  p1Hand.position.y = (height-93);
+  p1Hand.position.y = (height-65);
 
   p2Hand.position.x = (width/2) + 150;
-  p2Hand.position.y = (height-93);
+  p2Hand.position.y = (height-65);
 
   p3Hand.position.x = 100;
 

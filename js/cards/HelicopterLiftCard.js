@@ -4,10 +4,10 @@ var HelicopterLiftCard = function() {
 
   //SAMPLE card creation
   helicopterCardSquare = new PIXI.Graphics();
-  helicopterCardText = new PIXI.Text("HelicopterLift", {font: '10px Arial'});
+  helicopterCardText = new PIXI.Text("Helicopter\nLift", {font: '10px Arial'});
   helicopterCardSquare.beginFill(0xFFFFFF);
   helicopterCardSquare.lineStyle(5, 0x000000);
-  helicopterCardSquare.drawRect(0, 0, 70, 90);
+  helicopterCardSquare.drawRect(0, 0, 64, 64);
   helicopterCardText.position.x = this.position.x + 15;
   helicopterCardText.position.y = this.position.y + 5;
   helicopterCardSquare.interactive = true;
