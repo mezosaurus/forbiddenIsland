@@ -9,6 +9,10 @@ $(function(){
     $('body').on('treasureClick', function(event, type, which){
         treasureClickListener(type, which);
     });
+    $('body').on('cardClick', function(event, type){
+        //TODO only if treasures[type].state = 'obtainable';
+        cardClickListener(type);
+    });
     $('.btn').on('click', function(event) {
     	actionMode = event.target.id;
     });

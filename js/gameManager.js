@@ -42,6 +42,6 @@ function checkTreasures() {
     }
 }
 
-function cardClickListener() {
-
+function cardClickListener(type) {
+	alert(type);
 }

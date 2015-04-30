@@ -1,6 +1,6 @@
 var HelicopterLiftCard = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.type = "Helicopter Lift Card";
+  this.type = "Helicopter Lift";
 
   //SAMPLE card creation
   helicopterCardSquare = new PIXI.Graphics();
@@ -16,12 +16,13 @@ var HelicopterLiftCard = function() {
   this.addChild(helicopterCardSquare);
   this.addChild(helicopterCardText);
 
+  var type = this.type;
   helicopterCardSquare.mousedown = helicopterCardSquare.touchstart = function(data) {
-    $('body').trigger('cardClick', [this.type]);
+    $('body').trigger('cardClick', [type]);
   };
 
 };
 
 
 HelicopterLiftCard.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
-//HelicopterLiftCard.constructor = HelicopterLiftCard;
+HelicopterLiftCard.constructor = HelicopterLiftCard;
