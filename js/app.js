@@ -206,14 +206,12 @@ function drawPlayerHands(gameContainer, numPlayers) {
   p1Hand.position.x = 100;
   p1Hand.position.y = (height-93);
 
-  p2Hand.position.x = 10;
-  p2Hand.position.y = 5;
+  p2Hand.position.x = (width/2) + 150;
+  p2Hand.position.y = (height-93);
 
-  p3Hand.position.x = 10;
-  p3Hand.position.y = 5;
+  p3Hand.position.x = 100;
 
-  p4Hand.position.x = 10;
-  p4Hand.position.y = 5;
+  p4Hand.position.x = (width/2) + 150;
 
 	gameContainer.addChild(p1text);
 	gameContainer.addChild(p2text);
@@ -250,6 +248,12 @@ function drawTreasureDeck(gameContainer) {
   treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
       p1Hand.addCard(new HelicopterLiftCard());
       p1Hand.addCard(new CupcakeCard());
+      p2Hand.addCard(new HelicopterLiftCard());
+      p2Hand.addCard(new CupcakeCard());
+      p3Hand.addCard(new HelicopterLiftCard());
+      p3Hand.addCard(new CupcakeCard());
+      p4Hand.addCard(new HelicopterLiftCard());
+      p4Hand.addCard(new CupcakeCard());
   };
   //TODO: Add Deck formation with given card classes and then shuffle
 }
