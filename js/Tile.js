@@ -1,7 +1,7 @@
 function Tile(normalTexture, floodedTexture, x, y, name){
     PIXI.Sprite.call(this, normalTexture);
     this.name = name;
-    
+
     //possible tints for tiles
     this.flooded = 0x4985f3;
     this.normal = 0xffffff;
@@ -13,12 +13,12 @@ function Tile(normalTexture, floodedTexture, x, y, name){
     this.state = 'normal';
     this.buttonMode = true;
     this.interactive = true;
-    this.position.x = 180+x*70;
-    this.position.y = 120+y*70;
+    this.position.x = 180+x*66;
+    this.position.y = 130+y*66;
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
     this.alpha = 1;
-    
+
     this.flip = function(){
         if(this.state === 'flooded'){
             this.state = 'shoring';
@@ -26,29 +26,29 @@ function Tile(normalTexture, floodedTexture, x, y, name){
             this.state = 'flooding';
         }
     }
-    
+
     this.mousedown = this.touchstart = function(data){
         var eventWhich = data.originalEvent.which;
         $('body').trigger('tileClick', [this.xIndex, this.yIndex, this.name, eventWhich]);
     }
-    
-    
+
+
     this.sink = function(){
         this.state = 'sinking';
         this.buttonMode = false;
         this.interactive - false;
     }
-    
+
     this.highlight = function(){
         this.currentTint = this.highlight;
         this.tint = this.currentTint;
     }
-    
+
     this.unhighlight = function(){
         this.currentTint = this.normal;
         this.tint = this.currentTint;
     }
-    
+
     this.animate = function(){
         if(this.state === 'flooding'){
             if(this.width > 0){
@@ -78,11 +78,11 @@ function Tile(normalTexture, floodedTexture, x, y, name){
             else{
                 this.state = 'sunk';
             }
-        }		
-        else if((this.state === 'normal' ||this.state === 'flooded') && this.width < this.texture.width){	
+        }
+        else if((this.state === 'normal' ||this.state === 'flooded') && this.width < this.texture.width){
             this.width += 10;
         }
-        
+
     }
 }
 Tile.constructor = Tile;

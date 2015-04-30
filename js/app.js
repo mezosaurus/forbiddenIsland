@@ -7,8 +7,11 @@ $(function(){
         tileClickListener(x, y, name, which);
     });
     $('body').on('treasureClick', function(event, type, which){
-        //TODO only if treasures[type].state = 'obtainable';
         treasureClickListener(type, which);
+    });
+    $('body').on('cardClick', function(event, type){
+        //TODO only if treasures[type].state = 'obtainable';
+        cardClickListener(type);
     });
     $('.btn').on('click', function(event) {
     	actionMode = event.target.id;
@@ -24,7 +27,7 @@ var treasures = [];
 var actionMode = "move";
 // Turn - integer for each player
 var turn = 3;
-var height = 600;
+var height = 610;
 var width = 1280;
 
 // GAME BOARD
@@ -35,17 +38,19 @@ while(gameBoard.push([]) < 6);
 /***************/
 
 // pixi stage with grey background
-var stage = new PIXI.Stage(0x888888);
+var stage = new PIXI.Stage(0x8888ff);
+var background = new PIXI.Sprite.fromImage("img/water.jpg");
 // renderer instance with height and width
 var renderer = PIXI.autoDetectRenderer(width, height);
 
 // empty container
 var gameContainer = new PIXI.DisplayObjectContainer();
+stage.addChild(background);
 stage.addChild(gameContainer);
 // add renderer view element to DOM
 document.body.appendChild(renderer.view);
 // Get normal texture
-var texture = PIXI.Texture.fromImage("img/tile.png");
+var texture = PIXI.Texture.fromImage("img/sand.png");
 // Get flooded texture
 
 // Get the tresure images
@@ -76,11 +81,6 @@ players.push(p3);
 var p4 = new Player(4, 4, new PlayerPawn(tokenTexture, 1, 1), new PlayerHand("Player 4", "Pilot"), "Explorer");
 players.push(p4);
 
-//Player hands
-var p1Hand = new PlayerHand();
-var p2Hand = new PlayerHand();
-var p3Hand = new PlayerHand();
-var p4Hand = new PlayerHand();
 
 /* TILE GRID
 *   ABCDEF
@@ -111,6 +111,8 @@ drawTreasures(stage);
 // Draw card decks
 drawFloodDeck(stage);
 drawTreasureDeck(stage);
+
+drawWaterMeter(stage);
 
 requestAnimFrame(animate);
 
@@ -206,26 +208,24 @@ function drawPlayerHands(gameContainer, numPlayers) {
 	p2text.position.x = width-p2text.width;
 	p2text.position.y = height-p2text.height;
 
-  p1Hand.position.x = 100;
-  p1Hand.position.y = (height-93);
+  p1.hand.position.x = 100;
+  p1.hand.position.y = (height-65);
 
-  p2Hand.position.x = 10;
-  p2Hand.position.y = 5;
+  p2.hand.position.x = (width/2) + 150;
+  p2.hand.position.y = (height-65);
 
-  p3Hand.position.x = 10;
-  p3Hand.position.y = 5;
+  p3.hand.position.x = 100;
 
-  p4Hand.position.x = 10;
-  p4Hand.position.y = 5;
+  p4.hand.position.x = (width/2) + 150;
 
 	gameContainer.addChild(p1text);
 	gameContainer.addChild(p2text);
 	gameContainer.addChild(p3text);
 	gameContainer.addChild(p4text);
-  gameContainer.addChild(p1Hand);
-  gameContainer.addChild(p2Hand);
-  gameContainer.addChild(p3Hand);
-  gameContainer.addChild(p4Hand);
+  gameContainer.addChild(p1.hand);
+  gameContainer.addChild(p2.hand);
+  gameContainer.addChild(p3.hand);
+  gameContainer.addChild(p4.hand);
 }
 
 /*
@@ -251,8 +251,14 @@ function drawTreasureDeck(gameContainer) {
   gameContainer.addChild(treasureDeck);
 
   treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
-      p1Hand.addCard(new HelicopterLiftCard());
-      p1Hand.addCard(new CupcakeCard());
+      p1.hand.addCard(new CupcakeCard());
+      p1.hand.addCard(new CupcakeCard());
+      p2.hand.addCard(new HelicopterLiftCard());
+      p2.hand.addCard(new CupcakeCard());
+      p3.hand.addCard(new HelicopterLiftCard());
+      p3.hand.addCard(new CupcakeCard());
+      p4.hand.addCard(new HelicopterLiftCard());
+      p4.hand.addCard(new CupcakeCard());
   };
   //TODO: Add Deck formation with given card classes and then shuffle
 }
@@ -337,4 +343,61 @@ function drawTreasures(gameContainer) {
   treasureContainer.addChild(treasureText);
 
   gameContainer.addChild(treasureContainer);
+}
+
+function drawWaterMeter(gameContainer) {
+  var waterMeter = new PIXI.DisplayObjectContainer();
+  var waterMeterY = waterMeter.position.y;
+  var waterMeterX = waterMeter.position.x;
+  var mainWaterLine = new PIXI.Graphics();
+  var currentWaterLine = new PIXI.Graphics();
+  var level1Text  = new PIXI.Text('2', {font: "15px Arial"});
+  var level2Text  = new PIXI.Text('-', {font: "15px Arial"});
+  var level3Text  = new PIXI.Text('3', {font: "15px Arial"});
+  var level4Text  = new PIXI.Text('-', {font: "15px Arial"});
+  var level5Text  = new PIXI.Text('4', {font: "15px Arial"});
+  var captionText  = new PIXI.Text('Water Level', {font: "15px Arial"});
+
+  mainWaterLine.beginFill(0x000000);
+  mainWaterLine.drawRect(0, 0, 10, 160);
+  mainWaterLine.position.x = waterMeterX;
+  mainWaterLine.position.y = waterMeterY + 5;
+
+  captionText.position.x = waterMeterX - 20;
+  captionText.position.y = waterMeterY - 20;
+  waterMeter.addChild(captionText);
+
+  level1Text.position.x = waterMeterX + 30 ;
+  level1Text.position.y = waterMeterY + 140;
+  waterMeter.addChild(level1Text);
+
+  level2Text.position.x = waterMeterX + 30;
+  level2Text.position.y = waterMeterY + 110;
+  waterMeter.addChild(level2Text);
+
+  level3Text.position.x = waterMeterX + 30;
+  level3Text.position.y = waterMeterY + 80;
+  waterMeter.addChild(level3Text);
+
+  level4Text.position.x = waterMeterX + 30;
+  level4Text.position.y = waterMeterX + 50;
+  waterMeter.addChild(level4Text);
+
+  level5Text.position.x = waterMeterX + 30;
+  level5Text.position.y = waterMeterX + 20;
+  waterMeter.addChild(level5Text);
+
+
+  currentWaterLine.beginFill(0xB80000);
+  currentWaterLine.drawRect(0, 0, 40, 5);
+  currentWaterLine.position.x = waterMeterX - 15;
+  currentWaterLine.position.y = waterMeterY + 145;
+
+  waterMeter.addChild(mainWaterLine);
+  waterMeter.addChild(currentWaterLine);
+
+  waterMeter.position.x = width - (width - 20);
+  waterMeter.position.y = (height/2) - 100;
+
+  gameContainer.addChild(waterMeter);
 }
