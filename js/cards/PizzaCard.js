@@ -1,8 +1,8 @@
 var PizzaCard = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.type = "Pizza";
+  this.type = 1;
 
-  //SAMPLE card creation
+  //Pizza treasure card creation
   treasureCardSquare = new PIXI.Graphics();
   treasureCardSquare.beginFill(0xFFFFFF);
   treasureCardSquare.lineStyle(5, 0x000000);

@@ -2,7 +2,7 @@ var FloodCard = function() {
   PIXI.DisplayObjectContainer.call(this);
   this.type = "Flood";
 
-  //SAMPLE card creation
+  //Flood card creation
   floodCardSquare = new PIXI.Graphics();
   floodCardText = new PIXI.Text("H5", {font: '10px Arial'});
   floodCardSquare.beginFill(0xFFFFFF);

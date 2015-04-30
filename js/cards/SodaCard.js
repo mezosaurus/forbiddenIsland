@@ -1,8 +1,8 @@
 var SodaCard = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.type = "Soda";
+  this.type = 3;
 
-  //SAMPLE card creation
+  //Soda treasure card creation
   treasureCardSquare = new PIXI.Graphics();
   treasureCardSquare.beginFill(0xFFFFFF);
   treasureCardSquare.lineStyle(5, 0x000000);

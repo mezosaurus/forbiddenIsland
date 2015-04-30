@@ -1,8 +1,8 @@
 var DonutCard = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.type = "Donut";
+  this.type = 4;
 
-  //SAMPLE card creation
+  //Donut treasure card creation
   treasureCardSquare = new PIXI.Graphics();
   treasureCardSquare.beginFill(0xFFFFFF);
   treasureCardSquare.lineStyle(5, 0x000000);

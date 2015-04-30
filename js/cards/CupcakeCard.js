@@ -1,8 +1,8 @@
 var CupcakeCard = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.type = "Cupcake";
+  this.type = 0;
 
-  //SAMPLE card creation
+  //Cupcake treasure card creation
   treasureCardSquare = new PIXI.Graphics();
   treasureCardSquare.beginFill(0xFFFFFF);
   treasureCardSquare.lineStyle(5, 0x000000);

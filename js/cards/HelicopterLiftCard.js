@@ -2,7 +2,7 @@ var HelicopterLiftCard = function() {
   PIXI.DisplayObjectContainer.call(this);
   this.type = "Helicopter Lift";
 
-  //SAMPLE card creation
+  //Helicopter card creation
   helicopterCardSquare = new PIXI.Graphics();
   helicopterCardText = new PIXI.Text("Helicopter\nLift", {font: '10px Arial'});
   helicopterCardSquare.beginFill(0xFFFFFF);
