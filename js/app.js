@@ -15,6 +15,9 @@ $(function(){
     });
 });
 
+// GAME START - SHOW PLAYER/ROLE SELECT
+
+
 /** GLOBAL VARS **/
 var players = [];
 var treasures = [];
