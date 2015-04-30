@@ -24,8 +24,17 @@ var PizzaCard = function() {
       // This rotates the square 45 degrees, so that it becomes a diamond standing on its point.
   diamond.rotation = 62.05;
 
+  var pizzaTexture = PIXI.Texture.fromImage("img/pizza.png");
+  var pizzaSprite = new PIXI.Sprite(cupcakeTexture);
+  pizzaSprite.position.x = 35;
+  pizzaSprite.position.y = 30;
+  pizzaSprite.anchor.x = 0.5;
+  pizzaSprite.anchor.y = 0.5;
+  pizzaSprite.scale.x = 0.7;
+  pizzaSprite.scale.y = 0.7;
+
   this.addChild(treasureCardSquare);
-  this.addChild(diamond);
+  this.addChild(pizzaSprite);
 
   treasureCardSquare.mousedown = treasureCardSquare.touchstart = function(data) {
     $('body').trigger('cardClick', [this.type]);
