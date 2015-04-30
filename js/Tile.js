@@ -13,8 +13,8 @@ function Tile(normalTexture, floodedTexture, x, y, name){
     this.state = 'normal';
     this.buttonMode = true;
     this.interactive = true;
-    this.position.x = 180+x*70;
-    this.position.y = 130+y*70;
+    this.position.x = 180+x*66;
+    this.position.y = 130+y*66;
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
     this.alpha = 1;

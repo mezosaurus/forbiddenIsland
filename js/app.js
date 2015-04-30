@@ -32,17 +32,19 @@ while(gameBoard.push([]) < 6);
 /***************/
 
 // pixi stage with grey background
-var stage = new PIXI.Stage(0x888888);
+var stage = new PIXI.Stage(0x8888ff);
+var background = new PIXI.Sprite.fromImage("img/water.jpg");
 // renderer instance with height and width
 var renderer = PIXI.autoDetectRenderer(width, height);
 
 // empty container
 var gameContainer = new PIXI.DisplayObjectContainer();
+stage.addChild(background);
 stage.addChild(gameContainer);
 // add renderer view element to DOM
 document.body.appendChild(renderer.view);
 // Get normal texture
-var texture = PIXI.Texture.fromImage("img/tile.png");
+var texture = PIXI.Texture.fromImage("img/sand.png");
 // Get flooded texture
 
 // Get the tresure images
