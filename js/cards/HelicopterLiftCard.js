@@ -1,6 +1,6 @@
 var HelicopterLiftCard = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.type = "Helicopter Lift";
+  this.type = "HelicopterLift";
 
   //Helicopter card creation
   helicopterCardSquare = new PIXI.Graphics();

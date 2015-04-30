@@ -1,6 +1,6 @@
 var SandbagCard = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.type = "Helicopter Lift";
+  this.type = "HelicopterLift";
 
   //Sangbag card creation
   sandbagCardSquare = new PIXI.Graphics();
