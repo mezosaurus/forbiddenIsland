@@ -27,9 +27,28 @@ function tileClickListener(x, y, name, which) {
 
 function treasureClickListener(type, which) {
     var treasure = treasures[type];
-    treasure.takeTreasure();
+    checkTreasures()//TODO do this elsewhere
+    
+    if (treasure.state == 'obtainable')
+        treasure.takeTreasure();
 }
 
-function cardClickListener() {
+function checkTreasures() {
+    for (var type = 0; type < 3; type++) {
+        var count = 0;
+        for (var j = 0; j < p1.hand.hand.length; j++) {
+            //TODO only check the active player
+            if (p1.hand.hand[j].type == type) {
+                count++;
+            }
+        }
+        
+        if (count == 4) {
+            treasures[type].state = 'obtainable';
+        }
+    }
+}
 
+function cardClickListener(type) {
+	alert(type);
 }

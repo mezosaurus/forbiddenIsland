@@ -1,8 +1,8 @@
 var DonutCard = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.type = "Donut";
+  this.type = 4;
 
-  //SAMPLE card creation
+  //Donut treasure card creation
   treasureCardSquare = new PIXI.Graphics();
   treasureCardSquare.beginFill(0xFFFFFF);
   treasureCardSquare.lineStyle(5, 0x000000);
@@ -23,8 +23,9 @@ var DonutCard = function() {
   this.addChild(treasureCardSquare);
   this.addChild(donutSprite);
 
+  var type = this.type;
   treasureCardSquare.mousedown = treasureCardSquare.touchstart = function(data) {
-    $('body').trigger('cardClick', [this.type]);
+    $('body').trigger('cardClick', [type]);
   };
 };
 

@@ -4,7 +4,7 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture, treasureTyp
     this.obtainable = obtainableTexture;
     this.obtained = obtainedTexture;
     this.type = treasureType;
-    this.state = 'normal';
+    this.state = 'available';
     this.buttonMode = true;
     this.interactive = true;
     this.tint = 0xffffff;
@@ -35,6 +35,14 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture, treasureTyp
         }
         else if(this.state === 'obtained' && this.width < this.obtained.width){	
             this.width += 10;
+        }
+        else if(this.state === 'obtainable'){
+            this.tint = 0xffffff;
+            this.alpha = 1;
+        }
+        else if(this.state === 'available'){
+            this.tint = 0xaaaaaa;
+            this.alpha = 0.8;
         }
     }
 }

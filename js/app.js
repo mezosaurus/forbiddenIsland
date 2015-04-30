@@ -7,8 +7,11 @@ $(function(){
         tileClickListener(x, y, name, which);
     });
     $('body').on('treasureClick', function(event, type, which){
-        //TODO only if treasures[type].state = 'obtainable';
         treasureClickListener(type, which);
+    });
+    $('body').on('cardClick', function(event, type){
+        //TODO only if treasures[type].state = 'obtainable';
+        cardClickListener(type);
     });
     $('.btn').on('click', function(event) {
     	actionMode = event.target.id;
@@ -75,11 +78,6 @@ players.push(p3);
 var p4 = new Player(4, 4, new PlayerPawn(tokenTexture, 1, 1), new PlayerHand("Player 4", "Pilot"), "Explorer");
 players.push(p4);
 
-//Player hands
-var p1Hand = new PlayerHand();
-var p2Hand = new PlayerHand();
-var p3Hand = new PlayerHand();
-var p4Hand = new PlayerHand();
 
 /* TILE GRID
 *   ABCDEF
@@ -205,24 +203,24 @@ function drawPlayerHands(gameContainer, numPlayers) {
 	p2text.position.x = width-p2text.width;
 	p2text.position.y = height-p2text.height;
 
-  p1Hand.position.x = 100;
-  p1Hand.position.y = (height-65);
+  p1.hand.position.x = 100;
+  p1.hand.position.y = (height-65);
 
-  p2Hand.position.x = (width/2) + 150;
-  p2Hand.position.y = (height-65);
+  p2.hand.position.x = (width/2) + 150;
+  p2.hand.position.y = (height-65);
 
-  p3Hand.position.x = 100;
+  p3.hand.position.x = 100;
 
-  p4Hand.position.x = (width/2) + 150;
+  p4.hand.position.x = (width/2) + 150;
 
 	gameContainer.addChild(p1text);
 	gameContainer.addChild(p2text);
 	gameContainer.addChild(p3text);
 	gameContainer.addChild(p4text);
-  gameContainer.addChild(p1Hand);
-  gameContainer.addChild(p2Hand);
-  gameContainer.addChild(p3Hand);
-  gameContainer.addChild(p4Hand);
+  gameContainer.addChild(p1.hand);
+  gameContainer.addChild(p2.hand);
+  gameContainer.addChild(p3.hand);
+  gameContainer.addChild(p4.hand);
 }
 
 /*
@@ -248,14 +246,14 @@ function drawTreasureDeck(gameContainer) {
   gameContainer.addChild(treasureDeck);
 
   treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
-      p1Hand.addCard(new HelicopterLiftCard());
-      p1Hand.addCard(new CupcakeCard());
-      p2Hand.addCard(new HelicopterLiftCard());
-      p2Hand.addCard(new CupcakeCard());
-      p3Hand.addCard(new HelicopterLiftCard());
-      p3Hand.addCard(new CupcakeCard());
-      p4Hand.addCard(new HelicopterLiftCard());
-      p4Hand.addCard(new CupcakeCard());
+      p1.hand.addCard(new CupcakeCard());
+      p1.hand.addCard(new CupcakeCard());
+      p2.hand.addCard(new HelicopterLiftCard());
+      p2.hand.addCard(new CupcakeCard());
+      p3.hand.addCard(new HelicopterLiftCard());
+      p3.hand.addCard(new CupcakeCard());
+      p4.hand.addCard(new HelicopterLiftCard());
+      p4.hand.addCard(new CupcakeCard());
   };
   //TODO: Add Deck formation with given card classes and then shuffle
 }
