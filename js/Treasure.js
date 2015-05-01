@@ -19,10 +19,6 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture, treasureTyp
         $('body').trigger('treasureClick', [this.type, eventWhich]);
     }
     
-    this.takeTreasure = function(){
-        this.state = 'obtaining';
-    }
-    
     this.animate = function(){
         if(this.state === 'obtaining'){
             if(this.width > 0){
@@ -35,6 +31,7 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture, treasureTyp
         }
         else if(this.state === 'obtained' && this.width < this.obtained.width){	
             this.width += 10;
+            this.alpha = 0.8;
         }
         else if(this.state === 'obtainable'){
             this.tint = 0xffffff;

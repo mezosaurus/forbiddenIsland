@@ -29,10 +29,12 @@ function treasureClickListener(type, which) {
     var treasure = treasures[type];
     checkTreasures()//TODO do this elsewhere
     
-    if (treasure.state == 'obtainable')
-        treasure.takeTreasure();
+    if (treasure.state === 'obtainable') {
+        treasure.state = 'obtaining';
+    }
 }
 
+//TODO call this at beginning of player turn and after every move
 function checkTreasures() {
     for (var type = 0; type < 3; type++) {
         var count = 0;
@@ -43,8 +45,10 @@ function checkTreasures() {
             }
         }
         
-        if (count == 4) {
-            treasures[type].state = 'obtainable';
+        if (count >= 4) {
+            if (treasures[type].state === 'available') {
+                treasures[type].state = 'obtainable';
+            }
         }
     }
 }
