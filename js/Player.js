@@ -1,6 +1,6 @@
-function Player (x, y, sprite, hand, role) {
-	this.x = x;
-	this.y = y;
+function Player (sprite, hand, role) {
+	this.x = 0;
+	this.y = 0;
 	this.sprite = sprite;
 	this.hand = hand;
 	this.role = role;
