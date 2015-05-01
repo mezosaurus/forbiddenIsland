@@ -25,11 +25,11 @@ $(function(){
 var players = [];
 var treasures = [];
 var actionMode = "move";
-var pawnTextures = {"Diver" : "img/pawns/black.png", 
-"Explorer": "img/pawns/green.png", 
-"Navigator": "img/pawns/yellow.png", 
-"Pilot": "img/pawns/blue.png", 
-"Engineer": "img/pawns/red.png", 
+var pawnTextures = {"Diver" : "img/pawns/black.png",
+"Explorer": "img/pawns/green.png",
+"Navigator": "img/pawns/yellow.png",
+"Pilot": "img/pawns/blue.png",
+"Engineer": "img/pawns/red.png",
 "Messenger": "img/pawns/grey.png"}
 // Turn - integer for each player
 var turn = 3;
@@ -284,14 +284,14 @@ function drawTreasureDeck(gameContainer) {
       }
   };
 
-  while (treasureDeck.length < 27)
+  /*while (treasureDeck.length < 28)
   {
     //Add SandBag
     //Add SandBag
     //Create 3 Helicopter lift
     //Create 3 waters rise
     //for loop for 20 treasure cards
-  }
+  }*/
   //TODO: Add Deck formation with given card classes and then shuffle
 }
 
