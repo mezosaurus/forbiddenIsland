@@ -151,7 +151,7 @@ waterMeter.position.y = (height/2) - 100;
 
 //Register actions to both of the decks
 treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
-  if (waterLevel != 4)
+  if (waterLevel != 8)
   {
     alert("Waters Rise card has been revealed - Water level has risen!");
     player1.addCard(new HelicopterLiftCard());

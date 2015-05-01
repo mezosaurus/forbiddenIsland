@@ -272,10 +272,15 @@ function drawTreasureDeck(gameContainer) {
       p4.hand.addCard(new HelicopterLiftCard());
       p4.hand.addCard(new CupcakeCard());
 
-      if (waterLevel != 4)
+      if (waterLevel != 5)
       {
         currentWaterLine.position.y = currentWaterLine.position.y - 30;
         waterLevel++;
+      }
+
+      if (waterLevel == 5)
+      {
+        alert("You died");
       }
   };
 
@@ -382,6 +387,7 @@ function drawWaterMeter(gameContainer) {
   var level3Text  = new PIXI.Text('3', {font: "15px Arial"});
   var level4Text  = new PIXI.Text('-', {font: "15px Arial"});
   var level5Text  = new PIXI.Text('4', {font: "15px Arial"});
+  var levelDeathText  = new PIXI.Text('Death', {font: "15px Arial"});
   var captionText  = new PIXI.Text('Water Level', {font: "15px Arial"});
 
   mainWaterLine.beginFill(0x000000);
@@ -390,7 +396,7 @@ function drawWaterMeter(gameContainer) {
   mainWaterLine.position.y = waterMeterY + 5;
 
   captionText.position.x = waterMeterX - 20;
-  captionText.position.y = waterMeterY - 20;
+  captionText.position.y = waterMeterY - 35;
   waterMeter.addChild(captionText);
 
   level1Text.position.x = waterMeterX + 30 ;
@@ -412,6 +418,10 @@ function drawWaterMeter(gameContainer) {
   level5Text.position.x = waterMeterX + 30;
   level5Text.position.y = waterMeterX + 20;
   waterMeter.addChild(level5Text);
+
+  levelDeathText.position.x = waterMeterX + 30;
+  levelDeathText.position.y = waterMeterX  - 10;
+  waterMeter.addChild(levelDeathText);
 
 
   currentWaterLine.beginFill(0xB80000);
