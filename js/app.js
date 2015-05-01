@@ -120,7 +120,10 @@ drawTreasures(stage);
 drawFloodDeck(stage);
 drawTreasureDeck(stage);
 
+//Draw water meter, current water line is needed to adjust water level
+var currentWaterLine = new PIXI.Graphics();
 drawWaterMeter(stage);
+var waterLevel = 0;
 
 requestAnimFrame(animate);
 
@@ -258,6 +261,7 @@ function drawTreasureDeck(gameContainer) {
 
   gameContainer.addChild(treasureDeck);
 
+  //Whenever player clicks the treasure deck
   treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
       p1.hand.addCard(new CupcakeCard());
       p1.hand.addCard(new CupcakeCard());
@@ -267,7 +271,22 @@ function drawTreasureDeck(gameContainer) {
       p3.hand.addCard(new CupcakeCard());
       p4.hand.addCard(new HelicopterLiftCard());
       p4.hand.addCard(new CupcakeCard());
+
+      if (waterLevel != 4)
+      {
+        currentWaterLine.position.y = currentWaterLine.position.y - 30;
+        waterLevel++;
+      }
   };
+
+  while (treasureDeck.length < 27)
+  {
+    //Add SandBag
+    //Add SandBag
+    //Create 3 Helicopter lift
+    //Create 3 waters rise
+    //for loop for 20 treasure cards
+  }
   //TODO: Add Deck formation with given card classes and then shuffle
 }
 
@@ -358,7 +377,6 @@ function drawWaterMeter(gameContainer) {
   var waterMeterY = waterMeter.position.y;
   var waterMeterX = waterMeter.position.x;
   var mainWaterLine = new PIXI.Graphics();
-  var currentWaterLine = new PIXI.Graphics();
   var level1Text  = new PIXI.Text('2', {font: "15px Arial"});
   var level2Text  = new PIXI.Text('-', {font: "15px Arial"});
   var level3Text  = new PIXI.Text('3', {font: "15px Arial"});
