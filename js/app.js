@@ -20,26 +20,6 @@ $(function(){
 
 // GAME START - SHOW PLAYER/ROLE SELECT
 
-
-/** GLOBAL VARS **/
-var players = [];
-var treasures = [];
-var actionMode = "move";
-var pawnTextures = {"Diver" : "img/pawns/black.png", 
-"Explorer": "img/pawns/green.png", 
-"Navigator": "img/pawns/yellow.png", 
-"Pilot": "img/pawns/blue.png", 
-"Engineer": "img/pawns/red.png", 
-"Messenger": "img/pawns/grey.png"}
-// Turn - integer for each player
-var turn = 3;
-var height = 610;
-var width = 1280;
-
-// GAME BOARD
-var gameBoard = [];
-
-
 // Init empty 6x6 2D Array
 while(gameBoard.push([]) < 6);
 
@@ -80,15 +60,6 @@ var donutEatenTexture = PIXI.Texture.fromImage("img/donuteaten.png");
 
 // Players
 var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
-var p1 = new Player(1, 1, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Pilot"]), 0, 0), new PlayerHand("Player 1", "Pilot"), "Pilot");
-players.push(p1);
-var p2 = new Player(1, 4, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Engineer"]), 1, 0), new PlayerHand("Player 2", "Pilot"), "Engineer");
-players.push(p2);
-var p3 = new Player(4, 1, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Diver"]), 0, 1), new PlayerHand("Player 3", "Pilot"), "Diver");
-players.push(p3);
-var p4 = new Player(4, 4, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Explorer"]), 1, 1), new PlayerHand("Player 4", "Pilot"), "Explorer");
-players.push(p4);
-
 
 /* TILE GRID
 *   ABCDEF

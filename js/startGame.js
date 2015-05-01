@@ -1,26 +1,23 @@
-var numPlayers = 1;
-var roles = ["Diver", "Explorer", "Navigator", "Pilot", "Engineer", "Messenger"];
-var gameStarted = false;
+
 $(document).ready(function() {
+	startGame();
+});
+
+function startGame() {
 	$("#myModal").modal('show');
 
 	$("#playerSelect").on('change', function() {
-		console.log('player select change');
 		numPlayers = this.value;
-		console.log('numPlayers: ' + numPlayers);
 		// Get how many player selects there currently are
 		var numSelects = $("#roleSelectDiv > select").length;
-		console.log('numSelects: ' + numSelects);
 		// Get difference between numPlayers selected and numSelects
 		var diff = numPlayers - numSelects;
-		console.log('diff : ' + diff);
 
 		// If diff is negative, remove select(s)
 		if (diff < 0) {
 			diff = Math.abs(diff);
 			var temp = numSelects;
 			for (var i = 0; i < diff; i++) {
-				console.log('removing at id: ' +temp);
 				$("#selectLabel"+temp).remove();
 				$("#roleSelect"+temp).remove();
 				temp--;
@@ -51,7 +48,6 @@ $(document).ready(function() {
 		// If there is, make sure all the roles are different
 		var selectedRoles = [];
 		for (var i = 1; i <= numPlayers; i++) {
-			console.log("pushing: " + $("#roleSelect"+i).val());
 			selectedRoles.push($("#roleSelect"+i).val());
 		}
 		var sameRoles = false;
@@ -68,7 +64,26 @@ $(document).ready(function() {
 		}
 		else {
 			$("#myModal").hide();
+			var anchorX = 0;
+			var anchorY = 0;
+			// Create players and add to player area
+			for (var i = 1; i <= numPlayers; i++) {
+				players.push(createPlayer($("#roleSelect"+i).val(), anchorX, anchorY));
+				if (anchorY == 1) {
+					var temp = anchorX;
+					anchorX = anchorY;
+					anchorY = temp;
+				}
+				else {
+					anchorY++;
+				}
+			}
 			gameStarted = true;
 		}
 	});
-});
+}
+
+function createPlayer(role, anchorX, anchorY) {
+	var player = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures[role]), anchorX, anchorY), new PlayerHand(), role);
+	return player;
+}
