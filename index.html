@@ -15,6 +15,12 @@
 		<!--- CARDS -->
 		<script src="js/cards/HelicopterLiftCard.js"></script>
 		<script src="js/cards/CupcakeCard.js"></script>
+		<script src="js/cards/DonutCard.js"></script>
+		<script src="js/cards/PizzaCard.js"></script>
+		<script src="js/cards/SodaCard.js"></script>
+		<script src="js/cards/SandBagCard.js"></script>
+		<script src="js/cards/WatersRiseCard.js"></script>
+		<script src="js/cards/FloodCard.js"></script>
 		<!-- /CARDS -->
 		<script src="js/gameManager.js"></script>
 		<script src="js/Treasure.js"></script>
@@ -29,95 +35,26 @@
 		</style>
 	</head>
 	<body>
-		<script>
-			var numPlayers = 1;
-			var roles = ["Diver", "Explorer", "Navigator", "Pilot", "Engineer", "Messenger"];
-			$(document).ready(function() {
-				$("#myModal").modal('show');
-
-				$("#playerSelect").on('change', function() {
-					console.log('player select change');
-					numPlayers = this.value;
-					console.log('numPlayers: ' + numPlayers);
-					// Get how many player selects there currently are
-					var numSelects = $("#roleSelectDiv > select").length;
-					console.log('numSelects: ' + numSelects);
-					// Get difference between numPlayers selected and numSelects
-					var diff = numPlayers - numSelects;
-					console.log('diff : ' + diff);
-
-					// If diff is negative, remove select(s)
-					if (diff < 0) {
-						diff = Math.abs(diff);
-						var temp = numSelects;
-						for (var i = 0; i < diff; i++) {
-							console.log('removing at id')
-							$("#selectLabel"+temp).remove();
-							$("#roleSelect"+temp).remove();
-							temp--;
-						}
-					}
-					// If diff is positive, add select(s)
-					else {
-						var temp = numSelects+1;
-						for (var i = 0; i < diff; i++) {
-							var roleSelect = "<br/>";
-							roleSelect += "<p id='selectLabel"+i+"'>Player"+temp+"</p>";
-							roleSelect += "<select id='roleSelect"+i+"' class='form-control'>";
-							for (var j = 0; j < roles.length; j++) {
-								roleSelect += "<option value="+roles[j]+">"+roles[j]+"</option>";
-							}
-							roleSelect += "</select>";
-							roleSelect += "</div>";
-							roleSelect += "</div>";
-							$("#roleSelectDiv").append(roleSelect);
-							temp++;
-						}
-					}
-					// If it does, remove it and then append new one based on new number of players
-					/*if ($("#roleSelectDiv").length) {
-						console.log('role select div exists');
-						$("#modalContent").remove("#roleSelectDiv");
-					}
-					// Based on number of players selected, generate selects for roles
-					for (var i = 1; i <= numPlayers; i++) {
-						var roleSelect = "<div class='row'>";
-						roleSelect += "<div id='roleSelectDiv' class='col-md-4'>"
-						roleSelect += "<p>Player"+i+"</p>";
-						roleSelect += "<select id='roleSelect'"+i+" class='form-control'>";
-						for (var j = 0; j < roles.length; j++) {
-							roleSelect += "<option value="+roles[j]+">"+roles[j]+"</option>";
-						}
-						roleSelect += "</select>";
-						roleSelect += "</div>";
-						roleSelect += "</div>";
-
-						$("#modalContent").append(roleSelect);
-					}*/
-				});
-
-				$("#startGameBtn").on('click', function() {
-
-				});
-			});
-		</script>
+		<script src="js/startGame.js"></script>
 		<div id="myModal" class="modal fade">
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
 		                <h4 class="modal-title">Start Game</h4>
 		            </div>
 		            <div id="modalContent" class="modal-body">
-		                <p>Please select the number of players:</p>
+		                <p>Please select the number of players (2-4):</p>
 		                <div class="row">
 			                <div class="col-md-4">
 				                <select id="playerSelect" class="form-control">
-								    <option value="1">One</option>
 								    <option value="2">Two</option>
 								    <option value="3">Three</option>
 								    <option value="4">Four</option>
 								</select>
+							</div>
+							<div class ="col-md-4">
+								<p hidden id="messageArea" class="bg-danger">Please select unique roles</p>
 							</div>
 						</div>
 						<div id="roleSelectDiv" class="col-md-4">
@@ -126,6 +63,15 @@
 							<select id="roleSelect1" class="form-control">
 								<script>
 									var roleSelect = document.getElementById('roleSelect1');
+									for (var i = 0; i < roles.length; i++) {
+										roleSelect.options[roleSelect.options.length] = new Option(roles[i], roles[i]);
+									}
+								</script>
+							</select>
+							<p id="selectLabel2">Player 2</p>
+							<select id="roleSelect2" class="form-control">
+								<script>
+									var roleSelect = document.getElementById('roleSelect2');
 									for (var i = 0; i < roles.length; i++) {
 										roleSelect.options[roleSelect.options.length] = new Option(roles[i], roles[i]);
 									}
@@ -142,7 +88,7 @@
 		    </div>
 		</div>
 </body>
-</html>                                		
+</html>
 		<div id="mode-buttons" class="btn-group" role="group">
 		  <button id="move" type="button" autofocus="true" class="btn btn-default">Move</button>
 		  <button id="shore" type="button" class="btn btn-default">Shore Up</button>

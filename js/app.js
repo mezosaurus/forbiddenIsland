@@ -20,26 +20,6 @@ $(function(){
 
 // GAME START - SHOW PLAYER/ROLE SELECT
 
-
-/** GLOBAL VARS **/
-var players = [];
-var treasures = [];
-var actionMode = "move";
-var pawnTextures = {"Diver" : "img/pawns/black.png", 
-"Explorer": "img/pawns/green.png", 
-"Navigator": "img/pawns/yellow.png", 
-"Pilot": "img/pawns/blue.png", 
-"Engineer": "img/pawns/red.png", 
-"Messenger": "img/pawns/grey.png"}
-// Turn - integer for each player
-var turn = 3;
-var height = 610;
-var width = 1280;
-
-// GAME BOARD
-var gameBoard = [];
-
-
 // Init empty 6x6 2D Array
 while(gameBoard.push([]) < 6);
 
@@ -82,15 +62,6 @@ var treasureTextures = [cupcakeTexture, pizzaTexture, sodaTexture, donutTexture]
 
 // Players
 var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
-var p1 = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Pilot"]), 0, 0), new PlayerHand("Player 1", "Pilot"), "Pilot");
-players.push(p1);
-var p2 = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Engineer"]), 1, 0), new PlayerHand("Player 2", "Pilot"), "Engineer");
-players.push(p2);
-var p3 = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Diver"]), 0, 1), new PlayerHand("Player 3", "Pilot"), "Diver");
-players.push(p3);
-var p4 = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Explorer"]), 1, 1), new PlayerHand("Player 4", "Pilot"), "Explorer");
-players.push(p4);
-
 
 /* TILE GRID
 *   ABCDEF
@@ -310,10 +281,15 @@ function drawTreasureDeck(gameContainer) {
       p4.hand.addCard(new HelicopterLiftCard());
       p4.hand.addCard(new CupcakeCard());
 
-      if (waterLevel != 4)
+      if (waterLevel != 5)
       {
         currentWaterLine.position.y = currentWaterLine.position.y - 30;
         waterLevel++;
+      }
+
+      if (waterLevel == 5)
+      {
+        alert("You died");
       }
   };
 
@@ -420,6 +396,7 @@ function drawWaterMeter(gameContainer) {
   var level3Text  = new PIXI.Text('3', {font: "15px Arial"});
   var level4Text  = new PIXI.Text('-', {font: "15px Arial"});
   var level5Text  = new PIXI.Text('4', {font: "15px Arial"});
+  var levelDeathText  = new PIXI.Text('Death', {font: "15px Arial"});
   var captionText  = new PIXI.Text('Water Level', {font: "15px Arial"});
 
   mainWaterLine.beginFill(0x000000);
@@ -428,7 +405,7 @@ function drawWaterMeter(gameContainer) {
   mainWaterLine.position.y = waterMeterY + 5;
 
   captionText.position.x = waterMeterX - 20;
-  captionText.position.y = waterMeterY - 20;
+  captionText.position.y = waterMeterY - 35;
   waterMeter.addChild(captionText);
 
   level1Text.position.x = waterMeterX + 30 ;
@@ -450,6 +427,10 @@ function drawWaterMeter(gameContainer) {
   level5Text.position.x = waterMeterX + 30;
   level5Text.position.y = waterMeterX + 20;
   waterMeter.addChild(level5Text);
+
+  levelDeathText.position.x = waterMeterX + 30;
+  levelDeathText.position.y = waterMeterX  - 10;
+  waterMeter.addChild(levelDeathText);
 
 
   currentWaterLine.beginFill(0xB80000);
