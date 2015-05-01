@@ -14,7 +14,7 @@ var pawnTextures = {"Diver" : "img/pawns/black.png",
 "Messenger": "img/pawns/grey.png"}
 
 // Turn - integer for each player
-var turn = 3;
+var turn = 0;
 var height = 610;
 var width = 1280;
 

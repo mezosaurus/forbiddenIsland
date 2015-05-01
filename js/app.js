@@ -77,11 +77,9 @@ var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
 drawTileGrid(gameContainer, texture, texture);
 
 // add pawns and treasures to board
-drawPlayerPositions();
 drawTreasurePositions();
 
-// Draw player name text, 5 px padding
-drawPlayerHands(stage, 4);
+// Draw treasures
 drawTreasures(stage);
 
 // Draw card decks
@@ -214,38 +212,41 @@ function drawTreasurePositions(){
 * |                         |
 * Player 1 --------- Player 2
 */
-function drawPlayerHands(gameContainer, numPlayers) {
-	var p3text = new PIXI.Text("Player 3", {font:"20px Arial", fill:"red"});
-	p3text.position.x = 5;
-	p3text.position.y = 5;
-	var p4text = new PIXI.Text("Player 4", {font:"20px Arial", fill:"red"});
-	p4text.position.x = width-p4text.width;
-	p4text.position.y = 5;
-	var p1text = new PIXI.Text("Player 1", {font:"20px Arial", fill:"red"});
-	p1text.position.x = 5;
-	p1text.position.y = height-p1text.height;
-	var p2text = new PIXI.Text("Player 2", {font:"20px Arial", fill:"red"});
-	p2text.position.x = width-p2text.width;
-	p2text.position.y = height-p2text.height;
-
-  p1.hand.position.x = 100;
-  p1.hand.position.y = (height-65);
-
-  p2.hand.position.x = (width/2) + 150;
-  p2.hand.position.y = (height-65);
-
-  p3.hand.position.x = 100;
-
-  p4.hand.position.x = (width/2) + 150;
-
-	gameContainer.addChild(p1text);
-	gameContainer.addChild(p2text);
-	gameContainer.addChild(p3text);
-	gameContainer.addChild(p4text);
-  gameContainer.addChild(p1.hand);
-  gameContainer.addChild(p2.hand);
-  gameContainer.addChild(p3.hand);
-  gameContainer.addChild(p4.hand);
+function drawPlayerHands(gameContainer) {
+  for (var i = 0; i < players.length; i++) {
+    var playerNum = i+1;
+    var player = players[i];
+    var text = new PIXI.Text("Player " + playerNum + " - " + player.role, {font:"20px Arial", fill:"black"});
+    
+    // player 1
+    if (i == 0) {
+      text.position.x = 5;
+      text.position.y = height - text.height - 5;
+      player.hand.position.x = 100;
+      player.hand.position.y = (height-65);
+    }
+    // player 2
+    else if (i == 1) {
+      text.position.x = width - text.width - 5;
+      text.position.y = height - text.height - 5;
+      player.hand.position.x = (width/2) + 150;
+      player.hand.position.y = (height-65);
+    }
+    // player 3
+    else if (i == 2) {
+      text.position.x = 5;
+      text.position.y = 5;
+      player.hand.position.x = 100;
+    }
+    // player 4
+    else if (i == 3) {
+      text.position.x = width - text.width - 5;
+      text.position.y = 5;
+      player.hand.position.x = (width/2) + 150;
+    }
+    gameContainer.addChild(text);
+    gameContainer.addChild(player.hand);
+  }
 }
 
 /*

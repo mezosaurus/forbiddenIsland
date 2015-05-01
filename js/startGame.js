@@ -63,7 +63,7 @@ function startGame() {
 			$("#messageArea").show();
 		}
 		else {
-			$("#myModal").hide();
+			
 			var anchorX = 0;
 			var anchorY = 0;
 			// Create players and add to player area
@@ -78,7 +78,11 @@ function startGame() {
 					anchorY++;
 				}
 			}
+			drawPlayerPositions();
+			drawPlayerHands(stage);
 			gameStarted = true;
+			//$("#myModal").hide();
+			$("#myModal").modal("hide");
 		}
 	});
 }
