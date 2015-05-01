@@ -1,6 +1,7 @@
 function Tile(normalTexture, floodedTexture, x, y, name){
     PIXI.Sprite.call(this, normalTexture);
     this.name = name;
+    this.treasureType = -1;
 
     //possible tints for tiles
     this.flooded = 0x4985f3;

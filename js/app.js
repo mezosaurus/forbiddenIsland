@@ -78,15 +78,17 @@ var donutTexture = PIXI.Texture.fromImage("img/donut.png");
 var donutObtainableTexture = PIXI.Texture.fromImage("img/donut.png");
 var donutEatenTexture = PIXI.Texture.fromImage("img/donuteaten.png");
 
+var treasureTextures = [cupcakeTexture, pizzaTexture, sodaTexture, donutTexture];
+
 // Players
 var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
-var p1 = new Player(1, 1, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Pilot"]), 0, 0), new PlayerHand("Player 1", "Pilot"), "Pilot");
+var p1 = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Pilot"]), 0, 0), new PlayerHand("Player 1", "Pilot"), "Pilot");
 players.push(p1);
-var p2 = new Player(1, 4, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Engineer"]), 1, 0), new PlayerHand("Player 2", "Pilot"), "Engineer");
+var p2 = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Engineer"]), 1, 0), new PlayerHand("Player 2", "Pilot"), "Engineer");
 players.push(p2);
-var p3 = new Player(4, 1, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Diver"]), 0, 1), new PlayerHand("Player 3", "Pilot"), "Diver");
+var p3 = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Diver"]), 0, 1), new PlayerHand("Player 3", "Pilot"), "Diver");
 players.push(p3);
-var p4 = new Player(4, 4, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Explorer"]), 1, 1), new PlayerHand("Player 4", "Pilot"), "Explorer");
+var p4 = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Explorer"]), 1, 1), new PlayerHand("Player 4", "Pilot"), "Explorer");
 players.push(p4);
 
 
@@ -102,15 +104,10 @@ players.push(p4);
 
 // Generate tile grid
 drawTileGrid(gameContainer, texture, texture);
-gameBoard[1][1].addChild(p1.sprite);
-gameBoard[1][4].addChild(p2.sprite);
-gameBoard[4][1].addChild(p3.sprite);
-gameBoard[4][4].addChild(p4.sprite);
 
-p1.calculateValidMoveTiles();
-p2.calculateValidMoveTiles();
-p3.calculateValidMoveTiles();
-p4.calculateValidMoveTiles();
+// add pawns and treasures to board
+drawPlayerPositions();
+drawTreasurePositions();
 
 // Draw player name text, 5 px padding
 drawPlayerHands(stage, 4);
@@ -195,6 +192,47 @@ function drawTileGrid(gameContainer, normalTexture, floodedTexture) {
 * Function responsible for drawing player indicators above tiles
 */
 function drawPlayerPositions() {
+  for(var i = 0; i < players.length; i++){
+    var player = players[i];
+    var x = Math.floor(Math.random() * 5);
+    var y = Math.floor(Math.random() * 5);
+    var tile = gameBoard[x][y];
+    while(tile.state === "sunk" || tile.children.length > 0){
+      x = Math.floor(Math.random() * 5);
+      y = Math.floor(Math.random() * 5);
+      tile = gameBoard[x][y];
+    }
+    tile.addChild(player.sprite);
+    player.x = x;
+    player.y = y;
+    player.calculateValidMoveTiles();
+  }
+}
+
+/*
+* Function responsible for adding the treasure locations to the board
+*/
+function drawTreasurePositions(){
+  var treasureValues = [0,0,1,1,2,2,3,3];
+  for(var i = 0; i < treasureValues.length; i++){
+    console.log(treasureValues[i]);
+    var x = Math.floor(Math.random() * 5);
+    var y = Math.floor(Math.random() * 5);
+    var tile = gameBoard[x][y];
+    while(tile.state === "sunk" || tile.treasureType >= 0){
+      x = Math.floor(Math.random() * 5);
+      y = Math.floor(Math.random() * 5);
+      tile = gameBoard[x][y];
+    }
+    var sprite = new PIXI.Sprite(treasureTextures[treasureValues[i]]);
+    sprite.scale.x = .25;
+    sprite.scale.y = .25;
+    sprite.anchor.x = .5;
+    sprite.anchor.y = .5;
+    tile.addChild(sprite);
+    tile.treasureType = treasureValues[i];
+
+  }
 
 }
 
