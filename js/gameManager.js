@@ -18,7 +18,13 @@ function tileClickListener(x, y, name, which) {
             }
 		}
 		else if (actionMode == "shore") {
-			tile.flip();
+			console.log(tile.state);
+			console.log(player.validShoreTiles[x][y]);
+			if(player.validShoreTiles[x][y]){
+				console.log('here');
+				tile.flip();
+				player.calculateValidShoreTiles();
+			}
 		}
 	}
 	// Get current player turn
@@ -51,6 +57,17 @@ function checkTreasures() {
             }
         }
     }
+}
+
+function pawnClickListener(index){
+	var player = players[turn];
+	if(actionMode == "give"){
+		if(player.validGiveTargets[index]){
+			console.log("validGiveTarget");
+		}else{
+			console.log("invalidGiveTarget");
+		}
+	}
 }
 
 function cardClickListener(type) {

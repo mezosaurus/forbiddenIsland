@@ -13,6 +13,9 @@ $(function(){
         //TODO only if treasures[type].state = 'obtainable';
         cardClickListener(type);
     });
+    $('body').on('pawnClick', function(evend, index){
+        pawnClickListener(index);
+    });
     $('.btn').on('click', function(event) {
     	actionMode = event.target.id;
     });
@@ -175,6 +178,8 @@ function drawPlayerPositions() {
     player.x = x;
     player.y = y;
     player.calculateValidMoveTiles();
+    player.calculateValidShoreTiles();
+    player.calculateValidGiveTargets();
   }
 }
 
