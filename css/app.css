@@ -4,3 +4,7 @@
 	left: 750px;
 	z-index: 100;
 }
+
+#turnModalContent li {
+  margin: 0 0 5px 0;
+}

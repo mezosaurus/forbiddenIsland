@@ -13,12 +13,12 @@ $(function(){
         //TODO only if treasures[type].state = 'obtainable';
         cardClickListener(type);
     });
-    $('.btn').on('click', function(event) {
+    // set action mode
+    $('.btn-group > .btn').on('click', function(event) {
     	actionMode = event.target.id;
     });
+    
 });
-
-// GAME START - SHOW PLAYER/ROLE SELECT
 
 // Init empty 6x6 2D Array
 while(gameBoard.push([]) < 6);
@@ -184,7 +184,7 @@ function drawPlayerPositions() {
 function drawTreasurePositions(){
   var treasureValues = [0,0,1,1,2,2,3,3];
   for(var i = 0; i < treasureValues.length; i++){
-    console.log(treasureValues[i]);
+    //console.log(treasureValues[i]);
     var x = Math.floor(Math.random() * 5);
     var y = Math.floor(Math.random() * 5);
     var tile = gameBoard[x][y];

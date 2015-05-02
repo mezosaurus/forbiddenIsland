@@ -37,61 +37,125 @@
 	<body>
 		<script src="js/globals.js"></script>
 		<script src="js/startGame.js"></script>
-		<div id="myModal" class="modal fade">
+		<!-- START GAME MODAL -->
+		<div id="myModal" class="modal fade" data-backdrop="static">
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
-		                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-		                <h4 class="modal-title">Start Game</h4>
+
+		                <h3 class="modal-title">Start Game</h3>
 		            </div>
-		            <div id="modalContent" class="modal-body">
+		            <div id="modalContent" class="modal-body row">
+		            	<div class="col-lg-12">
 		                <p>Please select the number of players (2-4):</p>
 		                <div class="row">
 			                <div class="col-md-4">
 				                <select id="playerSelect" class="form-control">
-								    <option value="2">2</option>
-								    <option value="3">3</option>
-								    <option value="4">4</option>
-								</select>
-							</div>
-							<div class ="col-md-4">
-								<p hidden id="messageArea" class="bg-danger">Please select unique roles</p>
-							</div>
-						</div>
-						<div id="roleSelectDiv" class="col-md-4">
-							<br/>
-							<p id="selectLabel1">Player 1</p>
-							<select id="roleSelect1" class="form-control">
-								<script>
-									var roleSelect = document.getElementById('roleSelect1');
-									for (var i = 0; i < roles.length; i++) {
-										roleSelect.options[roleSelect.options.length] = new Option(roles[i], roles[i]);
-									}
-								</script>
-							</select>
-							<p id="selectLabel2">Player 2</p>
-							<select id="roleSelect2" class="form-control">
-								<script>
-									var roleSelect = document.getElementById('roleSelect2');
-									for (var i = 0; i < roles.length; i++) {
-										roleSelect.options[roleSelect.options.length] = new Option(roles[i], roles[i]);
-									}
-								</script>
-							</select>
-						</div>
-		                <!--<p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>-->
+											    <option value="2">2</option>
+											    <option value="3">3</option>
+											    <option value="4">4</option>
+											</select>
+											</div>
+											<div class ="col-md-4">
+												<p hidden id="messageArea" class="bg-danger">Please select unique roles</p>
+											</div>
+										</div>
+										<div id="roleSelectDiv" class="col-md-6">
+											<br/>
+											<p id="selectLabel1">Player 1</p>
+											<select id="roleSelect1" class="form-control">
+												<script>
+													var roleSelect = document.getElementById('roleSelect1');
+													for (var i = 0; i < roles.length; i++) {
+														roleSelect.options[roleSelect.options.length] = new Option(roles[i], roles[i]);
+													}
+												</script>
+											</select>
+											<p id="selectLabel2">Player 2</p>
+											<select id="roleSelect2" class="form-control">
+												<script>
+													var roleSelect = document.getElementById('roleSelect2');
+													for (var i = 0; i < roles.length; i++) {
+														roleSelect.options[roleSelect.options.length] = new Option(roles[i], roles[i]);
+													}
+												</script>
+											</select>
+										</div>
+									</div>
 		            </div>
 		            <div class="modal-footer">
-		                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
 		                <button id="startGameBtn" type="button" class="btn btn-primary">Start Game</button>
 		            </div>
 		        </div>
 		    </div>
 		</div>
+		<!-- /START GAME MODAL -->
+		<!-- TURN DIALOG MODAL -->
+		<div id="turnModal" class="modal fade" data-backdrop="static" hidden >
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h3 id="turnModalTitle" class="modal-title">Turn</h4>
+		            </div>
+		            <div id="turnModalContent" class="modal-body row">
+		            	<div class="col-lg-6">
+			            	<h4>Order of Play</h4>
+			            	<ol>
+			            		<li>Take up to 3 actions</li>
+			            		<li>
+			            			Draw 2 Treasure deck cards
+			            			<ul style="list-style: none;">
+			            				<li>Discard down to 5</li>
+			            			</ul>
+		            			</li>
+			            		<li>Draw Flood cards equal to the water level</li>
+			            	</ol>
+			            	<h4>Actions</h4>
+			            	<ul>
+			            		<li>
+			            			Move
+			            			<ul style="list-style: none;">
+			            				<li>Adjacent (not diagonally)</li>
+			            			</ul>
+			            		</li>
+			            		<li>
+			            			Shore Up
+			            			<ul style="list-style: none;">
+			            				<li>On or adjacent tiles</li>
+			            			</ul>
+			            		</li>
+			            		<li>
+			            			Give a Treasure card
+			            			<ul style="list-style: none;">
+			            				<li>If on same tile</li>
+			            			</ul>
+			            		</li>
+			            		<li>
+			            			Capture a Treasure
+			            			<ul style="list-style: none;">
+			            				<li>4 matching cards on matchine tile</li>
+			            			</ul>
+			            		</li>
+			            	</ul>
+		            	</div>
+		            	<div class"col-lg-6">
+		            		<h4 id="roleInfoHeader"></h4>
+		            		<div id="roleInfoContent">
+	            				
+		            		</div>
+		            	</div>
+		            </div>
+		            <div class="modal-footer">
+		                <button id="turnModalStartBtn" type="button" class="btn btn-primary">Start Turn</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		<!-- /TURN DIALOG MODAL -->
 </body>
 </html>
 		<div id="mode-buttons" class="btn-group" role="group">
-		  <button id="move" type="button" autofocus="true" class="btn btn-default">Move</button>
+		  <button id="move" type="button"  class="btn btn-default">Move</button>
 		  <button id="shore" type="button" class="btn btn-default">Shore Up</button>
 		  <button id="give" type="button" class="btn btn-default">Give Card</button>
 		</div>
