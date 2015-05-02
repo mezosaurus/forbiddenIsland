@@ -59,13 +59,13 @@ function cardClickListener(type) {
 
 function shuffleCards(cards) {
 	var length = cards.length - 1;
-	var toSwap; // The index we will swap  (i.e. the random number)
-	var temp; // A temporary variable to hold reference to index variable i points to
+	var swap;
+	var temp;
 	for (i = length; i > 0; i--) {
-	    toSwap = Math.floor(Math.random() * i);
+	    swap = Math.floor(Math.random() * i);
 	    temp = cards[i];
-	    cards[i] = cards[toSwap];
-	    cards[toSwap] = temp;
+	    cards[i] = cards[swap];
+	    cards[swap] = temp;
 	}
 
 	return cards;
