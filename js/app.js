@@ -357,8 +357,8 @@ function drawTreasures(gameContainer) {
 
   // Make some labels for treasure stacks
   var treasureText  = new PIXI.Text('Treasures', {font: "15px Arial"});
-  treasureText.position.x = treasureContainerWidth/2 - 20;
-  treasureText.position.y = 5;
+  treasureText.position.x = (treasureContainerWidth - treasureText.width)/2;
+  treasureText.position.y = 0;
 
   // Create the treaures and display them
   var treasure0 = new Treasure(cupcakeTexture, cupcakeObtainableTexture, cupcakeEatenTexture, 0);
