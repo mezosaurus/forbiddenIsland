@@ -30,4 +30,3 @@ var DonutCard = function() {
 };
 
 DonutCard.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
-DonutCard.constructor = TreasureCard;

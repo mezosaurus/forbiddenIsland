@@ -271,38 +271,41 @@ function drawTreasureDeck(gameContainer) {
 
   gameContainer.addChild(treasureDeck);
 
+  //create treasure deck
+  treasureCards.push(new SandbagCard());
+  treasureCards.push(new SandbagCard());
+
+  treasureCards.push(new HelicopterLiftCard());
+  treasureCards.push(new HelicopterLiftCard());
+  treasureCards.push(new HelicopterLiftCard());
+
+  treasureCards.push(new WatersRiseCard());
+  treasureCards.push(new WatersRiseCard());
+  treasureCards.push(new WatersRiseCard());
+
+  for (var i = 0; i < 5; i++)
+  {
+    treasureCards.push(new CupcakeCard());
+    treasureCards.push(new PizzaCard());
+    treasureCards.push(new DonutCard());
+    treasureCards.push(new SodaCard());
+  }
+
+  treasureCards = shuffleCards(treasureCards);
   //Whenever player clicks the treasure deck
   treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
-      p1.hand.addCard(new CupcakeCard());
-      p1.hand.addCard(new CupcakeCard());
-      p2.hand.addCard(new HelicopterLiftCard());
-      p2.hand.addCard(new CupcakeCard());
-      p3.hand.addCard(new HelicopterLiftCard());
-      p3.hand.addCard(new CupcakeCard());
-      p4.hand.addCard(new HelicopterLiftCard());
-      p4.hand.addCard(new CupcakeCard());
-
-      if (waterLevel != 5)
+      for (var i = 0; i < players.length; i++)
       {
-        currentWaterLine.position.y = currentWaterLine.position.y - 30;
-        waterLevel++;
-      }
+        var card1 = drawCard();
+        var card2 = drawCard();
 
-      if (waterLevel == 5)
-      {
-        alert("You died");
+        if (card1.type != "WatersRise")
+          players[i].hand.addCard(card1);
+
+        if (card2.type != "WatersRise")
+          players[i].hand.addCard(card2);
       }
   };
-
-  while (treasureDeck.length < 27)
-  {
-    //Add SandBag
-    //Add SandBag
-    //Create 3 Helicopter lift
-    //Create 3 waters rise
-    //for loop for 20 treasure cards
-  }
-  //TODO: Add Deck formation with given card classes and then shuffle
 }
 
 /*
@@ -446,4 +449,26 @@ function drawWaterMeter(gameContainer) {
   waterMeter.position.y = (height/2) - 100;
 
   gameContainer.addChild(waterMeter);
+}
+
+function drawCard() {
+  var card = treasureCards.pop();
+
+  if (card.type == "WatersRise")
+  {
+
+    if (waterLevel != 5)
+    {
+      currentWaterLine.position.y = currentWaterLine.position.y - 30;
+      waterLevel++;
+      alert("Waters Rise Card! Water is rising!");
+    }
+
+    if (waterLevel == 5)
+    {
+      alert("You died");
+    }
+  }
+
+  return card;
 }

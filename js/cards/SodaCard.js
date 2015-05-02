@@ -6,13 +6,13 @@ var SodaCard = function() {
   treasureCardSquare = new PIXI.Graphics();
   treasureCardSquare.beginFill(0xFFFFFF);
   treasureCardSquare.lineStyle(5, 0x000000);
-  treasureCardSquare.drawRect(0, 0, 70, 90);
+  treasureCardSquare.drawRect(0, 0, 64, 64);
 
   treasureCardSquare.interactive = true;
   treasureCardSquare.hitArea = treasureCardSquare.getBounds();
 
   var sodaTexture = PIXI.Texture.fromImage("img/soda.png");
-  var sodaSprite = new PIXI.Sprite(cupcakeTexture);
+  var sodaSprite = new PIXI.Sprite(sodaTexture);
   sodaSprite.position.x = 35;
   sodaSprite.position.y = 30;
   sodaSprite.anchor.x = 0.5;
@@ -29,4 +29,3 @@ var SodaCard = function() {
 };
 
 SodaCard.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
-SodaCard.constructor = TreasureCard;

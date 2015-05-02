@@ -11,7 +11,7 @@ var PizzaCard = function() {
   treasureCardSquare.hitArea = treasureCardSquare.getBounds();
 
   var pizzaTexture = PIXI.Texture.fromImage("img/pizza.png");
-  var pizzaSprite = new PIXI.Sprite(cupcakeTexture);
+  var pizzaSprite = new PIXI.Sprite(pizzaTexture);
   pizzaSprite.position.x = 35;
   pizzaSprite.position.y = 30;
   pizzaSprite.anchor.x = 0.5;
@@ -29,4 +29,3 @@ var PizzaCard = function() {
 };
 
 PizzaCard.prototype = Object.create(PIXI.DisplayObjectContainer.prototype);
-PizzaCard.constructor = TreasureCard;

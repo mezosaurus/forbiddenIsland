@@ -28,7 +28,7 @@ function tileClickListener(x, y, name, which) {
 function treasureClickListener(type, which) {
     var treasure = treasures[type];
     checkTreasures()//TODO do this elsewhere
-    
+
     if (treasure.state === 'obtainable') {
         treasure.state = 'obtaining';
     }
@@ -44,7 +44,7 @@ function checkTreasures() {
                 count++;
             }
         }
-        
+
         if (count >= 4) {
             if (treasures[type].state === 'available') {
                 treasures[type].state = 'obtainable';
@@ -55,4 +55,18 @@ function checkTreasures() {
 
 function cardClickListener(type) {
 	alert(type);
+}
+
+function shuffleCards(cards) {
+	var length = cards.length - 1;
+	var toSwap; // The index we will swap  (i.e. the random number)
+	var temp; // A temporary variable to hold reference to index variable i points to
+	for (i = length; i > 0; i--) {
+	    toSwap = Math.floor(Math.random() * i);
+	    temp = cards[i];
+	    cards[i] = cards[toSwap];
+	    cards[toSwap] = temp;
+	}
+
+	return cards;
 }
