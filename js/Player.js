@@ -1,7 +1,7 @@
 function Player (sprite, hand, role, index) {
 	this.x = 0;
 	this.y = 0;
-    this.me = this;
+    this.moveTarget = this;
     sprite.index = index;
     this.index = index;
 	this.sprite = sprite;
@@ -18,6 +18,8 @@ function Player (sprite, hand, role, index) {
 	this.abilityUsed = false;
 
     this.sprite.mousedown = this.sprite.touch = function(data){
+        console.log(data);
+        data.originalEvent.cancelBubble = true;
         $('body').trigger('pawnClick', [this.index]);
     }
 
@@ -158,7 +160,7 @@ function Player (sprite, hand, role, index) {
     this.calculateValidGiveTargets = function(){
         //initialize to false;
         for(var i = 0; i < this.validGiveTargets.length; i++){
-            validGiveTargets[i] = false;
+            this.validGiveTargets[i] = false;
         }
         for(var i = 0; i < players.length; i++){
             var player = players[i];

@@ -7,7 +7,7 @@ function tileClickListener(x, y, name, which) {
 	if (which == 1) {
 		// Left mouse event
 		var tile = gameBoard[x][y];
-		var player = players[turn];
+		var player = players[turn].moveTarget;
 		var playerTile = gameBoard[player.x][player.y];
 		// Handle actions for each mode
 		if (actionMode == "move") {
@@ -66,6 +66,10 @@ function pawnClickListener(index){
 			console.log("validGiveTarget");
 		}else{
 			console.log("invalidGiveTarget");
+		}
+	}else if(actionMode == "choose"){
+		if(player.role == "Navigator"){
+			player.moveTarget = players[index];
 		}
 	}
 }
