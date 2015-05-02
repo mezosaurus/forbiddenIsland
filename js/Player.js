@@ -1,24 +1,51 @@
-function Player (sprite, hand, role) {
+function Player (sprite, hand, role, index) {
 	this.x = 0;
 	this.y = 0;
+    this.moveTarget = this;
+    sprite.index = index;
+    this.index = index;
 	this.sprite = sprite;
 	this.hand = hand;
 	this.role = role;
 	this.validMoveTiles = [];
+    this.validShoreTiles = [];
+    this.validGiveTargets = [];
 	while(this.validMoveTiles.push([]) < 6);
+    while(this.validShoreTiles.push([]) < 6);
+    while(this.validGiveTargets.push(false) < 4);
 	
 	this.validGiveTargets = [];
 	this.abilityUsed = false;
+
+    this.sprite.mousedown = this.sprite.touch = function(data){
+        console.log(data);
+        data.originalEvent.cancelBubble = true;
+        $('body').trigger('pawnClick', [this.index]);
+    }
 
 	this.move = function (x, y) {
 		this.x = x;
 		this.y = y;
 		this.calculateValidMoveTiles();
+        this.calculateValidShoreTiles();
+        this.calculateValidGiveTargets();
 	}
     
     this.markMovable = function(xPos, yPos){
         if(xPos < 6 && xPos >= 0  & yPos < 6 && yPos >= 0){
             this.validMoveTiles[xPos][yPos] = gameBoard[xPos][yPos].state !== "sunk";
+        }
+    }
+
+    this.markShorable = function (xPos, yPos){
+        if(xPos < 6 && xPos >= 0  & yPos < 6 && yPos >= 0){
+            this.validShoreTiles[xPos][yPos] = gameBoard[xPos][yPos].state === "flooded";
+        }
+    }
+
+    this.markGivable = function (index){
+        if(index < validGiveTargets.length){
+            this.validGiveTargets[index] = true;
         }
     }
 
@@ -29,6 +56,14 @@ function Player (sprite, hand, role) {
 			}
 		}
 	}
+
+    this.initValidShoreTiles = function() {
+        for (var i = 0; i < 6; i++) {
+            for (var j = 0; j < 6; j++) {
+                this.validShoreTiles[i][j] = false;
+            }
+        }
+    }
     
     this.findClosest = function(direction){
         deltaX = 0;
@@ -61,6 +96,27 @@ function Player (sprite, hand, role) {
                 return xPos;
         }
         return -1;
+    }
+
+    this.calculateValidShoreTiles = function() {
+        this.initValidShoreTiles();
+        var xleft = this.x - 1;
+        var xright = this.x +1;
+        var yup = this.y - 1;
+        var ydown = this.y + 1;
+
+        this.markShorable(xleft, this.y);
+        this.markShorable(xright, this.y);
+        this.markShorable(this.x, yup);
+        this.markShorable(this.x, ydown);
+        this.markShorable(this.x, this.y);
+
+        if(this.role == "Explorer"){
+            this.markShorable(xright, yup);
+            this.markShorable(xright, ydown);
+            this.markShorable(xleft, yup);
+            this.markShorable(xleft, ydown);
+        }
     }
 
 	this.calculateValidMoveTiles = function() {
@@ -101,5 +157,22 @@ function Player (sprite, hand, role) {
 		}
 	}
 
+    this.calculateValidGiveTargets = function(){
+        //initialize to false;
+        for(var i = 0; i < this.validGiveTargets.length; i++){
+            this.validGiveTargets[i] = false;
+        }
+        for(var i = 0; i < players.length; i++){
+            var player = players[i];
+            console.log(role + ": " + i);
+            console.log(player);
+            if(this.index !== i && ((this.x == player.x && this.y == player.y) || this.role == "Messenger")){
+               this.validGiveTargets[i] = true;
+            }
+        }
+
+    }
+
 	this.initValidActionTiles();
+    this.initValidShoreTiles();
 }

@@ -16,7 +16,7 @@ function tileClickListener(x, y, name, which) {
 	if (which == 1) {
 		// Left mouse event
 		var tile = gameBoard[x][y];
-		var player = players[turn];
+		var player = players[turn].moveTarget;
 		var playerTile = gameBoard[player.x][player.y];
 		// Handle actions for each mode
 		if (actionMode == "move") {
@@ -28,7 +28,13 @@ function tileClickListener(x, y, name, which) {
             }
 		}
 		else if (actionMode == "shore") {
-			tile.flip();
+			console.log(tile.state);
+			console.log(player.validShoreTiles[x][y]);
+			if(player.validShoreTiles[x][y]){
+				console.log('here');
+				tile.flip();
+				player.calculateValidShoreTiles();
+			}
 		}
 	}
 	// Get current player turn
@@ -61,6 +67,21 @@ function checkTreasures() {
             }
         }
     }
+}
+
+function pawnClickListener(index){
+	var player = players[turn];
+	if(actionMode == "give"){
+		if(player.validGiveTargets[index]){
+			console.log("validGiveTarget");
+		}else{
+			console.log("invalidGiveTarget");
+		}
+	}else if(actionMode == "choose"){
+		if(player.role == "Navigator"){
+			player.moveTarget = players[index];
+		}
+	}
 }
 
 function cardClickListener(type) {

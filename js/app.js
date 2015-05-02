@@ -15,9 +15,11 @@ $(function(){
     });
     // set action mode
     $('.btn-group > .btn').on('click', function(event) {
-    	actionMode = event.target.id;
+      actionMode = event.target.id;
     });
-    
+    $('body').on('pawnClick', function(evend, index){
+        pawnClickListener(index);
+    });
 });
 
 // Init empty 6x6 2D Array
@@ -175,6 +177,8 @@ function drawPlayerPositions() {
     player.x = x;
     player.y = y;
     player.calculateValidMoveTiles();
+    player.calculateValidShoreTiles();
+    player.calculateValidGiveTargets();
   }
 }
 

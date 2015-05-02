@@ -68,7 +68,7 @@ function startGame() {
 			var anchorY = 0;
 			// Create players and add to player area
 			for (var i = 1; i <= numPlayers; i++) {
-				players.push(createPlayer($("#roleSelect"+i).val(), anchorX, anchorY));
+				players.push(createPlayer($("#roleSelect"+i).val(), anchorX, anchorY, i));
 				if (anchorY == 1) {
 					var temp = anchorX;
 					anchorX = anchorY;
@@ -89,7 +89,7 @@ function startGame() {
 	});
 }
 
-function createPlayer(role, anchorX, anchorY) {
-	var player = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures[role]), anchorX, anchorY), new PlayerHand(), role);
+function createPlayer(role, anchorX, anchorY, index) {
+	var player = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures[role]), anchorX, anchorY), new PlayerHand(), role, index - 1);
 	return player;
 }
