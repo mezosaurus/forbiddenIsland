@@ -81,7 +81,6 @@ function startGame() {
 			drawPlayerPositions();
 			drawPlayerHands(stage);
 			gameStarted = true;
-			//$("#myModal").hide();
 			$("#myModal").modal("hide");
 		}
 	});

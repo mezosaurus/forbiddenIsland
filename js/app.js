@@ -226,28 +226,30 @@ function drawPlayerHands(gameContainer) {
     // player 1
     if (i == 0) {
       text.position.x = 5;
-      text.position.y = height - text.height - 5;
-      player.hand.position.x = 100;
-      player.hand.position.y = (height-65);
+      text.position.y = height - text.height - 70;
+      player.hand.position.x = 5;
+      player.hand.position.y = (height-69);
     }
     // player 2
     else if (i == 1) {
       text.position.x = width - text.width - 5;
-      text.position.y = height - text.height - 5;
-      player.hand.position.x = (width/2) + 150;
-      player.hand.position.y = (height-65);
+      text.position.y = height - text.height - 70;
+      player.hand.position.x = width - 389;
+      player.hand.position.y = (height-69);
     }
     // player 3
     else if (i == 2) {
       text.position.x = 5;
-      text.position.y = 5;
-      player.hand.position.x = 100;
+      text.position.y = 70;
+      player.hand.position.x = 5;
+      player.hand.position.y = 5;
     }
     // player 4
     else if (i == 3) {
       text.position.x = width - text.width - 5;
-      text.position.y = 5;
-      player.hand.position.x = (width/2) + 150;
+      text.position.y = 70;
+      player.hand.position.x = width - 389;
+      player.hand.position.y = 5;
     }
     gameContainer.addChild(text);
     gameContainer.addChild(player.hand);
@@ -360,8 +362,8 @@ function drawTreasures(gameContainer) {
 
   // Make some labels for treasure stacks
   var treasureText  = new PIXI.Text('Treasures', {font: "15px Arial"});
-  treasureText.position.x = treasureContainerWidth/2 - 20;
-  treasureText.position.y = 5;
+  treasureText.position.x = (treasureContainerWidth - treasureText.width)/2;
+  treasureText.position.y = 0;
 
   // Create the treaures and display them
   var treasure0 = new Treasure(cupcakeTexture, cupcakeObtainableTexture, cupcakeEatenTexture, 0);
