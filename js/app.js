@@ -20,26 +20,6 @@ $(function(){
 
 // GAME START - SHOW PLAYER/ROLE SELECT
 
-
-/** GLOBAL VARS **/
-var players = [];
-var treasures = [];
-var actionMode = "move";
-var pawnTextures = {"Diver" : "img/pawns/black.png",
-"Explorer": "img/pawns/green.png",
-"Navigator": "img/pawns/yellow.png",
-"Pilot": "img/pawns/blue.png",
-"Engineer": "img/pawns/red.png",
-"Messenger": "img/pawns/grey.png"}
-// Turn - integer for each player
-var turn = 3;
-var height = 610;
-var width = 1280;
-
-// GAME BOARD
-var gameBoard = [];
-
-
 // Init empty 6x6 2D Array
 while(gameBoard.push([]) < 6);
 
@@ -78,17 +58,10 @@ var donutTexture = PIXI.Texture.fromImage("img/donut.png");
 var donutObtainableTexture = PIXI.Texture.fromImage("img/donut.png");
 var donutEatenTexture = PIXI.Texture.fromImage("img/donuteaten.png");
 
+var treasureTextures = [cupcakeTexture, pizzaTexture, sodaTexture, donutTexture];
+
 // Players
 var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
-var p1 = new Player(1, 1, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Pilot"]), 0, 0), new PlayerHand("Player 1", "Pilot"), "Pilot");
-players.push(p1);
-var p2 = new Player(1, 4, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Engineer"]), 1, 0), new PlayerHand("Player 2", "Pilot"), "Engineer");
-players.push(p2);
-var p3 = new Player(4, 1, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Diver"]), 0, 1), new PlayerHand("Player 3", "Pilot"), "Diver");
-players.push(p3);
-var p4 = new Player(4, 4, new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures["Explorer"]), 1, 1), new PlayerHand("Player 4", "Pilot"), "Explorer");
-players.push(p4);
-
 
 /* TILE GRID
 *   ABCDEF
@@ -102,18 +75,11 @@ players.push(p4);
 
 // Generate tile grid
 drawTileGrid(gameContainer, texture, texture);
-gameBoard[1][1].addChild(p1.sprite);
-gameBoard[1][4].addChild(p2.sprite);
-gameBoard[4][1].addChild(p3.sprite);
-gameBoard[4][4].addChild(p4.sprite);
 
-p1.calculateValidMoveTiles();
-p2.calculateValidMoveTiles();
-p3.calculateValidMoveTiles();
-p4.calculateValidMoveTiles();
+// add pawns and treasures to board
+drawTreasurePositions();
 
-// Draw player name text, 5 px padding
-drawPlayerHands(stage, 4);
+// Draw treasures
 drawTreasures(stage);
 
 // Draw card decks
@@ -195,6 +161,47 @@ function drawTileGrid(gameContainer, normalTexture, floodedTexture) {
 * Function responsible for drawing player indicators above tiles
 */
 function drawPlayerPositions() {
+  for(var i = 0; i < players.length; i++){
+    var player = players[i];
+    var x = Math.floor(Math.random() * 5);
+    var y = Math.floor(Math.random() * 5);
+    var tile = gameBoard[x][y];
+    while(tile.state === "sunk" || tile.children.length > 0){
+      x = Math.floor(Math.random() * 5);
+      y = Math.floor(Math.random() * 5);
+      tile = gameBoard[x][y];
+    }
+    tile.addChild(player.sprite);
+    player.x = x;
+    player.y = y;
+    player.calculateValidMoveTiles();
+  }
+}
+
+/*
+* Function responsible for adding the treasure locations to the board
+*/
+function drawTreasurePositions(){
+  var treasureValues = [0,0,1,1,2,2,3,3];
+  for(var i = 0; i < treasureValues.length; i++){
+    console.log(treasureValues[i]);
+    var x = Math.floor(Math.random() * 5);
+    var y = Math.floor(Math.random() * 5);
+    var tile = gameBoard[x][y];
+    while(tile.state === "sunk" || tile.treasureType >= 0){
+      x = Math.floor(Math.random() * 5);
+      y = Math.floor(Math.random() * 5);
+      tile = gameBoard[x][y];
+    }
+    var sprite = new PIXI.Sprite(treasureTextures[treasureValues[i]]);
+    sprite.scale.x = .25;
+    sprite.scale.y = .25;
+    sprite.anchor.x = .5;
+    sprite.anchor.y = .5;
+    tile.addChild(sprite);
+    tile.treasureType = treasureValues[i];
+
+  }
 
 }
 
@@ -205,38 +212,41 @@ function drawPlayerPositions() {
 * |                         |
 * Player 1 --------- Player 2
 */
-function drawPlayerHands(gameContainer, numPlayers) {
-	var p3text = new PIXI.Text("Player 3", {font:"20px Arial", fill:"red"});
-	p3text.position.x = 5;
-	p3text.position.y = 5;
-	var p4text = new PIXI.Text("Player 4", {font:"20px Arial", fill:"red"});
-	p4text.position.x = width-p4text.width;
-	p4text.position.y = 5;
-	var p1text = new PIXI.Text("Player 1", {font:"20px Arial", fill:"red"});
-	p1text.position.x = 5;
-	p1text.position.y = height-p1text.height;
-	var p2text = new PIXI.Text("Player 2", {font:"20px Arial", fill:"red"});
-	p2text.position.x = width-p2text.width;
-	p2text.position.y = height-p2text.height;
+function drawPlayerHands(gameContainer) {
+  for (var i = 0; i < players.length; i++) {
+    var playerNum = i+1;
+    var player = players[i];
+    var text = new PIXI.Text("Player " + playerNum + " - " + player.role, {font:"20px Arial", fill:"black"});
 
-  p1.hand.position.x = 100;
-  p1.hand.position.y = (height-65);
-
-  p2.hand.position.x = (width/2) + 150;
-  p2.hand.position.y = (height-65);
-
-  p3.hand.position.x = 100;
-
-  p4.hand.position.x = (width/2) + 150;
-
-	gameContainer.addChild(p1text);
-	gameContainer.addChild(p2text);
-	gameContainer.addChild(p3text);
-	gameContainer.addChild(p4text);
-  gameContainer.addChild(p1.hand);
-  gameContainer.addChild(p2.hand);
-  gameContainer.addChild(p3.hand);
-  gameContainer.addChild(p4.hand);
+    // player 1
+    if (i == 0) {
+      text.position.x = 5;
+      text.position.y = height - text.height - 5;
+      player.hand.position.x = 100;
+      player.hand.position.y = (height-65);
+    }
+    // player 2
+    else if (i == 1) {
+      text.position.x = width - text.width - 5;
+      text.position.y = height - text.height - 5;
+      player.hand.position.x = (width/2) + 150;
+      player.hand.position.y = (height-65);
+    }
+    // player 3
+    else if (i == 2) {
+      text.position.x = 5;
+      text.position.y = 5;
+      player.hand.position.x = 100;
+    }
+    // player 4
+    else if (i == 3) {
+      text.position.x = width - text.width - 5;
+      text.position.y = 5;
+      player.hand.position.x = (width/2) + 150;
+    }
+    gameContainer.addChild(text);
+    gameContainer.addChild(player.hand);
+  }
 }
 
 /*
@@ -284,14 +294,14 @@ function drawTreasureDeck(gameContainer) {
       }
   };
 
-  /*while (treasureDeck.length < 28)
+  while (treasureDeck.length < 27)
   {
     //Add SandBag
     //Add SandBag
     //Create 3 Helicopter lift
     //Create 3 waters rise
     //for loop for 20 treasure cards
-  }*/
+  }
   //TODO: Add Deck formation with given card classes and then shuffle
 }
 
