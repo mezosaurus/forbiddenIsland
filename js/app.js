@@ -10,7 +10,6 @@ $(function(){
         treasureClickListener(type, which);
     });
     $('body').on('cardClick', function(event, type){
-        //TODO only if treasures[type].state = 'obtainable';
         cardClickListener(type);
     });
     // set action mode
@@ -233,11 +232,20 @@ function drawPlayerHands(gameContainer) {
     var playerNum = i+1;
     var player = players[i];
     var text = new PIXI.Text("Player " + playerNum + " - " + player.role, {font:"20px Arial", fill:"black"});
+    var roleColorSquare = new PIXI.Graphics();
+    roleColorSquare.beginFill(roleColors[player.role]);
+    
+    //roleColorSquare.lineStyle(1, 0x000000);
+    roleColorSquare.drawRect(0, 0, 20, 20);
+    //treasureSquare.hitArea = treasureSquare.getBounds();
+    
 
     // player 1
     if (i == 0) {
       text.position.x = 5;
       text.position.y = height - text.height - 70;
+      roleColorSquare.position.x = text.position.x + text.width + 5;
+      roleColorSquare.position.y = text.position.y;
       player.hand.position.x = 5;
       player.hand.position.y = (height-69);
     }
@@ -245,6 +253,8 @@ function drawPlayerHands(gameContainer) {
     else if (i == 1) {
       text.position.x = width - text.width - 5;
       text.position.y = height - text.height - 70;
+      roleColorSquare.position.x = text.position.x - roleColorSquare.width - 5;
+      roleColorSquare.position.y = text.position.y;
       player.hand.position.x = width - 389;
       player.hand.position.y = (height-69);
     }
@@ -252,6 +262,8 @@ function drawPlayerHands(gameContainer) {
     else if (i == 2) {
       text.position.x = 5;
       text.position.y = 70;
+      roleColorSquare.position.x = text.position.x + text.width + 5;
+      roleColorSquare.position.y = text.position.y;
       player.hand.position.x = 5;
       player.hand.position.y = 5;
     }
@@ -259,10 +271,13 @@ function drawPlayerHands(gameContainer) {
     else if (i == 3) {
       text.position.x = width - text.width - 5;
       text.position.y = 70;
+      roleColorSquare.position.x = text.position.x  - roleColorSquare.width - 5;
+      roleColorSquare.position.y = text.position.y;
       player.hand.position.x = width - 389;
       player.hand.position.y = 5;
     }
     gameContainer.addChild(text);
+    gameContainer.addChild(roleColorSquare);
     gameContainer.addChild(player.hand);
   }
 }
@@ -533,6 +548,13 @@ function drawCard() {
     {
       currentWaterLine.position.y = currentWaterLine.position.y - 30;
       waterLevel++;
+
+      if (discardedFloodCards !== undefined || discardedFloodCards.length !== 0)
+      {
+        discardedFloodCards = shuffleCards(discardedFloodCards);
+        floodCards = [].concat(floodCards, discardedFloodCards);
+        discardedFloodCards = [];
+      }
       alert("Waters Rise Card! Water is rising!");
       if (waterLevel != 1 && waterLevel != 3)
       {
@@ -542,7 +564,7 @@ function drawCard() {
 
     if (waterLevel == 5)
     {
-      alert("You died");
+      alert("GAME OVER, you died");
     }
   }
 

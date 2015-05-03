@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 	<head>
 		<title>Forbidden Island</title>
 		<meta name="description" content="CS 4540 Final Project - Forbidden Island Pixi.JS">
@@ -35,6 +35,7 @@
 		</style>
 	</head>
 	<body>
+		<h1 hidden>Forbidden Island</h1>
 		<script src="js/globals.js"></script>
 		<script src="js/startGame.js"></script>
 		<!-- START GAME MODAL -->
@@ -62,24 +63,6 @@
 										</div>
 										<div id="roleSelectDiv" class="col-md-6">
 											<br/>
-											<!--<p id="selectLabel1">Player 1</p>
-											<select id="roleSelect1" class="form-control">
-												<script>
-													var roleSelect = document.getElementById('roleSelect1');
-													for (var i = 0; i < roles.length; i++) {
-														roleSelect.options[roleSelect.options.length] = new Option(roles[i], roles[i]);
-													}
-												</script>
-											</select>
-											<p id="selectLabel2">Player 2</p>
-											<select id="roleSelect2" class="form-control">
-												<script>
-													var roleSelect = document.getElementById('roleSelect2');
-													for (var i = 0; i < roles.length; i++) {
-														roleSelect.options[roleSelect.options.length] = new Option(roles[i], roles[i]);
-													}
-												</script>
-											</select>-->
 										</div>
 									</div>
 		            </div>
@@ -95,7 +78,7 @@
 		    <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
-		                <h3 id="turnModalTitle" class="modal-title">Turn</h4>
+		                <h3 id="turnModalTitle" class="modal-title">Turn</h3>
 		            </div>
 		            <div id="turnModalContent" class="modal-body row">
 		            	<div class="col-lg-6">
@@ -138,7 +121,7 @@
 			            		</li>
 			            	</ul>
 		            	</div>
-		            	<div class"col-lg-6">
+		            	<div class="col-lg-6">
 		            		<h4 id="roleInfoHeader"></h4>
 		            		<div id="roleInfoContent">
 	            				
@@ -151,9 +134,8 @@
 		        </div>
 		    </div>
 		</div>
+
 		<!-- /TURN DIALOG MODAL -->
-</body>
-</html>
 		<div id="mode-buttons" class="btn-group" role="group">
 		  <button id="move" type="button"  class="btn btn-default">Move</button>
 		  <button id="shore" type="button" class="btn btn-default">Shore Up</button>
