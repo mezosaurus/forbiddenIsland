@@ -41,6 +41,8 @@ var height = 610;
 var width = 1280;
 var treasureCards = [];
 var floodCards = [];
-var discardedFloodCards = [];
+var discardedFloodCards = new Array();
 // GAME BOARD
 var gameBoard = [];
+var helipadX = -1;
+var helipadY = -1;

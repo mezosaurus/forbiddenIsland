@@ -10,7 +10,6 @@ $(function(){
         treasureClickListener(type, which);
     });
     $('body').on('cardClick', function(event, type){
-        //TODO only if treasures[type].state = 'obtainable';
         cardClickListener(type);
     });
     // set action mode
@@ -81,6 +80,7 @@ var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
 
 // Generate tile grid
 drawTileGrid(gameContainer, texture, texture);
+placeHelipad();
 
 // add pawns and treasures to board
 drawTreasurePositions();
@@ -173,10 +173,16 @@ function drawPlayerPositions() {
     var x = Math.floor(Math.random() * 5);
     var y = Math.floor(Math.random() * 5);
     var tile = gameBoard[x][y];
-    while(tile.state === "sunk" || tile.children.length > 0){
-      x = Math.floor(Math.random() * 5);
-      y = Math.floor(Math.random() * 5);
+    if (player.role === "Pilot"){
+      x = helipadX;
+      y = helipadY;
       tile = gameBoard[x][y];
+    }else{
+      while(tile.state === "sunk" || tile.children.length > 0 || x == helipadX || y == helipadY){
+        x = Math.floor(Math.random() * 5);
+        y = Math.floor(Math.random() * 5);
+        tile = gameBoard[x][y];
+      }
     }
     tile.addChild(player.sprite);
     player.x = x;
@@ -197,7 +203,7 @@ function drawTreasurePositions(){
     var x = Math.floor(Math.random() * 5);
     var y = Math.floor(Math.random() * 5);
     var tile = gameBoard[x][y];
-    while(tile.state === "sunk" || tile.treasureType >= 0){
+    while(tile.state === "sunk" || tile.treasureType >= 0 || x == helipadX || y == helipadY){
       x = Math.floor(Math.random() * 5);
       y = Math.floor(Math.random() * 5);
       tile = gameBoard[x][y];
@@ -542,6 +548,13 @@ function drawCard() {
     {
       currentWaterLine.position.y = currentWaterLine.position.y - 30;
       waterLevel++;
+
+      if (discardedFloodCards !== undefined || discardedFloodCards.length !== 0)
+      {
+        discardedFloodCards = shuffleCards(discardedFloodCards);
+        floodCards = [].concat(floodCards, discardedFloodCards);
+        discardedFloodCards = [];
+      }
       alert("Waters Rise Card! Water is rising!");
       if (waterLevel != 1 && waterLevel != 3)
       {
@@ -551,9 +564,23 @@ function drawCard() {
 
     if (waterLevel == 5)
     {
-      alert("You died");
+      alert("GAME OVER, you died");
     }
   }
 
   return card;
+}
+
+function placeHelipad(){
+    var x = Math.floor(Math.random() * 5);
+    var y = Math.floor(Math.random() * 5);
+    var tile = gameBoard[x][y];
+    while(tile.state === "sunk" || tile.children.length > 0){
+      x = Math.floor(Math.random() * 5);
+      y = Math.floor(Math.random() * 5);
+      tile = gameBoard[x][y];
+    }
+    tile.setTexture(new PIXI.Texture.fromImage("img/helipad.jpg"));
+    helipadX = x;
+    helipadY = y;
 }

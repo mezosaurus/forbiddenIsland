@@ -25,6 +25,7 @@ function tileClickListener(x, y, name, which) {
                 playerTile.removeChild(player.sprite)
                 tile.addChild(player.sprite);
                 handleTurnEvent();
+                checkTreasures();
             }
 		}
 		else if (actionMode == "shore") {
@@ -42,20 +43,17 @@ function tileClickListener(x, y, name, which) {
 
 function treasureClickListener(type, which) {
     var treasure = treasures[type];
-    checkTreasures()//TODO do this elsewhere
 
     if (treasure.state === 'obtainable') {
         treasure.state = 'obtaining';
     }
 }
 
-//TODO call this at beginning of player turn and after every move
 function checkTreasures() {
     for (var type = 0; type < 3; type++) {
         var count = 0;
-        for (var j = 0; j < p1.hand.hand.length; j++) {
-            //TODO only check the active player
-            if (p1.hand.hand[j].type == type) {
+        for (var j = 0; j < players[turn].hand.hand.length; j++) {
+            if (players[turn].hand.hand[j].type == type) {
                 count++;
             }
         }
@@ -64,6 +62,14 @@ function checkTreasures() {
             if (treasures[type].state === 'available') {
                 treasures[type].state = 'obtainable';
             }
+        }
+    }
+}
+
+function resetTreasures() {
+    for (var type = 0; type<3; type++) {
+        if (treasures[type].state === 'obtainable') {
+            treasures[type].state = 'available';
         }
     }
 }
@@ -90,6 +96,8 @@ function cardClickListener(type) {
 }
 
 function shuffleCards(cards) {
+  if (cards.length <= 0)
+    return;
 	var length = cards.length - 1;
 	var swap;
 	var temp;
@@ -121,6 +129,8 @@ function startTurn(playerNum) {
   var roleInfoHeader = $("#roleInfoHeader");
   roleInfoHeader.text(player.role);
   setRoleContent(player.role);
+  
+  checkTreasures();
 }
 
 function setRoleContent(role) {
@@ -142,6 +152,8 @@ function handleTurnEvent() {
 }
 
 function endTurn() {
+    resetTreasures();
+    
 	// increment turn variable depending upon number of players
 	var maxTurn = numPlayers - 1;
 	turn++;
