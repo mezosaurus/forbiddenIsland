@@ -339,7 +339,7 @@ function drawFloodDeck(gameContainer) {
 
   for (var i = 0; i < 6; i++) {
     for (var j = 0; j < 6; j++) {
-      var card = new FloodCard(j, String.fromCharCode(i+64));
+      var card = new FloodCard(j, String.fromCharCode(i+65));
       // Skip card positions on first row that need to be blank
       if ((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 0 && j == 4) || (i == 0 && j == 5))  {
         continue;
