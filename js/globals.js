@@ -35,3 +35,5 @@ var treasureCards = [];
 var floodCards = [];
 // GAME BOARD
 var gameBoard = [];
+var helipadX = -1;
+var helipadY = -1;

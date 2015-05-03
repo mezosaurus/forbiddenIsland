@@ -81,6 +81,7 @@ var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
 
 // Generate tile grid
 drawTileGrid(gameContainer, texture, texture);
+placeHelipad();
 
 // add pawns and treasures to board
 drawTreasurePositions();
@@ -172,10 +173,16 @@ function drawPlayerPositions() {
     var x = Math.floor(Math.random() * 5);
     var y = Math.floor(Math.random() * 5);
     var tile = gameBoard[x][y];
-    while(tile.state === "sunk" || tile.children.length > 0){
-      x = Math.floor(Math.random() * 5);
-      y = Math.floor(Math.random() * 5);
+    if (player.role === "Pilot"){
+      x = helipadX;
+      y = helipadY;
       tile = gameBoard[x][y];
+    }else{
+      while(tile.state === "sunk" || tile.children.length > 0 || x == helipadX || y == helipadY){
+        x = Math.floor(Math.random() * 5);
+        y = Math.floor(Math.random() * 5);
+        tile = gameBoard[x][y];
+      }
     }
     tile.addChild(player.sprite);
     player.x = x;
@@ -196,7 +203,7 @@ function drawTreasurePositions(){
     var x = Math.floor(Math.random() * 5);
     var y = Math.floor(Math.random() * 5);
     var tile = gameBoard[x][y];
-    while(tile.state === "sunk" || tile.treasureType >= 0){
+    while(tile.state === "sunk" || tile.treasureType >= 0 || x == helipadX || y == helipadY){
       x = Math.floor(Math.random() * 5);
       y = Math.floor(Math.random() * 5);
       tile = gameBoard[x][y];
@@ -534,4 +541,18 @@ function drawCard() {
   }
 
   return card;
+}
+
+function placeHelipad(){
+    var x = Math.floor(Math.random() * 5);
+    var y = Math.floor(Math.random() * 5);
+    var tile = gameBoard[x][y];
+    while(tile.state === "sunk" || tile.children.length > 0){
+      x = Math.floor(Math.random() * 5);
+      y = Math.floor(Math.random() * 5);
+      tile = gameBoard[x][y];
+    }
+    tile.setTexture(new PIXI.Texture.fromImage("img/helipad.jpg"));
+    helipadX = x;
+    helipadY = y;
 }
