@@ -16,9 +16,9 @@ var SandbagCard = function() {
   this.addChild(sandbagCardSquare);
   this.addChild(sandbagCardText);
 
-  var type = this.type;
+  var me = this;
   sandbagCardSquare.mousedown = sandbagCardSquare.touchstart = function(data) {
-    $('body').trigger('cardClick', [type]);
+    $('body').trigger('cardClick', [me]);
   };
 
 };

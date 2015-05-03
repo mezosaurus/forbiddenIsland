@@ -18,9 +18,9 @@ var FloodCard = function(row, column) {
   this.addChild(floodCardSquare);
   this.addChild(floodCardText);
   
-  floodCardSquare.mousedown = floodCardSquare.touchstart = function(data) {
-    $('body').trigger('cardClick', [this.type]);
-  };
+  // floodCardSquare.mousedown = floodCardSquare.touchstart = function(data) {
+  //   $('body').trigger('cardClick', [this.type]);
+  // };
 
 };
 

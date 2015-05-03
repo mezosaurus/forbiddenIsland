@@ -23,7 +23,7 @@ var PlayerHand = function() {
     //Search the entire array for the card
     for (var i =0; i < this.hand.length; i++) {
        if (this.hand[i].type === card.type) {
-          someArray.splice(i,1);
+          this.hand.splice(i,1);
           this.removeChild(card);
           break;
        }

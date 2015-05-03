@@ -21,9 +21,9 @@ var CupcakeCard = function() {
   this.addChild(treasureCardSquare);
   this.addChild(cupcakeSprite);
 
-  var type = this.type;
+  var me = this;
   treasureCardSquare.mousedown = treasureCardSquare.touchstart = function(data) {
-    $('body').trigger('cardClick', [type]);
+    $('body').trigger('cardClick', [me]);
   };
 };
 
