@@ -18,6 +18,12 @@ var pawnTextures = {"Diver" : "img/pawns/black.png",
 "Pilot": "img/pawns/blue.png",
 "Engineer": "img/pawns/red.png",
 "Messenger": "img/pawns/grey.png"}
+var pawnHighlightTextures = {"Diver" : "img/pawns/black-highlight.png",
+"Explorer": "img/pawns/green-highlight.png",
+"Navigator": "img/pawns/yellow-highlight.png",
+"Pilot": "img/pawns/blue-highlight.png",
+"Engineer": "img/pawns/red-highlight.png",
+"Messenger": "img/pawns/grey-highlight.png"}
 
 // Turn - used to acces players array to know whose turn it is
 var turn = 0;

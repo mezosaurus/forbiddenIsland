@@ -28,8 +28,12 @@ while(gameBoard.push([]) < 6);
 /***************/
 
 // pixi stage with grey background
-var stage = new PIXI.Stage(0xffffff);
+var stage = new PIXI.Stage(0xE8E8E8);
 var background = new PIXI.Sprite.fromImage("img/water.jpg");
+background.width = 400;
+background.height = 400;
+background.x = 180 - 35;
+background.y = 130 - 35;
 // renderer instance with height and width
 var renderer = PIXI.autoDetectRenderer(width, height);
 

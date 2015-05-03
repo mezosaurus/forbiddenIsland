@@ -79,7 +79,9 @@ function pawnClickListener(index){
 		}
 	}else if(actionMode == "choose"){
 		if(player.role == "Navigator"){
+			player.moveTarget.sprite.unhighlight();
 			player.moveTarget = players[index];
+			player.moveTarget.sprite.highlight();
 		}
 	}
 }
