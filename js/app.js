@@ -66,6 +66,8 @@ var donutEatenTexture = PIXI.Texture.fromImage("img/donuteaten.png");
 
 var treasureTextures = [cupcakeTexture, pizzaTexture, sodaTexture, donutTexture];
 
+var actionCounterText;
+
 // Players
 var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
 
@@ -281,6 +283,17 @@ function drawPlayerHands(gameContainer) {
   }
 }
 
+function drawActionCounter() {
+  stage.removeChild(actionCounterText);
+  delete actionCounterText;
+  
+  actionCounterText = new PIXI.Text("Actions left: " + turnActions, {font:"20px Arial", fill:"black"});
+  actionCounterText.position.x = 750;
+  actionCounterText.position.y = 350;
+  
+  stage.addChild(actionCounterText);
+}
+
 /*
 * Function responsible for drawing treasure deck
 */
@@ -384,7 +397,7 @@ function drawFloodDeck(gameContainer) {
 
   for (var i = 0; i < 6; i++) {
     for (var j = 0; j < 6; j++) {
-      var card = new FloodCard(j, String.fromCharCode(i+65));
+      var card = new FloodCard(i, j);
       // Skip card positions on first row that need to be blank
       if ((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 0 && j == 4) || (i == 0 && j == 5))  {
         continue;
@@ -401,7 +414,6 @@ function drawFloodDeck(gameContainer) {
       if ((i == 5 && j == 0) || (i == 5 && j == 1) || (i == 5 && j == 4) || (i == 5 && j == 5)) {
         continue;
       }
-
       floodCards.push(card);
     }
   }
@@ -419,27 +431,27 @@ function drawFloodDeck(gameContainer) {
         for (var i = 0; i < currentWaterLevel; i++)
         {
           var card = floodCards.pop();
-          card.position.x = cardWidth;
-          card.position.y = cardHeight;
-          cardHeight += 64;
-          gameContainer.addChild(card);
           //Push to addedCards so we know which ones to remove later
           addedCards.push(card);
+
+          var tile = gameBoard[card.column][card.row];
+
+          if (tile.state === "normal")
+            tile.flip();
+          else
+            tile.sink();
         }
 
-        //Finally after 5 seconds, remove all the cards from the stage
-        setTimeout(function () {
-          for (var i = 0; i < addedCards.length; i++)
-          {
-            discardedFloodCards.push(addedCards[i]);
-            gameContainer.removeChild(addedCards[i]);
-          }
-        }, 3000);
+        //For all the cards added this turn, add them to discardedFloodCards
+        for (var i = 0; i < addedCards.length; i++)
+        {
+          discardedFloodCards.push(addedCards[i]);
+        }
 
         //Wait for user to see cards before ending turn
         setTimeout(function () {
           endTurn();
-        }, 2800);
+        }, 3000);
     }
     else
     {
@@ -583,6 +595,7 @@ function drawCard() {
       {
         discardedFloodCards = shuffleCards(discardedFloodCards);
         floodCards = [].concat(floodCards, discardedFloodCards);
+        alert(floodCards.length);
         discardedFloodCards = [];
       }
       //alert("Waters Rise Card! Water is rising!");

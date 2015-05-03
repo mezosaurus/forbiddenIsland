@@ -165,6 +165,7 @@ function startTurn(playerNum) {
 
   // Allocate 3 turn actions
   turnActions = 3;
+  drawActionCounter();
   var turnModal = $("#turnModal");
   var turnModalTitle = $("#turnModalTitle");
   var turnModalContent = $("turnModalContent");
@@ -204,6 +205,7 @@ function setRoleContent(role) {
 function handleTurnEvent() {
 	// decrement turn actions counter
     turnActions--;
+    drawActionCounter();
     // End turn if no actions left
     /*if (turnActions == 0) {
     	endTurn();
