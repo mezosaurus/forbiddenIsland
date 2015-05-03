@@ -24,7 +24,6 @@ function tileClickListener(x, y, name, which) {
                 player.move(x, y);
                 playerTile.removeChild(player.sprite)
                 tile.addChild(player.sprite);
-                handleTurnEvent();
                 checkTreasures();
             }
 		}
@@ -32,6 +31,18 @@ function tileClickListener(x, y, name, which) {
 			console.log(tile.state);
 			console.log(player.validShoreTiles[x][y]);
 			if(player.validShoreTiles[x][y]){
+				// If not engineer, decrement actions
+				if (player.role == "Engineer") {
+					if (player.engineerShoreCount == 0) {
+						player.engineerShoreCount = 2;
+						handleTurnEvent();
+					}
+					else
+						player.engineerShoreCount--;
+				}
+				else {
+					handleTurnEvent();
+				}
 				tile.flip();
 				player.calculateValidShoreTiles();
 			}
@@ -118,6 +129,13 @@ function startTurn(playerNum) {
   var turnModalTitle = $("#turnModalTitle");
   var turnModalContent = $("turnModalContent");
   var player = players[playerNum];
+  // Calculate valid move tiles
+  player.calculateValidMoveTiles();
+  // Calculate valid shore tiles
+  player.calculateValidShoreTiles();
+  // Calculate valid give targets
+  player.calculateValidGiveTargets();
+  // Highlight player pawn
   player.moveTarget.sprite.highlight();
   var currentPlayer = playerNum+1;
 

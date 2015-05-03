@@ -10,6 +10,7 @@ function Player (sprite, hand, role, index) {
 	this.validMoveTiles = [];
     this.validShoreTiles = [];
     this.validGiveTargets = [];
+    this.engineerShoreCount = 2;
 	while(this.validMoveTiles.push([]) < 6);
     while(this.validShoreTiles.push([]) < 6);
     while(this.validGiveTargets.push(false) < 4);
@@ -26,6 +27,8 @@ function Player (sprite, hand, role, index) {
 	this.move = function (x, y) {
 		this.x = x;
 		this.y = y;
+        if (this.role !== "Navigator")
+            handleTurnEvent();
 		this.calculateValidMoveTiles();
         this.calculateValidShoreTiles();
         this.calculateValidGiveTargets();
