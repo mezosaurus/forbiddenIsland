@@ -4,11 +4,38 @@
 */
 
 $(function(){
-  // Turn start OK button listener
+  // Turn start button listener
   $("#turnModalStartBtn").on("click", function() {
     $("#turnModal").modal("hide");
     // set focus to move button in the action mode button group
     document.getElementById("move").focus();
+  });
+  $("#waterRiseOkBtn").on("click", function() {
+  	$("#waterRiseModal").modal("hide");
+  });
+  $("#waterRiseModal").on("hide.bs.modal", function() {
+  	if (waterLevel != 5)
+    {
+      currentWaterLine.position.y = currentWaterLine.position.y - 30;
+      waterLevel++;
+
+      if (discardedFloodCards !== undefined || discardedFloodCards.length !== 0)
+      {
+        discardedFloodCards = shuffleCards(discardedFloodCards);
+        floodCards = [].concat(floodCards, discardedFloodCards);
+        discardedFloodCards = [];
+      }
+      //alert("Waters Rise Card! Water is rising!");
+      if (waterLevel != 1 && waterLevel != 3)
+      {
+        currentWaterLevel++;
+      }
+    }
+
+    if (waterLevel == 5)
+    {
+    	// show game over modal
+    }
   });
 });
 

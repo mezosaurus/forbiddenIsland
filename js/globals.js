@@ -48,3 +48,6 @@ var treasureDeckClicked = false;
 var gameBoard = [];
 var helipadX = -1;
 var helipadY = -1;
+// WATER LEVEL
+var waterLevel = 0;
+var currentWaterLevel = 2;

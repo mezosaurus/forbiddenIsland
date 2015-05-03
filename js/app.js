@@ -96,8 +96,6 @@ drawTreasureDeck(stage);
 //Draw water meter, current water line is needed to adjust water level
 var currentWaterLine = new PIXI.Graphics();
 drawWaterMeter(stage);
-var waterLevel = 0;
-var currentWaterLevel = 2;
 
 requestAnimFrame(animate);
 
@@ -575,8 +573,8 @@ function drawCard() {
 
   if (card.type == "WatersRise")
   {
-
-    if (waterLevel != 5)
+    $("#waterRiseModal").modal("show");
+    /*if (waterLevel != 5)
     {
       currentWaterLine.position.y = currentWaterLine.position.y - 30;
       waterLevel++;
@@ -587,7 +585,7 @@ function drawCard() {
         floodCards = [].concat(floodCards, discardedFloodCards);
         discardedFloodCards = [];
       }
-      alert("Waters Rise Card! Water is rising!");
+      //alert("Waters Rise Card! Water is rising!");
       if (waterLevel != 1 && waterLevel != 3)
       {
         currentWaterLevel++;
@@ -597,7 +595,7 @@ function drawCard() {
     if (waterLevel == 5)
     {
       alert("GAME OVER, you died");
-    }
+    }*/
   }
   return card;
 }
