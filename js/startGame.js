@@ -87,6 +87,6 @@ function startGame() {
 }
 
 function createPlayer(role, anchorX, anchorY, index) {
-	var player = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures[role]), anchorX, anchorY), new PlayerHand(), role, index - 1);
+	var player = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures[role]), new PIXI.Texture.fromImage(pawnHighlightTextures[role]), anchorX, anchorY), new PlayerHand(), role, index - 1);
 	return player;
 }

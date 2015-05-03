@@ -1,12 +1,15 @@
-function PlayerPawn(texture, anchorX, anchorY){
+function PlayerPawn(texture, highlight, anchorX, anchorY){
     PIXI.Sprite.call(this, texture);
     this.buttonMode = true;
+    this.highlighted = highlight;
+    this.unhighlighted = texture;
     this.interactive = true;
     this.state = "normal";
     this.tint = 0xffffff;
     this.anchor.x = anchorX;
     this.anchor.y = anchorY;
     this.alpha = 1;
+    console.log(texture);
     
     this.mousedown = this.touchstart = function(data){
         if(this.state === "normal"){
@@ -14,6 +17,14 @@ function PlayerPawn(texture, anchorX, anchorY){
         }else{
             this.state = "normal";
         }
+    }
+
+    this.highlight = function(){
+        this.setTexture(this.highlighted);
+    }
+
+    this.unhighlight = function(){
+        this.setTexture(this.unhighlighted);
     }
     
     this.animate = function(){
