@@ -3,6 +3,15 @@
 * Game Manager functions to handle game events
 */
 
+$(function(){
+  // Turn start OK button listener
+  $("#turnModalStartBtn").on("click", function() {
+    $("#turnModal").modal("hide");
+    // set focus to move button in the action mode button group
+    document.getElementById("move").focus();
+  });
+});
+
 function tileClickListener(x, y, name, which) {
 	if (which == 1) {
 		// Left mouse event
@@ -15,6 +24,7 @@ function tileClickListener(x, y, name, which) {
                 player.move(x, y);
                 playerTile.removeChild(player.sprite)
                 tile.addChild(player.sprite);
+                handleTurnEvent();
             }
 		}
 		else if (actionMode == "shore") {
@@ -92,4 +102,52 @@ function shuffleCards(cards) {
 	}
 
 	return cards;
+}
+
+function startTurn(playerNum) {
+  // Allocate 3 turn actions
+  turnActions = 3;
+  var turnModal = $("#turnModal");
+  var turnModalTitle = $("#turnModalTitle");
+  var turnModalContent = $("turnModalContent");
+  var player = players[playerNum];
+  var currentPlayer = playerNum+1;
+
+  // Set the modal title for whichever player's turn it is
+  turnModalTitle.text("Player " + currentPlayer + "'s Turn");
+  turnModal.modal("show");
+
+  // Set the role information content
+  var roleInfoHeader = $("#roleInfoHeader");
+  roleInfoHeader.text(player.role);
+  setRoleContent(player.role);
+}
+
+function setRoleContent(role) {
+	var roleInfoContent = $("#roleInfoContent");
+	for (var i = 0; i < roles.length; i++) {
+		if (role == roles[i]) {
+			roleInfoContent.text(roleInfoText[i]);
+		}
+	}
+}
+
+function handleTurnEvent() {
+	// decrement turn actions counter
+    turnActions--;
+    // End turn if no actions left
+    if (turnActions == 0) {
+    	endTurn();
+    }
+}
+
+function endTurn() {
+	// increment turn variable depending upon number of players
+	var maxTurn = numPlayers - 1;
+	turn++;
+	if (turn > maxTurn) {
+		turn = 0;
+	}
+	// Start next turn
+	startTurn(turn);
 }

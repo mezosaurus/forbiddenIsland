@@ -1,10 +1,12 @@
-var FloodCard = function() {
+var FloodCard = function(row, column) {
   PIXI.DisplayObjectContainer.call(this);
   this.type = "Flood";
+  this.row = row;
+  this.column = column;
 
   //Flood card creation
   floodCardSquare = new PIXI.Graphics();
-  floodCardText = new PIXI.Text("H5", {font: '10px Arial'});
+  floodCardText = new PIXI.Text(this.column + this.row, {font: '10px Arial'});
   floodCardSquare.beginFill(0xFFFFFF);
   floodCardSquare.lineStyle(5, 0x000000);
   floodCardSquare.drawRect(0, 0, 64, 64);
@@ -15,7 +17,7 @@ var FloodCard = function() {
 
   this.addChild(floodCardSquare);
   this.addChild(floodCardText);
-
+  
   floodCardSquare.mousedown = floodCardSquare.touchstart = function(data) {
     $('body').trigger('cardClick', [this.type]);
   };

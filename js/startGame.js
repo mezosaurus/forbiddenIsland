@@ -82,6 +82,9 @@ function startGame() {
 			drawPlayerHands(stage);
 			gameStarted = true;
 			$("#myModal").modal("hide");
+			
+			// Start turn
+			startTurn(turn);
 		}
 	});
 }

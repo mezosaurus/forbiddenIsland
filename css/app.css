@@ -1,6 +1,10 @@
 #mode-buttons {
 	position: absolute;
 	top: 290px;
-	left: 750px;
+	left: 700px;
 	z-index: 100;
+}
+
+#turnModalContent li {
+  margin: 0 0 5px 0;
 }

@@ -13,15 +13,14 @@ $(function(){
         //TODO only if treasures[type].state = 'obtainable';
         cardClickListener(type);
     });
+    // set action mode
+    $('.btn-group > .btn').on('click', function(event) {
+      actionMode = event.target.id;
+    });
     $('body').on('pawnClick', function(evend, index){
         pawnClickListener(index);
     });
-    $('.btn').on('click', function(event) {
-    	actionMode = event.target.id;
-    });
 });
-
-// GAME START - SHOW PLAYER/ROLE SELECT
 
 // Init empty 6x6 2D Array
 while(gameBoard.push([]) < 6);
@@ -96,7 +95,7 @@ drawTreasureDeck(stage);
 //Draw water meter, current water line is needed to adjust water level
 var currentWaterLine = new PIXI.Graphics();
 drawWaterMeter(stage);
-var waterLevel = 0;
+var waterLevel = 2;
 
 requestAnimFrame(animate);
 
@@ -193,7 +192,7 @@ function drawPlayerPositions() {
 function drawTreasurePositions(){
   var treasureValues = [0,0,1,1,2,2,3,3];
   for(var i = 0; i < treasureValues.length; i++){
-    console.log(treasureValues[i]);
+    //console.log(treasureValues[i]);
     var x = Math.floor(Math.random() * 5);
     var y = Math.floor(Math.random() * 5);
     var tile = gameBoard[x][y];
@@ -341,6 +340,59 @@ function drawFloodDeck(gameContainer) {
   floodDeck.addChild(floodSquareText);
 
   gameContainer.addChild(floodDeck);
+
+  for (var i = 0; i < 6; i++) {
+    for (var j = 0; j < 6; j++) {
+      var card = new FloodCard(j, String.fromCharCode(i+65));
+      // Skip card positions on first row that need to be blank
+      if ((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 0 && j == 4) || (i == 0 && j == 5))  {
+        continue;
+      }
+      // Skip cards positions on second row that need to be blank
+      if ((i == 1 && j == 0) || (i == 1 && j == 5)) {
+        continue;
+      }
+      // Skip card positions on fifth row that need to be blank
+      if ((i == 4 && j == 0) || (i == 4 && j == 5)) {
+        continue;
+      }
+      // Skip card positions on sixth row that need to be blank
+      if ((i == 5 && j == 0) || (i == 5 && j == 1) || (i == 5 && j == 4) || (i == 5 && j == 5)) {
+        continue;
+      }
+
+      floodCards.push(card);
+    }
+  }
+  //After all the cards are added shuffle them
+  floodCards = shuffleCards(floodCards);
+
+  floodSquare.mousedown = floodSquare.touchstart = function(data) {
+
+      var addedCards = [];
+      var cardWidth = width/2 - 50;
+      var cardHeight = height/2;
+
+      //Add each card per waterLevel
+      for (var i = 0; i < waterLevel; i++)
+      {
+        var card = floodCards.pop();
+        card.position.x = cardWidth;
+        card.position.y = cardHeight;
+        cardHeight += 64;
+        gameContainer.addChild(card);
+        //Push to addedCards so we know which ones to remove later
+        addedCards.push(card);
+      }
+
+      //Finally after 5 seconds, remove all the cards from the stage
+      setTimeout(function () {
+        for (var i = 0; i < addedCards.length; i++)
+        {
+          gameContainer.removeChild(addedCards[i]);
+        }
+      }, 3000);
+  };
 }
 
 /*
