@@ -327,17 +327,20 @@ function drawTreasureDeck(gameContainer) {
   treasureCards = shuffleCards(treasureCards);
   //Whenever player clicks the treasure deck
   treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
-      for (var i = 0; i < players.length; i++)
+      if (treasureCards.length === 0)
       {
-        var card1 = drawCard();
-        var card2 = drawCard();
-
-        if (card1.type != "WatersRise")
-          players[turn].hand.addCard(card1);
-
-        /*if (card2.type != "WatersRise")
-          players[turn].hand.addCard(card2);*/
+        treasureCards = shuffleCards(discardedTreasureCards);
+        discardedTreasureCards = [];
       }
+
+      var card1 = drawCard();
+      var card2 = drawCard();
+
+      if (card1.type != "WatersRise")
+        players[turn].hand.addCard(card1);
+
+      if (card2.type != "WatersRise")
+        players[turn].hand.addCard(card2);
   };
 }
 
@@ -540,6 +543,7 @@ function drawWaterMeter(gameContainer) {
 
 function drawCard() {
   var card = treasureCards.pop();
+  discardedTreasureCards.push(Object.create(card));
 
   if (card.type == "WatersRise")
   {
@@ -567,7 +571,6 @@ function drawCard() {
       alert("GAME OVER, you died");
     }
   }
-
   return card;
 }
 
