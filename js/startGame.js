@@ -1,6 +1,7 @@
 
 $(document).ready(function() {
 	startGame();
+	createRoleSelects();
 });
 
 function startGame() {
@@ -92,4 +93,18 @@ function startGame() {
 function createPlayer(role, anchorX, anchorY, index) {
 	var player = new Player(new PlayerPawn(new PIXI.Texture.fromImage(pawnTextures[role]), anchorX, anchorY), new PlayerHand(), role, index - 1);
 	return player;
+}
+
+function createRoleSelects() {
+	for (var i = 1; i <= 2; i++) {
+		var roleSelect = "<p id='selectLabel"+i+"'>Player "+i+"</p>";
+		roleSelect += "<select id='roleSelect"+i+"' class='form-control'>";
+		for (var j = 0; j < roles.length; j++) {
+			roleSelect += "<option value="+roles[j]+">"+roles[j]+"</option>";
+		}
+		roleSelect += "</select>";
+		roleSelect += "</div>";
+		roleSelect += "</div>";
+		$("#roleSelectDiv").append(roleSelect);
+	}
 }
