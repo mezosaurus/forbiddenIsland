@@ -43,6 +43,7 @@ var treasureCards = [];
 var floodCards = [];
 var discardedFloodCards = [];
 var discardedTreasureCards = [];
+var treasureDeckClicked = false;
 // GAME BOARD
 var gameBoard = [];
 var helipadX = -1;
