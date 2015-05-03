@@ -97,6 +97,8 @@ function cardClickListener(type) {
 }
 
 function shuffleCards(cards) {
+  if (cards.length <= 0)
+    return;
 	var length = cards.length - 1;
 	var swap;
 	var temp;
