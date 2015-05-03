@@ -31,7 +31,6 @@ function tileClickListener(x, y, name, which) {
 			console.log(tile.state);
 			console.log(player.validShoreTiles[x][y]);
 			if(player.validShoreTiles[x][y]){
-				console.log('here');
 				tile.flip();
 				player.calculateValidShoreTiles();
 			}
@@ -111,6 +110,7 @@ function startTurn(playerNum) {
   var turnModalTitle = $("#turnModalTitle");
   var turnModalContent = $("turnModalContent");
   var player = players[playerNum];
+  player.moveTarget.sprite.highlight();
   var currentPlayer = playerNum+1;
 
   // Set the modal title for whichever player's turn it is

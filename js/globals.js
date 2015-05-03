@@ -9,7 +9,14 @@ var roleInfoText = ["Move through 1 or more adjacent flooded and/or missing tile
 					"Once per turn, fly to any tile on the island for 1 action.",
 					"Shore up 2 tiles for 1 action.",
 					"Give Treasure cards to a player anywhere on the island for 1 action per card."];
-var roleColors = ["Black", "Green", "Yellow", "Blue", "Red", "Grey"];
+var roleColors = {
+		"Diver": "0x000000",
+		"Explorer": "0x00ff00",
+		"Navigator" : "0xffff00",
+		"Pilot" : "0x0000ff",
+		"Engineer" : "0xff0000",
+		"Messenger": "0x606060"
+	};
 var players = [];
 var gameStarted = false;
 var pawnTextures = {"Diver" : "img/pawns/black.png",
