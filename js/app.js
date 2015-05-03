@@ -234,11 +234,11 @@ function drawPlayerHands(gameContainer) {
     var text = new PIXI.Text("Player " + playerNum + " - " + player.role, {font:"20px Arial", fill:"black"});
     var roleColorSquare = new PIXI.Graphics();
     roleColorSquare.beginFill(roleColors[player.role]);
-    
+
     //roleColorSquare.lineStyle(1, 0x000000);
     roleColorSquare.drawRect(0, 0, 20, 20);
     //treasureSquare.hitArea = treasureSquare.getBounds();
-    
+
 
     // player 1
     if (i == 0) {
@@ -327,20 +327,36 @@ function drawTreasureDeck(gameContainer) {
   treasureCards = shuffleCards(treasureCards);
   //Whenever player clicks the treasure deck
   treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
-      if (treasureCards.length === 0)
+
+    if (!treasureDeckClicked)
+    {
+      //logic for checking if player wants to continue if they have actions left
+      var confirmAction = false;
+      if (turnActions !== 0)
+        confirmAction = confirm("You still have " + turnActions + " action(s) left\n" +
+          "Are you sure you want to continue?");
+
+      if (turnActions === 0 || confirmAction === true)
       {
-        treasureCards = shuffleCards(discardedTreasureCards);
-        discardedTreasureCards = [];
+        treasureDeckClicked = true;
+        if (treasureCards.length === 0)
+        {
+          treasureCards = shuffleCards(discardedTreasureCards);
+          discardedTreasureCards = [];
+        }
+
+        var card1 = drawCard();
+        var card2 = drawCard();
+
+        if (card1.type != "WatersRise")
+          players[turn].hand.addCard(card1);
+
+        if (card2.type != "WatersRise")
+          players[turn].hand.addCard(card2);
+
+        turnActions = 0;
       }
-
-      var card1 = drawCard();
-      var card2 = drawCard();
-
-      if (card1.type != "WatersRise")
-        players[turn].hand.addCard(card1);
-
-      if (card2.type != "WatersRise")
-        players[turn].hand.addCard(card2);
+    }
   };
 }
 
@@ -394,31 +410,42 @@ function drawFloodDeck(gameContainer) {
   floodCards = shuffleCards(floodCards);
 
   floodSquare.mousedown = floodSquare.touchstart = function(data) {
+    if (treasureDeckClicked)
+    {
+        var addedCards = [];
+        var cardWidth = width/2 - 50;
+        var cardHeight = height/2;
 
-      var addedCards = [];
-      var cardWidth = width/2 - 50;
-      var cardHeight = height/2;
-
-      //Add each card per waterLevel
-      for (var i = 0; i < currentWaterLevel; i++)
-      {
-        var card = floodCards.pop();
-        card.position.x = cardWidth;
-        card.position.y = cardHeight;
-        cardHeight += 64;
-        gameContainer.addChild(card);
-        //Push to addedCards so we know which ones to remove later
-        addedCards.push(card);
-      }
-
-      //Finally after 5 seconds, remove all the cards from the stage
-      setTimeout(function () {
-        for (var i = 0; i < addedCards.length; i++)
+        //Add each card per waterLevel
+        for (var i = 0; i < currentWaterLevel; i++)
         {
-          discardedFloodCards.push(addedCards[i]);
-          gameContainer.removeChild(addedCards[i]);
+          var card = floodCards.pop();
+          card.position.x = cardWidth;
+          card.position.y = cardHeight;
+          cardHeight += 64;
+          gameContainer.addChild(card);
+          //Push to addedCards so we know which ones to remove later
+          addedCards.push(card);
         }
-      }, 3000);
+
+        //Finally after 5 seconds, remove all the cards from the stage
+        setTimeout(function () {
+          for (var i = 0; i < addedCards.length; i++)
+          {
+            discardedFloodCards.push(addedCards[i]);
+            gameContainer.removeChild(addedCards[i]);
+          }
+        }, 3000);
+
+        //Wait for user to see cards before ending turn
+        setTimeout(function () {
+          endTurn();
+        }, 2800);
+    }
+    else
+    {
+      alert("Must click treasure deck before using flood deck");
+    }
   };
 }
 

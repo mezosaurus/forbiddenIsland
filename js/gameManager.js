@@ -62,7 +62,7 @@ function treasureClickListener(type, which) {
 
 function checkTreasures() {
     resetTreasures();
-    
+
     for (var type = 0; type < 3; type++) {
         var count = 0;
         for (var j = 0; j < players[turn].hand.hand.length; j++) {
@@ -158,7 +158,7 @@ function startTurn(playerNum) {
   var roleInfoHeader = $("#roleInfoHeader");
   roleInfoHeader.text(player.role);
   setRoleContent(player.role);
-  
+
   checkTreasures();
 }
 
@@ -175,14 +175,14 @@ function handleTurnEvent() {
 	// decrement turn actions counter
     turnActions--;
     // End turn if no actions left
-    if (turnActions == 0) {
+    /*if (turnActions == 0) {
     	endTurn();
-    }
+    }*/
 }
 
 function endTurn() {
     resetTreasures();
-    
+    treasureDeckClicked = false;
 	// increment turn variable depending upon number of players
 	var maxTurn = numPlayers - 1;
 	turn++;
