@@ -3,7 +3,7 @@ var treasures = [];
 var actionMode = "move";
 var numPlayers = 2;
 var roles = ["Diver", "Explorer", "Navigator", "Pilot", "Engineer", "Messenger"];
-var roleInfoText = ["Move through 1 or more adjacent flooded and/or missing tiles for 1 action. (Must end your turn on a tile)", 
+var roleInfoText = ["Move through 1 or more adjacent flooded and/or missing tiles for 1 action. (Must end your turn on a tile)",
 					"Move and/or shore up diagonally.",
 					"Move another player up to 2 adjacent tiles for 1 action.",
 					"Once per turn, fly to any tile on the island for 1 action.",
@@ -26,5 +26,6 @@ var turnActions = 3;
 var height = 610;
 var width = 1280;
 var treasureCards = [];
+var floodCards = [];
 // GAME BOARD
 var gameBoard = [];
