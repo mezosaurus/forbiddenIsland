@@ -286,16 +286,16 @@ function drawPlayerHands(gameContainer) {
 function drawActionCounter() {
   stage.removeChild(actionCounterText);
   delete actionCounterText;
-  
+
   actionCounterText = new PIXI.Text("", {font:"20px Arial", fill:"black"});
   actionCounterText.text = "Player " + (turn + 1) + "'s turn";
   actionCounterText.text += "\nActions left: " + turnActions;
   actionCounterText.text += "\nClick the Treasures Deck then the Flood Deck to end your turn";
   actionCounterText.text += "\nOr use an action card at any time";
-  
+
   actionCounterText.position.x = 600;
   actionCounterText.position.y = 350;
-  
+
   stage.addChild(actionCounterText);
 }
 
@@ -434,7 +434,7 @@ function drawFloodDeck(gameContainer) {
         var cardHeight = height/2;
 
         //Add each card per waterLevel
-        for (var i = 0; i < currentWaterLevel; i++)
+        for (var i = 0; i < waterLevels[waterLevel]; i++)
         {
           var card = floodCards.pop();
           //Push to addedCards so we know which ones to remove later
@@ -533,17 +533,21 @@ function drawWaterMeter(gameContainer) {
   var level2Text  = new PIXI.Text('-', {font: "15px Arial"});
   var level3Text  = new PIXI.Text('3', {font: "15px Arial"});
   var level4Text  = new PIXI.Text('-', {font: "15px Arial"});
-  var level5Text  = new PIXI.Text('4', {font: "15px Arial"});
+  var level5Text  = new PIXI.Text('-', {font: "15px Arial"});
+  var level6Text  = new PIXI.Text('4', {font: "15px Arial"});
+  var level7Text  = new PIXI.Text('-', {font: "15px Arial"});
+  var level8Text  = new PIXI.Text('5', {font: "15px Arial"});
+  var level9Text  = new PIXI.Text('-', {font: "15px Arial"});
   var levelDeathText  = new PIXI.Text('Death', {font: "15px Arial"});
   var captionText  = new PIXI.Text('Water Level', {font: "15px Arial"});
 
   mainWaterLine.beginFill(0x000000);
-  mainWaterLine.drawRect(0, 0, 10, 160);
+  mainWaterLine.drawRect(0, 0, 10, 250);
   mainWaterLine.position.x = waterMeterX;
-  mainWaterLine.position.y = waterMeterY + 5;
+  mainWaterLine.position.y = waterMeterY - 95;
 
   captionText.position.x = waterMeterX - 20;
-  captionText.position.y = waterMeterY - 35;
+  captionText.position.y = waterMeterY - 130;
   waterMeter.addChild(captionText);
 
   level1Text.position.x = waterMeterX + 30 ;
@@ -559,15 +563,27 @@ function drawWaterMeter(gameContainer) {
   waterMeter.addChild(level3Text);
 
   level4Text.position.x = waterMeterX + 30;
-  level4Text.position.y = waterMeterX + 50;
+  level4Text.position.y = waterMeterY + 50;
   waterMeter.addChild(level4Text);
 
   level5Text.position.x = waterMeterX + 30;
-  level5Text.position.y = waterMeterX + 20;
+  level5Text.position.y = waterMeterY + 20;
   waterMeter.addChild(level5Text);
 
+  level6Text.position.x = waterMeterX + 30;
+  level6Text.position.y = waterMeterY - 10;
+  waterMeter.addChild(level6Text);
+
+  level7Text.position.x = waterMeterX + 30;
+  level7Text.position.y = waterMeterY - 40;
+  waterMeter.addChild(level7Text);
+
+  level8Text.position.x = waterMeterX + 30;
+  level8Text.position.y = waterMeterY - 70;
+  waterMeter.addChild(level8Text);
+
   levelDeathText.position.x = waterMeterX + 30;
-  levelDeathText.position.y = waterMeterX  - 10;
+  levelDeathText.position.y = waterMeterY  - 100;
   waterMeter.addChild(levelDeathText);
 
 

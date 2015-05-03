@@ -16,7 +16,7 @@ $(function(){
   });
   // Water rise modal hide event
   $("#waterRiseModal").on("hide.bs.modal", function() {
-  	if (waterLevel != 5)
+  	if (waterLevels[waterLevel] != "death")
     {
       currentWaterLine.position.y = currentWaterLine.position.y - 30;
       waterLevel++;
@@ -27,14 +27,9 @@ $(function(){
         floodCards = [].concat(floodCards, discardedFloodCards);
         discardedFloodCards = [];
       }
-      //alert("Waters Rise Card! Water is rising!");
-      if (waterLevel != 1 && waterLevel != 3)
-      {
-        currentWaterLevel++;
-      }
     }
 
-    if (waterLevel == 5)
+    if (waterLevels[waterLevel] == "death")
     {
     	// show game over modal
     	$("#endGameModal").modal("show");
@@ -226,7 +221,7 @@ function endTurn() {
 
     var player = players[turn];
     player.moveTarget.sprite.unhighlight();
-    
+
     treasureDeckClicked = false;
 	// increment turn variable depending upon number of players
 	var maxTurn = numPlayers - 1;
