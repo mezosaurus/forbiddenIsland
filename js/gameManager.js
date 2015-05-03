@@ -50,6 +50,8 @@ function treasureClickListener(type, which) {
 }
 
 function checkTreasures() {
+    resetTreasures();
+    
     for (var type = 0; type < 3; type++) {
         var count = 0;
         for (var j = 0; j < players[turn].hand.hand.length; j++) {
@@ -58,7 +60,7 @@ function checkTreasures() {
             }
         }
 
-        if (count >= 4) {
+        if (count >= 4 && gameBoard[players[turn].x][players[turn].y].treasureType == type) {
             if (treasures[type].state === 'available') {
                 treasures[type].state = 'obtainable';
             }
