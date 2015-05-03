@@ -15,6 +15,7 @@ $(function(){
     // set action mode
     $('.btn-group > .btn').on('click', function(event) {
       actionMode = event.target.id;
+      var player = players[turn];
     });
     $('body').on('pawnClick', function(evend, index){
         pawnClickListener(index);

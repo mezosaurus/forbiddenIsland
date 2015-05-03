@@ -13,7 +13,7 @@ $(function(){
 });
 
 function tileClickListener(x, y, name, which) {
-	if (which == 1) {
+	if (which == 1 && turnActions > 0) {
 		// Left mouse event
 		var tile = gameBoard[x][y];
 		var player = players[turn].moveTarget;
@@ -92,11 +92,12 @@ function pawnClickListener(index){
 	var card = player.giveTarget;
 	if(actionMode == "give"){
 		if(player.validGiveTargets[index]){
-			if(card !== null){
+			if(card !== null && turnActions > 0){
 				console.log("I am giving")
 				var otherPlayer = players[index];
 				otherPlayer.hand.addCard(card);
 				player.hand.discardCard(card);
+				handleTurnEvent();
 			}
 			console.log("validGiveTarget");
 		}
@@ -134,6 +135,7 @@ function shuffleCards(cards) {
 }
 
 function startTurn(playerNum) {
+
   // Allocate 3 turn actions
   turnActions = 3;
   var turnModal = $("#turnModal");
@@ -146,6 +148,7 @@ function startTurn(playerNum) {
   player.calculateValidShoreTiles();
   // Calculate valid give targets
   player.calculateValidGiveTargets();
+  // Highlight valid move tiles
   // Highlight player pawn
   player.moveTarget.sprite.highlight();
   var currentPlayer = playerNum+1;
@@ -182,6 +185,9 @@ function handleTurnEvent() {
 
 function endTurn() {
     resetTreasures();
+
+    var player = players[turn];
+    player.moveTarget.sprite.unhighlight();
     
 	// increment turn variable depending upon number of players
 	var maxTurn = numPlayers - 1;
