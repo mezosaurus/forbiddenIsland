@@ -81,6 +81,7 @@ function startGame() {
 			}
 			drawPlayerPositions();
 			drawPlayerHands(stage);
+            drawActionCounter(stage);
 			gameStarted = true;
 			$("#myModal").modal("hide");
 			

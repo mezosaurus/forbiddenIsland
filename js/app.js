@@ -66,6 +66,8 @@ var donutEatenTexture = PIXI.Texture.fromImage("img/donuteaten.png");
 
 var treasureTextures = [cupcakeTexture, pizzaTexture, sodaTexture, donutTexture];
 
+var actionCounterText;
+
 // Players
 var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
 
@@ -281,6 +283,17 @@ function drawPlayerHands(gameContainer) {
     gameContainer.addChild(roleColorSquare);
     gameContainer.addChild(player.hand);
   }
+}
+
+function drawActionCounter() {
+  stage.removeChild(actionCounterText);
+  delete actionCounterText;
+  
+  actionCounterText = new PIXI.Text("Actions left: " + turnActions, {font:"20px Arial", fill:"black"});
+  actionCounterText.position.x = 750;
+  actionCounterText.position.y = 350;
+  
+  stage.addChild(actionCounterText);
 }
 
 /*
