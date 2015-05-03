@@ -287,8 +287,13 @@ function drawActionCounter() {
   stage.removeChild(actionCounterText);
   delete actionCounterText;
   
-  actionCounterText = new PIXI.Text("Actions left: " + turnActions, {font:"20px Arial", fill:"black"});
-  actionCounterText.position.x = 750;
+  actionCounterText = new PIXI.Text("", {font:"20px Arial", fill:"black"});
+  actionCounterText.text = "Player " + (turn + 1) + "'s turn";
+  actionCounterText.text += "\nActions left: " + turnActions;
+  actionCounterText.text += "\nClick the Treasures Deck then the Flood Deck to end your turn";
+  actionCounterText.text += "\nOr use an action card at any time";
+  
+  actionCounterText.position.x = 600;
   actionCounterText.position.y = 350;
   
   stage.addChild(actionCounterText);
@@ -367,6 +372,7 @@ function drawTreasureDeck(gameContainer) {
           players[turn].hand.addCard(card2);
 
         turnActions = 0;
+        drawActionCounter();
       }
     }
   };
