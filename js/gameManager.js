@@ -10,9 +10,11 @@ $(function(){
     // set focus to move button in the action mode button group
     document.getElementById("move").focus();
   });
+  // Water rise ok button click event
   $("#waterRiseOkBtn").on("click", function() {
   	$("#waterRiseModal").modal("hide");
   });
+  // Water rise modal hide event
   $("#waterRiseModal").on("hide.bs.modal", function() {
   	if (waterLevel != 5)
     {
@@ -35,7 +37,14 @@ $(function(){
     if (waterLevel == 5)
     {
     	// show game over modal
+    	$("#endGameModal").modal("show");
     }
+  });
+
+  // End game button click event
+  $("#newGameBtn").on("click", function() {
+  	$("#endGameModal").modal("hide");
+  	startGame();
   });
 });
 
