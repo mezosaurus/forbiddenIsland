@@ -61,6 +61,8 @@ function treasureClickListener(type, which) {
 }
 
 function checkTreasures() {
+    resetTreasures();
+    
     for (var type = 0; type < 3; type++) {
         var count = 0;
         for (var j = 0; j < players[turn].hand.hand.length; j++) {
@@ -69,7 +71,7 @@ function checkTreasures() {
             }
         }
 
-        if (count >= 4) {
+        if (count >= 4 && gameBoard[players[turn].x][players[turn].y].treasureType == type) {
             if (treasures[type].state === 'available') {
                 treasures[type].state = 'obtainable';
             }
@@ -87,11 +89,16 @@ function resetTreasures() {
 
 function pawnClickListener(index){
 	var player = players[turn];
+	var card = player.giveTarget;
 	if(actionMode == "give"){
 		if(player.validGiveTargets[index]){
+			if(card !== null){
+				console.log("I am giving")
+				var otherPlayer = players[index];
+				otherPlayer.hand.addCard(card);
+				player.hand.discardCard(card);
+			}
 			console.log("validGiveTarget");
-		}else{
-			console.log("invalidGiveTarget");
 		}
 	}else if(actionMode == "choose"){
 		if(player.role == "Navigator"){
@@ -102,8 +109,12 @@ function pawnClickListener(index){
 	}
 }
 
-function cardClickListener(type) {
-	alert(type);
+function cardClickListener(card) {
+	var player = players[turn];
+	if(actionMode == "give"){
+		console.log("adding give target");
+		player.giveTarget = card;
+	}
 }
 
 function shuffleCards(cards) {

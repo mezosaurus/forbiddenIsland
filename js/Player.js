@@ -2,6 +2,7 @@ function Player (sprite, hand, role, index) {
 	this.x = 0;
 	this.y = 0;
     this.moveTarget = this;
+    this.giveTarget = null;
     sprite.index = index;
     this.index = index;
 	this.sprite = sprite;

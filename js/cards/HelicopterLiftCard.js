@@ -16,9 +16,9 @@ var HelicopterLiftCard = function() {
   this.addChild(helicopterCardSquare);
   this.addChild(helicopterCardText);
 
-  var type = this.type;
+  var me = this;
   helicopterCardSquare.mousedown = helicopterCardSquare.touchstart = function(data) {
-    $('body').trigger('cardClick', [type]);
+    $('body').trigger('cardClick', [me]);
   };
 
 };
