@@ -33,5 +33,6 @@ var height = 610;
 var width = 1280;
 var treasureCards = [];
 var floodCards = [];
+var discardedFloodCards = [];
 // GAME BOARD
 var gameBoard = [];
