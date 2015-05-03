@@ -10,7 +10,6 @@ $(function(){
         treasureClickListener(type, which);
     });
     $('body').on('cardClick', function(event, type){
-        //TODO only if treasures[type].state = 'obtainable';
         cardClickListener(type);
     });
     // set action mode
