@@ -39,7 +39,8 @@ $(function(){
   // End game button click event
   $("#newGameBtn").on("click", function() {
   	$("#endGameModal").modal("hide");
-  	startGame();
+    location.reload();
+  	//startGame();
   });
 });
 
@@ -295,7 +296,8 @@ function endTurn() {
     resetTreasures();
 
     var player = players[turn];
-    player.moveTarget.sprite.unhighlight();
+    if (player)
+      player.moveTarget.sprite.unhighlight();
 
     treasureDeckClicked = false;
 	// increment turn variable depending upon number of players

@@ -6,7 +6,6 @@ $(document).ready(function() {
 
 function startGame() {
 	$("#myModal").modal('show');
-	//createRoleSelects();
 
 	$("#playerSelect").on('change', function() {
 		numPlayers = this.value;

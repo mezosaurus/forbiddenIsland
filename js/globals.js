@@ -46,6 +46,8 @@ var discardedTreasureCards = [];
 var treasureDeckClicked = false;
 // GAME BOARD
 var gameBoard = [];
+// Init empty 6x6 2D Array
+while(gameBoard.push([]) < 6);
 var helipadX = -1;
 var helipadY = -1;
 // WATER LEVEL
@@ -60,3 +62,28 @@ var holdCards = false;
 var helicopterPlayers = [];
 
 var initFloodTiles = true;
+// stage vars
+var stage;
+var gameContainer;
+var renderer;
+// Get the tresure images
+var cupcakeTexture = PIXI.Texture.fromImage("img/cupcake.png");
+var cupcakeObtainableTexture = PIXI.Texture.fromImage("img/cupcake.png");
+var cupcakeEatenTexture = PIXI.Texture.fromImage("img/cupcakeeaten.png");
+
+var pizzaTexture = PIXI.Texture.fromImage("img/pizza.png");
+var pizzaObtainableTexture = PIXI.Texture.fromImage("img/pizza.png");
+var pizzaEatenTexture = PIXI.Texture.fromImage("img/pizzaeaten.png");
+
+var sodaTexture = PIXI.Texture.fromImage("img/soda.png");
+var sodaObtainableTexture = PIXI.Texture.fromImage("img/soda.png");
+var sodaEatenTexture = PIXI.Texture.fromImage("img/sodaeaten.png");
+
+var donutTexture = PIXI.Texture.fromImage("img/donut.png");
+var donutObtainableTexture = PIXI.Texture.fromImage("img/donut.png");
+var donutEatenTexture = PIXI.Texture.fromImage("img/donuteaten.png");
+// Get normal texture
+var texture = PIXI.Texture.fromImage("img/sand.png");
+var treasureTextures = [];
+var currentWaterLine;
+var actionCounterText;
