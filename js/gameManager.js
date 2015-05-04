@@ -134,7 +134,7 @@ function treasureClickListener(type, which) {
 function checkTreasures() {
     resetTreasures();
 
-    for (var type = 0; type < 3; type++) {
+    for (var type = 0; type < 4; type++) {
         var count = 0;
         for (var j = 0; j < players[turn].hand.hand.length; j++) {
         	var card = players[turn].hand.hand[j];
@@ -152,7 +152,7 @@ function checkTreasures() {
 }
 
 function resetTreasures() {
-    for (var type = 0; type<3; type++) {
+    for (var type = 0; type < 4; type++) {
         if (treasures[type].state === 'obtainable') {
             treasures[type].state = 'available';
         }
