@@ -204,7 +204,8 @@ function shuffleCards(cards) {
 }
 
 function startTurn(playerNum) {
-
+	if (!gameStarted)
+		return;
   // Allocate 3 turn actions
   turnActions = 3;
   drawActionCounter();
