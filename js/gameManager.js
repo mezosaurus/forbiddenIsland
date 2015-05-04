@@ -42,6 +42,13 @@ $(function(){
     location.reload();
   	//startGame();
   });
+  
+  // End game button click event
+  $("#newGameBtnWin").on("click", function() {
+    $("#winGameModal").modal("hide");
+    location.reload();
+  	//startGame();
+  });
 });
 
 function tileClickListener(x, y, name, which) {
@@ -306,6 +313,21 @@ function endTurn() {
 	if (turn > maxTurn) {
 		turn = 0;
 	}
+    
+    var onExit = true;
+    for (var i = 0; i < players.length; i++) {
+        if (players[i].x != helipadX || players[i].y != helipadY) {
+            onExit = false;
+            break;
+        }
+    }
+    
+    if (onExit == true)
+    {
+    	// show game over modal
+    	$("#winGameModal").modal("show");
+    }
+    
 	// Start next turn
 	startTurn(turn);
 }
