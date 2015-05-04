@@ -69,12 +69,11 @@ function tileClickListener(x, y, name, which) {
 			if(player.validShoreTiles[x][y]){
 				// If not engineer, decrement actions
 				if (player.role == "Engineer") {
+					player.engineerShoreCount--;
 					if (player.engineerShoreCount == 0) {
 						player.engineerShoreCount = 2;
 						handleTurnEvent();
 					}
-					else
-						player.engineerShoreCount--;
 				}
 				else {
 					handleTurnEvent();

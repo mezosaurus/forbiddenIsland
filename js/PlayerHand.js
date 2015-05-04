@@ -4,9 +4,19 @@
 var PlayerHand = function() {
   PIXI.DisplayObjectContainer.call(this);
   this.hand = [];
+  for (var i = 0; i < 5; i++) {
+    this.hand[i] = null;
+  }
 
   this.addCard = function(card) {
-    if (this.hand.length < 5)
+    for (var i = 0; i < hand.length; i++) {
+      if (this.hand[i] == null) {
+        card.position.x += i*80;
+        this.hand[i] = card;
+        this.addChild(card);
+      }
+    }
+    /*if (this.hand.length < 5)
     {
       //Make sure the cards appear in a row and not ontop of each other
       if (this.hand.length > 0)
@@ -16,14 +26,15 @@ var PlayerHand = function() {
 
       this.hand.push(card);
       this.addChild(card);
-    }
+    }*/
   };
 
   this.discardCard = function(card) {
     //Search the entire array for the card
     for (var i =0; i < this.hand.length; i++) {
        if (this.hand[i].type === card.type) {
-          this.hand.splice(i,1);
+          //this.hand.splice(i,1);
+          this.hand[i] = null;
           this.removeChild(card);
           break;
        }

@@ -51,3 +51,5 @@ var helipadY = -1;
 // WATER LEVEL
 var waterLevel = 0;
 var currentWaterLevel = 2;
+// discard mode variables
+var tempMode = "discard";
