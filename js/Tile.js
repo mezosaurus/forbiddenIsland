@@ -40,7 +40,10 @@ function Tile(normalTexture, floodedTexture, x, y, name){
         this.interactive = false;
 
         if (helipadX === this.xIndex && helipadY === this.yIndex)
+        {
           $("#endGameModal").modal("show");
+          gameStarted = false;
+        }
 
         if (this.treasureType > -1)
         {
@@ -49,7 +52,11 @@ function Tile(normalTexture, floodedTexture, x, y, name){
               if ((gameBoard[i][j].treasureType === this.treasureType) &&
                 gameBoard[i][j].state === "sunk")
               {
-                  $("#endGameModal").modal("show");
+                  if (treasures[this.treasureType].state != "obtained")
+                  {
+                    $("#endGameModal").modal("show");
+                    gameStarted = false;
+                  }
               }
             }
           }

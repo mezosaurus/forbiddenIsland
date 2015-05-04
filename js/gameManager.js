@@ -21,7 +21,7 @@ $(function(){
       currentWaterLine.position.y = currentWaterLine.position.y - 30;
       waterLevel++;
 
-      if (discardedFloodCards !== undefined || discardedFloodCards.length !== 0)
+      if (discardedFloodCards.length !== 0)
       {
         discardedFloodCards = shuffleCards(discardedFloodCards);
         floodCards = [].concat(floodCards, discardedFloodCards);

@@ -13,12 +13,12 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture, treasureTyp
     this.position.y = 0;
     this.anchor.x = 0.5;
     this.anchor.y = 0.5;
-    
+
     this.mousedown = this.touchstart = function(data){
         var eventWhich = data.originalEvent.which;
         $('body').trigger('treasureClick', [this.type, eventWhich]);
     }
-    
+
     this.animate = function(){
         if(this.state === 'obtaining'){
             if(this.width > 0){
@@ -29,7 +29,7 @@ function Treasure(normalTexture, obtainableTexture, obtainedTexture, treasureTyp
                 this.setTexture(this.obtained);
             }
         }
-        else if(this.state === 'obtained' && this.width < this.obtained.width){	
+        else if(this.state === 'obtained' && this.width < this.obtained.width){
             this.width += 10;
             this.alpha = 0.8;
         }

@@ -161,7 +161,6 @@ function drawTileGrid(gameContainer, normalTexture, floodedTexture) {
 			// Push tile object onto gameboard 2D Array
 			gameBoard[i][j] = tile;
 			gameContainer.addChild(tile);
-      tile.flip();
 		}
 	}
 }
@@ -351,10 +350,11 @@ function drawTreasureDeck(gameContainer) {
     treasureCards.push(new DonutCard());
     treasureCards.push(new SodaCard());
   }
+  //end create treasure deck
 
   treasureCards = shuffleCards(treasureCards);
   //Whenever player clicks the treasure deck
-  treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
+  treasureSquare.click = treasureSquare.touchstart = function(data) {
 
     if (!treasureDeckClicked)
     {
@@ -369,6 +369,7 @@ function drawTreasureDeck(gameContainer) {
       if (turnActions === 0 || confirmAction === true)
       {
         treasureDeckClicked = true;
+        //Shuffle old cards back into deck
         if (treasureCards.length === 0)
         {
           treasureCards = shuffleCards(discardedTreasureCards);
@@ -469,7 +470,7 @@ function drawFloodDeck(gameContainer) {
   //After all the cards are added shuffle them
   floodCards = shuffleCards(floodCards);
 
-  floodSquare.mousedown = floodSquare.touchstart = function(data) {
+  floodSquare.click = floodSquare.touchstart = function(data) {
     if (treasureDeckClicked)
     {
         var addedCards = [];
