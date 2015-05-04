@@ -21,7 +21,7 @@ $(function(){
       currentWaterLine.position.y = currentWaterLine.position.y - 30;
       waterLevel++;
 
-      if (discardedFloodCards !== undefined || discardedFloodCards.length !== 0)
+      if (discardedFloodCards.length !== 0)
       {
         discardedFloodCards = shuffleCards(discardedFloodCards);
         floodCards = [].concat(floodCards, discardedFloodCards);
@@ -164,6 +164,23 @@ function cardClickListener(card) {
 	if(actionMode == "give"){
 		player.giveTarget = card;
 	}
+	else if (actionMode == "discard") {
+		var player = players[turn];
+		var hand = player.hand;
+		if (hand.hasCard(card)) {
+			hand.discardCard(card);
+			if (holdCard1) {
+				hand.addCard(holdCard1);
+			}
+			else if (holdCard2) {
+				hand.addCard(holdCard2);
+			}
+		}
+		else {
+			stage.removeChild(card);
+		}
+		actionMode = tempMode;
+	}
     else if (card.type === 'Sandbag') {
         tempMode = actionMode;
         actionMode = "sandbag";
@@ -188,7 +205,8 @@ function shuffleCards(cards) {
 }
 
 function startTurn(playerNum) {
-
+	if (!gameStarted)
+		return;
   // Allocate 3 turn actions
   turnActions = 3;
   drawActionCounter();

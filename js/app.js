@@ -161,7 +161,6 @@ function drawTileGrid(gameContainer, normalTexture, floodedTexture) {
 			// Push tile object onto gameboard 2D Array
 			gameBoard[i][j] = tile;
 			gameContainer.addChild(tile);
-      tile.flip();
 		}
 	}
 }
@@ -351,14 +350,17 @@ function drawTreasureDeck(gameContainer) {
     treasureCards.push(new DonutCard());
     treasureCards.push(new SodaCard());
   }
+  //end create treasure deck
 
   treasureCards = shuffleCards(treasureCards);
   //Whenever player clicks the treasure deck
-  treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
+  treasureSquare.click = treasureSquare.touchstart = function(data) {
 
     if (!treasureDeckClicked)
     {
       //logic for checking if player wants to continue if they have actions left
+      var player = players[turn];
+      var hand = player.hand;
       var confirmAction = false;
       if (turnActions !== 0)
         confirmAction = confirm("You still have " + turnActions + " action(s) left\n" +
@@ -367,6 +369,7 @@ function drawTreasureDeck(gameContainer) {
       if (turnActions === 0 || confirmAction === true)
       {
         treasureDeckClicked = true;
+        //Shuffle old cards back into deck
         if (treasureCards.length === 0)
         {
           treasureCards = shuffleCards(discardedTreasureCards);
@@ -376,11 +379,41 @@ function drawTreasureDeck(gameContainer) {
         var card1 = drawCard();
         var card2 = drawCard();
 
-        if (card1.type != "WatersRise")
-          players[turn].hand.addCard(card1);
+        if (card1.type != "WatersRise") {
+          // Check to see if the player hand has room for both cards
+          // If not, put them in the holding area and enter discard mode
+          if (hand.cardCount == 5) {
+            card1.position.x = 555;
+            card1.position.y = 360;
+            stage.addChild(card1);
+            tempMode = actionMode;
+            actionMode = "discard";
+            holdCard1 = card1;
+            holdCards = true;
+            alert("Too many cards. Please discard down to 5. The extra cards are shown to the right of the game board.");
+          }
+          else {
+            hand.addCard(card1);
+          }
+        }
 
-        if (card2.type != "WatersRise")
-          players[turn].hand.addCard(card2);
+        if (card2.type != "WatersRise") {
+          // Check to see if the player hand has room for both cards
+          // If not, put them in the holding area and enter discard mode
+          if (hand.cardCount == 5) {
+            card2.position.x = 555;
+            card2.position.y = 430;
+            stage.addChild(card2);
+            tempMode = actionMode;
+            actionMode = "discard";
+            holdCard2 = card2;
+            if (!holdCards)
+              alert("Too many cards. Please discard down to 5. The extra cards are shown to the right of the game board.");
+          }
+          else {
+            hand.addCard(card2);
+          }
+        }
 
         turnActions = 0;
         drawActionCounter();
@@ -437,7 +470,7 @@ function drawFloodDeck(gameContainer) {
   //After all the cards are added shuffle them
   floodCards = shuffleCards(floodCards);
 
-  floodSquare.mousedown = floodSquare.touchstart = function(data) {
+  floodSquare.click = floodSquare.touchstart = function(data) {
     if (treasureDeckClicked)
     {
         var addedCards = [];
@@ -468,6 +501,12 @@ function drawFloodDeck(gameContainer) {
         {
           discardedFloodCards.push(addedCards[i]);
         }
+
+        //Remove cards in hold
+        if (holdCard1)
+          stage.removeChild(holdCard1);
+        if (holdCard2)
+          stage.removeChild(holdCard2);
 
         //Wait for user to see cards before ending turn
         setTimeout(function () {
