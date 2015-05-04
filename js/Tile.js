@@ -50,6 +50,21 @@ function Tile(normalTexture, floodedTexture, x, y, name){
                 }
             }
         }
+
+        if (helipadX === this.xIndex && helipadY === this.yIndex)
+          $("#endGameModal").modal("show");
+        if (this.treasureType > -1)
+        {
+          for (var i = 0; i < 6; i++) {
+            for (var j = 0; j < 6; j++) {
+              if ((gameBoard[i][j].treasureType === this.treasureType) &&
+                gameBoard[i][j].state === "sunk")
+              {
+                  $("#endGameModal").modal("show");
+              }
+            }
+          }
+        }
     }
 
     this.highlight = function(){
