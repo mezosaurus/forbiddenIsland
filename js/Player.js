@@ -11,16 +11,17 @@ function Player (sprite, hand, role, index) {
 	this.validMoveTiles = [];
     this.validShoreTiles = [];
     this.validGiveTargets = [];
+    this.validNavigatorTiles = [];
     this.engineerShoreCount = 2;
 	while(this.validMoveTiles.push([]) < 6);
     while(this.validShoreTiles.push([]) < 6);
+    while(this.validNavigatorTiles.push([]) < 6);
     while(this.validGiveTargets.push(false) < 4);
 	
 	this.validGiveTargets = [];
 	this.abilityUsed = false;
 
     this.sprite.mousedown = this.sprite.touch = function(data){
-        console.log(data);
         data.originalEvent.cancelBubble = true;
         $('body').trigger('pawnClick', [this.index]);
     }
@@ -28,16 +29,18 @@ function Player (sprite, hand, role, index) {
 	this.move = function (x, y) {
 		this.x = x;
 		this.y = y;
-        if (this.role !== "Navigator")
-            handleTurnEvent();
-		this.calculateValidMoveTiles();
+        handleTurnEvent();
+        
+        this.initValidActionTiles();
+		this.calculateValidMoveTiles(this.x, this.y, this.validMoveTiles);
+        this.calculateValidNavigatorTiles();
         this.calculateValidShoreTiles();
         this.calculateValidGiveTargets();
 	}
     
-    this.markMovable = function(xPos, yPos){
+    this.markMovable = function(xPos, yPos, array){
         if(xPos < 6 && xPos >= 0  & yPos < 6 && yPos >= 0){
-            this.validMoveTiles[xPos][yPos] = gameBoard[xPos][yPos].state !== "sunk";
+            array[xPos][yPos] = gameBoard[xPos][yPos].state !== "sunk";
         }
     }
 
@@ -123,30 +126,29 @@ function Player (sprite, hand, role, index) {
         }
     }
 
-	this.calculateValidMoveTiles = function() {
-        this.initValidActionTiles();
-        var xleft = this.x - 1;
-        var xright = this.x +1;
-        var yup = this.y - 1;
-        var ydown = this.y + 1;
+	this.calculateValidMoveTiles = function(xPos, yPos, array) {
+        var xleft = xPos - 1;
+        var xright = xPos +1;
+        var yup = yPos - 1;
+        var ydown = yPos + 1;
         
-        this.markMovable(xleft, this.y);
-        this.markMovable(xright, this.y);
-        this.markMovable(this.x, yup);
-        this.markMovable(this.x, ydown);
+        this.markMovable(xleft, yPos, array);
+        this.markMovable(xright, yPos, array);
+        this.markMovable(xPos, yup, array);
+        this.markMovable(xPos, ydown, array);
         
 		if (this.role == "Pilot" && !this.abilityUsed) {
 			for (var i = 0; i < 6; i++) {
 				for (var j = 0; j < 6; j++) {
-                   this.markMovable(i, j);
+                   this.markMovable(i, j, array);
 				}
 			}
 		}
 		else if (this.role == "Explorer") {
-            this.markMovable(xright, yup);
-            this.markMovable(xright, ydown);
-            this.markMovable(xleft, yup);
-            this.markMovable(xleft, ydown);
+            this.markMovable(xright, yup, array);
+            this.markMovable(xright, ydown, array);
+            this.markMovable(xleft, yup, array);
+            this.markMovable(xleft, ydown, array);
 		}
 		else if (this.role == "Diver") {
             var up = this.findClosest("up");
@@ -154,10 +156,10 @@ function Player (sprite, hand, role, index) {
             var left = this.findClosest("left");
             var right = this.findClosest("right");
             
-            this.markMovable(this.x, up);
-            this.markMovable(this.x, down);
-            this.markMovable(right, this.y);
-            this.markMovable(left, this.y);
+            this.markMovable(xPos, up, array);
+            this.markMovable(xPos, down, array);
+            this.markMovable(right, yPos, array);
+            this.markMovable(left, yPos, array);
 		}
 	}
 
@@ -168,13 +170,28 @@ function Player (sprite, hand, role, index) {
         }
         for(var i = 0; i < players.length; i++){
             var player = players[i];
-            console.log(role + ": " + i);
-            console.log(player);
             if(this.index !== i && ((this.x == player.x && this.y == player.y) || this.role == "Messenger")){
                this.validGiveTargets[i] = true;
             }
         }
 
+    }
+
+    this.calculateValidNavigatorTiles = function(){
+        var points = [];
+        for(var i = 0; i < 6; i++){
+            for(var j = 0; j < 6; j++){
+                if(this.validMoveTiles[i][j]){
+                    this.markMovable(i, j, this.validNavigatorTiles);
+                    points.push({"x":i, "y":j});
+                }
+            }
+        }
+        console.log(points);
+        for(var index = 0; index < points.length; index++){
+            var point = points[index];
+            this.calculateValidMoveTiles(point.x, point.y, this.validNavigatorTiles);
+        }
     }
 
 	this.initValidActionTiles();

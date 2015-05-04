@@ -187,7 +187,9 @@ function drawPlayerPositions() {
     tile.addChild(player.sprite);
     player.x = x;
     player.y = y;
-    player.calculateValidMoveTiles();
+    player.initValidActionTiles();
+    player.calculateValidMoveTiles(player.x, player.y, player.validMoveTiles);
+    player.calculateValidNavigatorTiles();
     player.calculateValidShoreTiles();
     player.calculateValidGiveTargets();
   }

@@ -16,20 +16,31 @@ function tileClickListener(x, y, name, which) {
 	if (which == 1) {
 		// Left mouse event
 		var tile = gameBoard[x][y];
-		var player = players[turn].moveTarget;
+		var player = players[turn];
+		var moveTarget = players[turn].moveTarget;
 		var playerTile = gameBoard[player.x][player.y];
 		// Handle actions for each mode
 		if (actionMode == "move") {
-			if(player.validMoveTiles[x][y]){
-                player.move(x, y);
-                playerTile.removeChild(player.sprite)
-                tile.addChild(player.sprite);
+			var validTiles;
+			console.log(player.role);
+			console.log(player.moveTarget.role);
+			console.log(player.moveTarget);
+			if(player.role === moveTarget.role){
+				console.log("my role is the same as my move target");
+				validTiles = player.validMoveTiles;
+			}else
+			{
+				validTiles = player.moveTarget.validNavigatorTiles;
+			}
+			console.log(validTiles);
+			if(validTiles[x][y]){
+                moveTarget.move(x, y);
+                playerTile.removeChild(moveTarget.sprite)
+                tile.addChild(moveTarget.sprite);
                 checkTreasures();
             }
 		}
 		else if (actionMode == "shore") {
-			console.log(tile.state);
-			console.log(player.validShoreTiles[x][y]);
 			if(player.validShoreTiles[x][y]){
 				// If not engineer, decrement actions
 				if (player.role == "Engineer") {
@@ -93,7 +104,6 @@ function pawnClickListener(index){
 	if(actionMode == "give"){
 		if(player.validGiveTargets[index]){
 			if(card !== null){
-				console.log("I am giving")
 				var otherPlayer = players[index];
 				otherPlayer.hand.addCard(card);
 				player.hand.discardCard(card);
@@ -103,6 +113,7 @@ function pawnClickListener(index){
 	}else if(actionMode == "choose"){
 		if(player.role == "Navigator"){
 			player.moveTarget.sprite.unhighlight();
+			console.log(players[index]);
 			player.moveTarget = players[index];
 			player.moveTarget.sprite.highlight();
 		}
@@ -112,7 +123,6 @@ function pawnClickListener(index){
 function cardClickListener(card) {
 	var player = players[turn];
 	if(actionMode == "give"){
-		console.log("adding give target");
 		player.giveTarget = card;
 	}
 }
@@ -141,7 +151,9 @@ function startTurn(playerNum) {
   var turnModalContent = $("turnModalContent");
   var player = players[playerNum];
   // Calculate valid move tiles
-  player.calculateValidMoveTiles();
+  player.initValidActionTiles();
+  player.calculateValidMoveTiles(player.x, player.y, player.validMoveTiles);
+  player.calculateValidNavigatorTiles();
   // Calculate valid shore tiles
   player.calculateValidShoreTiles();
   // Calculate valid give targets
