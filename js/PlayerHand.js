@@ -26,6 +26,7 @@ var PlayerHand = function() {
           //this.hand.splice(i,1);
           this.hand[i] = null;
           this.cardCount--;
+          discardedTreasureCards.push(card);
           this.removeChild(card);
           break;
        }

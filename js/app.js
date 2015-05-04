@@ -380,8 +380,8 @@ function drawTreasureDeck(gameContainer) {
         var card2 = drawCard();
 
         if (card1.type != "WatersRise") {
-          // Check to see if the player hand has room for both cards
-          // If not, put them in the holding area and enter discard mode
+          // Check to see if the player hand has room for this card
+          // If not, put it in holding area and enter discard mode
           if (hand.cardCount == 5) {
             card1.position.x = 555;
             card1.position.y = 360;
@@ -404,11 +404,12 @@ function drawTreasureDeck(gameContainer) {
             card2.position.x = 555;
             card2.position.y = 430;
             stage.addChild(card2);
-            tempMode = actionMode;
-            actionMode = "discard";
             holdCard2 = card2;
-            if (!holdCards)
+            if (!holdCards) {
+              tempMode = actionMode;
+              actionMode = "discard";
               alert("Too many cards. Please discard down to 5. The extra cards are shown to the right of the game board.");
+            }
           }
           else {
             hand.addCard(card2);

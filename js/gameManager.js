@@ -167,18 +167,27 @@ function cardClickListener(card) {
 		var player = players[turn];
 		var hand = player.hand;
 		if (hand.hasCard(card)) {
-			hand.discardCard(card);
 			if (holdCard1) {
-				hand.addCard(holdCard1);
+				hand.discardCard(card);
+				var temp = holdCard1;
+				hand.addCard(temp);
+				holdCard1 = null;
 			}
 			else if (holdCard2) {
-				hand.addCard(holdCard2);
+				hand.discardCard(card);
+				var temp = holdCard2;
+				hand.addCard(temp);
+				holdCard2 = null;
 			}
 		}
 		else {
+			discardedTreasureCards.push(card);
 			stage.removeChild(card);
 		}
-		actionMode = tempMode;
+		if (holdCard1 == null && holdCard2 == null) {
+			holdCards = false;
+			actionMode = tempMode;
+		}
 	}
     else if (card.type === 'Sandbag') {
         tempMode = actionMode;
