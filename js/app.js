@@ -202,7 +202,6 @@ function drawPlayerPositions() {
 function drawTreasurePositions(){
   var treasureValues = [0,0,1,1,2,2,3,3];
   for(var i = 0; i < treasureValues.length; i++){
-    //console.log(treasureValues[i]);
     var x = Math.floor(Math.random() * 5);
     var y = Math.floor(Math.random() * 5);
     var tile = gameBoard[x][y];

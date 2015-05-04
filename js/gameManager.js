@@ -45,7 +45,7 @@ $(function(){
   });
   
   // End game button click event
-  $("#newGameBtnWin").on("click", function() {
+  $("#newGameBtnwin").on("click", function() {
     $("#winGameModal").modal("hide");
     location.reload();
   	//startGame();
@@ -62,17 +62,12 @@ function tileClickListener(x, y, name, which) {
 		// Handle actions for each mode
 		if (actionMode == "move" && turnActions > 0) {
 			var validTiles;
-			console.log(player.role);
-			console.log(player.moveTarget.role);
-			console.log(player.moveTarget);
 			if(player.role === moveTarget.role){
-				console.log("my role is the same as my move target");
 				validTiles = player.validMoveTiles;
 			}else
 			{
 				validTiles = player.moveTarget.validNavigatorTiles;
 			}
-			console.log(validTiles);
 			if(validTiles[x][y]){
                 moveTarget.move(x, y);
                 handleTurnEvent();
@@ -120,7 +115,6 @@ function tileClickListener(x, y, name, which) {
             }
         }
 	}
-	// Get current player turn
 
 }
 
@@ -175,7 +169,6 @@ function pawnClickListener(index){
 	} else if(actionMode == "choose"){
 		if(player.role == "Navigator"){
 			player.moveTarget.sprite.unhighlight();
-			console.log(players[index]);
 			player.moveTarget = players[index];
 			player.moveTarget.sprite.highlight();
 		}
