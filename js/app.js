@@ -161,6 +161,7 @@ function drawTileGrid(gameContainer, normalTexture, floodedTexture) {
 			// Push tile object onto gameboard 2D Array
 			gameBoard[i][j] = tile;
 			gameContainer.addChild(tile);
+      tile.flip();
 		}
 	}
 }
@@ -479,15 +480,19 @@ function drawFloodDeck(gameContainer) {
         for (var i = 0; i < waterLevels[waterLevel]; i++)
         {
           var card = floodCards.pop();
-          //Push to addedCards so we know which ones to remove later
-          addedCards.push(card);
 
           var tile = gameBoard[card.column][card.row];
 
           if (tile.state === "normal")
+          {
             tile.flip();
+            //Push to addedCards so we know which ones to remove later
+            addedCards.push(card);
+          }
           else
+          {
             tile.sink();
+          }
         }
 
         //For all the cards added this turn, add them to discardedFloodCards
@@ -634,7 +639,7 @@ function drawWaterMeter(gameContainer) {
   waterMeter.addChild(currentWaterLine);
 
   waterMeter.position.x = width - (width - 20);
-  waterMeter.position.y = (height/2) - 100;
+  waterMeter.position.y = (height/2) - 50;
 
   gameContainer.addChild(waterMeter);
 }
