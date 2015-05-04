@@ -6,7 +6,7 @@ var SandbagCard = function() {
   sandbagCardSquare = new PIXI.Graphics();
   sandbagCardText = new PIXI.Text("Sand\nbag", {font: '10px Arial'});
   sandbagCardSquare.beginFill(0xFFFFFF);
-  sandbagCardSquare.lineStyle(5, 0x000000);
+  sandbagCardSquare.lineStyle(1, 0x000000);
   sandbagCardSquare.drawRect(0, 0, 64, 64);
   sandbagCardText.position.x = this.position.x + 15;
   sandbagCardText.position.y = this.position.y + 5;

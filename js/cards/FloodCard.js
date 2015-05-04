@@ -8,7 +8,7 @@ var FloodCard = function(row, column) {
   floodCardSquare = new PIXI.Graphics();
   floodCardText = new PIXI.Text(this.column + ', ' + this.row, {font: '10px Arial'});
   floodCardSquare.beginFill(0xFFFFFF);
-  floodCardSquare.lineStyle(5, 0x000000);
+  floodCardSquare.lineStyle(1, 0x000000);
   floodCardSquare.drawRect(0, 0, 64, 64);
   floodCardText.position.x = this.position.x + 15;
   floodCardText.position.y = this.position.y + 5;

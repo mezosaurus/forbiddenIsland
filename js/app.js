@@ -239,7 +239,11 @@ function drawPlayerHands(gameContainer) {
     //roleColorSquare.lineStyle(1, 0x000000);
     roleColorSquare.drawRect(0, 0, 20, 20);
     //treasureSquare.hitArea = treasureSquare.getBounds();
-
+    var background = new PIXI.Graphics();
+    background.beginFill(0xc8c8c8);
+    background.drawRect(0, 0, 400, 65);
+    background.interactive = true;
+    background.hitArea = background.getBounds();
 
     // player 1
     if (i == 0) {
@@ -248,7 +252,7 @@ function drawPlayerHands(gameContainer) {
       roleColorSquare.position.x = text.position.x + text.width + 5;
       roleColorSquare.position.y = text.position.y;
       player.hand.position.x = 5;
-      player.hand.position.y = (height-69);
+      player.hand.position.y = (height-65);
     }
     // player 2
     else if (i == 1) {
@@ -256,8 +260,8 @@ function drawPlayerHands(gameContainer) {
       text.position.y = height - text.height - 70;
       roleColorSquare.position.x = text.position.x - roleColorSquare.width - 5;
       roleColorSquare.position.y = text.position.y;
-      player.hand.position.x = width - 389;
-      player.hand.position.y = (height-69);
+      player.hand.position.x = width - 385;
+      player.hand.position.y = (height-65);
     }
     // player 3
     else if (i == 2) {
@@ -274,12 +278,16 @@ function drawPlayerHands(gameContainer) {
       text.position.y = 70;
       roleColorSquare.position.x = text.position.x  - roleColorSquare.width - 5;
       roleColorSquare.position.y = text.position.y;
-      player.hand.position.x = width - 389;
+      player.hand.position.x = width - 385;
       player.hand.position.y = 5;
     }
+    background.position.x = player.hand.position.x;
+    background.position.y = player.hand.position.y;
     gameContainer.addChild(text);
     gameContainer.addChild(roleColorSquare);
+    gameContainer.addChild(background);
     gameContainer.addChild(player.hand);
+
   }
 }
 
