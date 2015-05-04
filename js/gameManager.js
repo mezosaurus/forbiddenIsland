@@ -4,16 +4,47 @@
 */
 
 $(function(){
-  // Turn start OK button listener
+  // Turn start button listener
   $("#turnModalStartBtn").on("click", function() {
     $("#turnModal").modal("hide");
     // set focus to move button in the action mode button group
     document.getElementById("move").focus();
   });
+  // Water rise ok button click event
+  $("#waterRiseOkBtn").on("click", function() {
+  	$("#waterRiseModal").modal("hide");
+  });
+  // Water rise modal hide event
+  $("#waterRiseModal").on("hide.bs.modal", function() {
+  	if (waterLevels[waterLevel] != "death")
+    {
+      currentWaterLine.position.y = currentWaterLine.position.y - 30;
+      waterLevel++;
+
+      if (discardedFloodCards !== undefined || discardedFloodCards.length !== 0)
+      {
+        discardedFloodCards = shuffleCards(discardedFloodCards);
+        floodCards = [].concat(floodCards, discardedFloodCards);
+        discardedFloodCards = [];
+      }
+    }
+
+    if (waterLevels[waterLevel] == "death")
+    {
+    	// show game over modal
+    	$("#endGameModal").modal("show");
+    }
+  });
+
+  // End game button click event
+  $("#newGameBtn").on("click", function() {
+  	$("#endGameModal").modal("hide");
+  	startGame();
+  });
 });
 
 function tileClickListener(x, y, name, which) {
-	if (which == 1) {
+	if (which == 1 && turnActions > 0) {
 		// Left mouse event
 		var tile = gameBoard[x][y];
 		var player = players[turn];
@@ -44,12 +75,11 @@ function tileClickListener(x, y, name, which) {
 			if(player.validShoreTiles[x][y]){
 				// If not engineer, decrement actions
 				if (player.role == "Engineer") {
+					player.engineerShoreCount--;
 					if (player.engineerShoreCount == 0) {
 						player.engineerShoreCount = 2;
 						handleTurnEvent();
 					}
-					else
-						player.engineerShoreCount--;
 				}
 				else {
 					handleTurnEvent();
@@ -73,11 +103,12 @@ function treasureClickListener(type, which) {
 
 function checkTreasures() {
     resetTreasures();
-    
+
     for (var type = 0; type < 3; type++) {
         var count = 0;
         for (var j = 0; j < players[turn].hand.hand.length; j++) {
-            if (players[turn].hand.hand[j].type == type) {
+        	var card = players[turn].hand.hand[j];
+            if (card && card.type == type) {
                 count++;
             }
         }
@@ -103,12 +134,12 @@ function pawnClickListener(index){
 	var card = player.giveTarget;
 	if(actionMode == "give"){
 		if(player.validGiveTargets[index]){
-			if(card !== null){
+			if(card !== null && turnActions > 0){
 				var otherPlayer = players[index];
 				otherPlayer.hand.addCard(card);
 				player.hand.discardCard(card);
+				handleTurnEvent();
 			}
-			console.log("validGiveTarget");
 		}
 	}else if(actionMode == "choose"){
 		if(player.role == "Navigator"){
@@ -144,8 +175,10 @@ function shuffleCards(cards) {
 }
 
 function startTurn(playerNum) {
+
   // Allocate 3 turn actions
   turnActions = 3;
+  drawActionCounter();
   var turnModal = $("#turnModal");
   var turnModalTitle = $("#turnModalTitle");
   var turnModalContent = $("turnModalContent");
@@ -158,6 +191,7 @@ function startTurn(playerNum) {
   player.calculateValidShoreTiles();
   // Calculate valid give targets
   player.calculateValidGiveTargets();
+  // Highlight valid move tiles
   // Highlight player pawn
   player.moveTarget.sprite.highlight();
   var currentPlayer = playerNum+1;
@@ -170,7 +204,7 @@ function startTurn(playerNum) {
   var roleInfoHeader = $("#roleInfoHeader");
   roleInfoHeader.text(player.role);
   setRoleContent(player.role);
-  
+
   checkTreasures();
 }
 
@@ -186,15 +220,20 @@ function setRoleContent(role) {
 function handleTurnEvent() {
 	// decrement turn actions counter
     turnActions--;
+    drawActionCounter();
     // End turn if no actions left
-    if (turnActions == 0) {
+    /*if (turnActions == 0) {
     	endTurn();
-    }
+    }*/
 }
 
 function endTurn() {
     resetTreasures();
-    
+
+    var player = players[turn];
+    player.moveTarget.sprite.unhighlight();
+
+    treasureDeckClicked = false;
 	// increment turn variable depending upon number of players
 	var maxTurn = numPlayers - 1;
 	turn++;

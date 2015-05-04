@@ -134,8 +134,51 @@
 		        </div>
 		    </div>
 		</div>
-
 		<!-- /TURN DIALOG MODAL -->
+		<!-- Water's rise DIALOG MODAL -->
+		<div id="waterRiseModal" class="modal fade" hidden>
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h3 class="modal-title">Water's Rise!</h3>
+		            </div>
+		            <div id="waterRiseModalContent" class="modal-body row">
+		            	<ol>
+		            		<li>
+		            			The water level moves up one tick mark.
+	            			</li>
+	            			<li>
+	            				The flood discard pile will be shuffled and placed on top of the Flood draw pile.
+            				</li>
+            				<li>
+            					This card will be discarded to the Treasure discard pile.
+        					</li>
+		            	</ol>
+		            </div>
+		            <div class="modal-footer">
+		            	<button id="waterRiseOkBtn" type="button" class="btn btn-primary">OK</button>
+	            	</div>
+            	</div>
+        	</div>
+    	</div>
+    	<!-- /water's rise DIALOG MODAL -->
+    	<!-- END GAME MODAL -->
+    	<div id="endGameModal" class="modal fade" hidden>
+    		<div class="modal-dialog">
+    			<div class="modal-content">
+    				<div class="modal-header">
+    					<h3 class="modal-title">Game Over</h3>
+					</div>
+					<div id="endGameModalContent" class="modal-body row">
+						<p>Thank you for playing! Refresh the page, or click the new game button to start a new game.</p>
+					</div>
+					<div class="modal-footer">
+						<button id="newGameBtn" type="button" class="btn btn-primary">New Game</button>
+					</div>
+				</div>
+			</div>
+    	</div>
+    	<!-- /END GAME MODAL -->
 		<div id="mode-buttons" class="btn-group" role="group">
 		  <button id="move" type="button"  class="btn btn-default">Move</button>
 		  <button id="shore" type="button" class="btn btn-default">Shore Up</button>

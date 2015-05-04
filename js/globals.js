@@ -43,7 +43,13 @@ var treasureCards = [];
 var floodCards = [];
 var discardedFloodCards = [];
 var discardedTreasureCards = [];
+var treasureDeckClicked = false;
 // GAME BOARD
 var gameBoard = [];
 var helipadX = -1;
 var helipadY = -1;
+// WATER LEVEL
+var waterLevel = 0;
+var waterLevels = [2,2,3,3,3,4,4,5,5,"death"];
+// discard mode variables
+var tempMode = "discard";

@@ -1,11 +1,12 @@
 
 $(document).ready(function() {
 	startGame();
-	createRoleSelects();
+	//createRoleSelects();
 });
 
 function startGame() {
 	$("#myModal").modal('show');
+	createRoleSelects();
 
 	$("#playerSelect").on('change', function() {
 		numPlayers = this.value;
@@ -44,6 +45,8 @@ function startGame() {
 	});
 
 	$("#startGameBtn").on('click', function() {
+		// Reset water level
+
 		var numPlayers = $("#roleSelectDiv > select").length;
 		// See if there is more than one player
 		// If there is, make sure all the roles are different
@@ -81,6 +84,7 @@ function startGame() {
 			}
 			drawPlayerPositions();
 			drawPlayerHands(stage);
+            drawActionCounter(stage);
 			gameStarted = true;
 			$("#myModal").modal("hide");
 			

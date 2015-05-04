@@ -5,7 +5,7 @@ var PizzaCard = function() {
   //Pizza treasure card creation
   treasureCardSquare = new PIXI.Graphics();
   treasureCardSquare.beginFill(0xFFFFFF);
-  treasureCardSquare.lineStyle(5, 0x000000);
+  treasureCardSquare.lineStyle(1, 0x000000);
   treasureCardSquare.drawRect(0, 0, 64, 64);
   treasureCardSquare.interactive = true;
   treasureCardSquare.hitArea = treasureCardSquare.getBounds();

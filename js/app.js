@@ -15,6 +15,7 @@ $(function(){
     // set action mode
     $('.btn-group > .btn').on('click', function(event) {
       actionMode = event.target.id;
+      var player = players[turn];
     });
     $('body').on('pawnClick', function(evend, index){
         pawnClickListener(index);
@@ -65,6 +66,8 @@ var donutEatenTexture = PIXI.Texture.fromImage("img/donuteaten.png");
 
 var treasureTextures = [cupcakeTexture, pizzaTexture, sodaTexture, donutTexture];
 
+var actionCounterText;
+
 // Players
 var tokenTexture = PIXI.Texture.fromImage("img/bunny.png");
 
@@ -95,8 +98,6 @@ drawTreasureDeck(stage);
 //Draw water meter, current water line is needed to adjust water level
 var currentWaterLine = new PIXI.Graphics();
 drawWaterMeter(stage);
-var waterLevel = 0;
-var currentWaterLevel = 2;
 
 requestAnimFrame(animate);
 
@@ -236,11 +237,15 @@ function drawPlayerHands(gameContainer) {
     var text = new PIXI.Text("Player " + playerNum + " - " + player.role, {font:"20px Arial", fill:"black"});
     var roleColorSquare = new PIXI.Graphics();
     roleColorSquare.beginFill(roleColors[player.role]);
-    
+
     //roleColorSquare.lineStyle(1, 0x000000);
     roleColorSquare.drawRect(0, 0, 20, 20);
     //treasureSquare.hitArea = treasureSquare.getBounds();
-    
+    var background = new PIXI.Graphics();
+    background.beginFill(0xc8c8c8);
+    background.drawRect(0, 0, 400, 65);
+    background.interactive = true;
+    background.hitArea = background.getBounds();
 
     // player 1
     if (i == 0) {
@@ -249,7 +254,7 @@ function drawPlayerHands(gameContainer) {
       roleColorSquare.position.x = text.position.x + text.width + 5;
       roleColorSquare.position.y = text.position.y;
       player.hand.position.x = 5;
-      player.hand.position.y = (height-69);
+      player.hand.position.y = (height-65);
     }
     // player 2
     else if (i == 1) {
@@ -257,8 +262,8 @@ function drawPlayerHands(gameContainer) {
       text.position.y = height - text.height - 70;
       roleColorSquare.position.x = text.position.x - roleColorSquare.width - 5;
       roleColorSquare.position.y = text.position.y;
-      player.hand.position.x = width - 389;
-      player.hand.position.y = (height-69);
+      player.hand.position.x = width - 385;
+      player.hand.position.y = (height-65);
     }
     // player 3
     else if (i == 2) {
@@ -275,13 +280,33 @@ function drawPlayerHands(gameContainer) {
       text.position.y = 70;
       roleColorSquare.position.x = text.position.x  - roleColorSquare.width - 5;
       roleColorSquare.position.y = text.position.y;
-      player.hand.position.x = width - 389;
+      player.hand.position.x = width - 385;
       player.hand.position.y = 5;
     }
+    background.position.x = player.hand.position.x;
+    background.position.y = player.hand.position.y;
     gameContainer.addChild(text);
     gameContainer.addChild(roleColorSquare);
+    gameContainer.addChild(background);
     gameContainer.addChild(player.hand);
+
   }
+}
+
+function drawActionCounter() {
+  stage.removeChild(actionCounterText);
+  delete actionCounterText;
+
+  actionCounterText = new PIXI.Text("", {font:"20px Arial", fill:"black"});
+  actionCounterText.text = "Player " + (turn + 1) + "'s turn        Actions left: " + turnActions + "\n";
+
+  actionCounterText.text += "\nClick the Treasures Deck then\n     the Flood Deck to end your turn";
+  actionCounterText.text += "\nOr use an action card at any time";
+
+  actionCounterText.position.x = 700;
+  actionCounterText.position.y = 350;
+
+  stage.addChild(actionCounterText);
 }
 
 /*
@@ -329,20 +354,37 @@ function drawTreasureDeck(gameContainer) {
   treasureCards = shuffleCards(treasureCards);
   //Whenever player clicks the treasure deck
   treasureSquare.mousedown = treasureSquare.touchstart = function(data) {
-      if (treasureCards.length === 0)
+
+    if (!treasureDeckClicked)
+    {
+      //logic for checking if player wants to continue if they have actions left
+      var confirmAction = false;
+      if (turnActions !== 0)
+        confirmAction = confirm("You still have " + turnActions + " action(s) left\n" +
+          "Are you sure you want to continue?");
+
+      if (turnActions === 0 || confirmAction === true)
       {
-        treasureCards = shuffleCards(discardedTreasureCards);
-        discardedTreasureCards = [];
+        treasureDeckClicked = true;
+        if (treasureCards.length === 0)
+        {
+          treasureCards = shuffleCards(discardedTreasureCards);
+          discardedTreasureCards = [];
+        }
+
+        var card1 = drawCard();
+        var card2 = drawCard();
+
+        if (card1.type != "WatersRise")
+          players[turn].hand.addCard(card1);
+
+        if (card2.type != "WatersRise")
+          players[turn].hand.addCard(card2);
+
+        turnActions = 0;
+        drawActionCounter();
       }
-
-      var card1 = drawCard();
-      var card2 = drawCard();
-
-      if (card1.type != "WatersRise")
-        players[turn].hand.addCard(card1);
-
-      if (card2.type != "WatersRise")
-        players[turn].hand.addCard(card2);
+    }
   };
 }
 
@@ -371,7 +413,7 @@ function drawFloodDeck(gameContainer) {
 
   for (var i = 0; i < 6; i++) {
     for (var j = 0; j < 6; j++) {
-      var card = new FloodCard(j, String.fromCharCode(i+65));
+      var card = new FloodCard(i, j);
       // Skip card positions on first row that need to be blank
       if ((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 0 && j == 4) || (i == 0 && j == 5))  {
         continue;
@@ -388,7 +430,6 @@ function drawFloodDeck(gameContainer) {
       if ((i == 5 && j == 0) || (i == 5 && j == 1) || (i == 5 && j == 4) || (i == 5 && j == 5)) {
         continue;
       }
-
       floodCards.push(card);
     }
   }
@@ -396,31 +437,42 @@ function drawFloodDeck(gameContainer) {
   floodCards = shuffleCards(floodCards);
 
   floodSquare.mousedown = floodSquare.touchstart = function(data) {
+    if (treasureDeckClicked)
+    {
+        var addedCards = [];
+        var cardWidth = width/2 - 50;
+        var cardHeight = height/2;
 
-      var addedCards = [];
-      var cardWidth = width/2 - 50;
-      var cardHeight = height/2;
+        //Add each card per waterLevel
+        for (var i = 0; i < waterLevels[waterLevel]; i++)
+        {
+          var card = floodCards.pop();
+          //Push to addedCards so we know which ones to remove later
+          addedCards.push(card);
 
-      //Add each card per waterLevel
-      for (var i = 0; i < currentWaterLevel; i++)
-      {
-        var card = floodCards.pop();
-        card.position.x = cardWidth;
-        card.position.y = cardHeight;
-        cardHeight += 64;
-        gameContainer.addChild(card);
-        //Push to addedCards so we know which ones to remove later
-        addedCards.push(card);
-      }
+          var tile = gameBoard[card.column][card.row];
 
-      //Finally after 5 seconds, remove all the cards from the stage
-      setTimeout(function () {
+          if (tile.state === "normal")
+            tile.flip();
+          else
+            tile.sink();
+        }
+
+        //For all the cards added this turn, add them to discardedFloodCards
         for (var i = 0; i < addedCards.length; i++)
         {
           discardedFloodCards.push(addedCards[i]);
-          gameContainer.removeChild(addedCards[i]);
         }
-      }, 3000);
+
+        //Wait for user to see cards before ending turn
+        setTimeout(function () {
+          endTurn();
+        }, 500);
+    }
+    else
+    {
+      alert("Must click treasure deck before using flood deck");
+    }
   };
 }
 
@@ -491,17 +543,21 @@ function drawWaterMeter(gameContainer) {
   var level2Text  = new PIXI.Text('-', {font: "15px Arial"});
   var level3Text  = new PIXI.Text('3', {font: "15px Arial"});
   var level4Text  = new PIXI.Text('-', {font: "15px Arial"});
-  var level5Text  = new PIXI.Text('4', {font: "15px Arial"});
+  var level5Text  = new PIXI.Text('-', {font: "15px Arial"});
+  var level6Text  = new PIXI.Text('4', {font: "15px Arial"});
+  var level7Text  = new PIXI.Text('-', {font: "15px Arial"});
+  var level8Text  = new PIXI.Text('5', {font: "15px Arial"});
+  var level9Text  = new PIXI.Text('-', {font: "15px Arial"});
   var levelDeathText  = new PIXI.Text('Death', {font: "15px Arial"});
   var captionText  = new PIXI.Text('Water Level', {font: "15px Arial"});
 
   mainWaterLine.beginFill(0x000000);
-  mainWaterLine.drawRect(0, 0, 10, 160);
+  mainWaterLine.drawRect(0, 0, 10, 250);
   mainWaterLine.position.x = waterMeterX;
-  mainWaterLine.position.y = waterMeterY + 5;
+  mainWaterLine.position.y = waterMeterY - 95;
 
   captionText.position.x = waterMeterX - 20;
-  captionText.position.y = waterMeterY - 35;
+  captionText.position.y = waterMeterY - 130;
   waterMeter.addChild(captionText);
 
   level1Text.position.x = waterMeterX + 30 ;
@@ -517,15 +573,27 @@ function drawWaterMeter(gameContainer) {
   waterMeter.addChild(level3Text);
 
   level4Text.position.x = waterMeterX + 30;
-  level4Text.position.y = waterMeterX + 50;
+  level4Text.position.y = waterMeterY + 50;
   waterMeter.addChild(level4Text);
 
   level5Text.position.x = waterMeterX + 30;
-  level5Text.position.y = waterMeterX + 20;
+  level5Text.position.y = waterMeterY + 20;
   waterMeter.addChild(level5Text);
 
+  level6Text.position.x = waterMeterX + 30;
+  level6Text.position.y = waterMeterY - 10;
+  waterMeter.addChild(level6Text);
+
+  level7Text.position.x = waterMeterX + 30;
+  level7Text.position.y = waterMeterY - 40;
+  waterMeter.addChild(level7Text);
+
+  level8Text.position.x = waterMeterX + 30;
+  level8Text.position.y = waterMeterY - 70;
+  waterMeter.addChild(level8Text);
+
   levelDeathText.position.x = waterMeterX + 30;
-  levelDeathText.position.y = waterMeterX  - 10;
+  levelDeathText.position.y = waterMeterY  - 100;
   waterMeter.addChild(levelDeathText);
 
 
@@ -549,8 +617,8 @@ function drawCard() {
 
   if (card.type == "WatersRise")
   {
-
-    if (waterLevel != 5)
+    $("#waterRiseModal").modal("show");
+    /*if (waterLevel != 5)
     {
       currentWaterLine.position.y = currentWaterLine.position.y - 30;
       waterLevel++;
@@ -559,9 +627,10 @@ function drawCard() {
       {
         discardedFloodCards = shuffleCards(discardedFloodCards);
         floodCards = [].concat(floodCards, discardedFloodCards);
+        alert(floodCards.length);
         discardedFloodCards = [];
       }
-      alert("Waters Rise Card! Water is rising!");
+      //alert("Waters Rise Card! Water is rising!");
       if (waterLevel != 1 && waterLevel != 3)
       {
         currentWaterLevel++;
@@ -571,7 +640,7 @@ function drawCard() {
     if (waterLevel == 5)
     {
       alert("GAME OVER, you died");
-    }
+    }*/
   }
   return card;
 }
