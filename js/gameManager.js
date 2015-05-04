@@ -223,14 +223,22 @@ function cardClickListener(card) {
     }
     else if (card.type === 'HelicopterLift') {
         var onExit = true;
-        for (var i = 0; i < players.length; i++) {
-            if (players[i].x != helipadX || players[i].y != helipadY) {
+        for (var p = 0; p < players.length; p++) {
+            if (players[p].x != helipadX || players[p].y != helipadY) {
                 onExit = false;
                 break;
             }
         }
+        
+        var haveTreasures = true;
+        for (var type = 0; type < 4; type++) {
+            if (treasures[type].state != 'obtained') {
+                haveTreasures = false;
+                break;
+            }
+        }
 
-        if (onExit == true) {
+        if (onExit == true && haveTreasures == true) {
             // show win modal
             $("#winGameModal").modal("show");
         }
