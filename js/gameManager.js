@@ -44,14 +44,14 @@ $(function(){
 });
 
 function tileClickListener(x, y, name, which) {
-	if (which == 1 && turnActions > 0) {
+	if (which == 1) {
 		// Left mouse event
 		var tile = gameBoard[x][y];
 		var player = players[turn];
 		var moveTarget = players[turn].moveTarget;
 		var playerTile = gameBoard[player.x][player.y];
 		// Handle actions for each mode
-		if (actionMode == "move") {
+		if (actionMode == "move" && turnActions > 0) {
 			var validTiles;
 			console.log(player.role);
 			console.log(player.moveTarget.role);
@@ -72,7 +72,7 @@ function tileClickListener(x, y, name, which) {
                 checkTreasures();
             }
 		}
-		else if (actionMode == "shore") {
+		else if (actionMode == "shore" && turnActions > 0) {
 			if(player.validShoreTiles[x][y]){
 				// If not engineer, decrement actions
 				if (player.role == "Engineer") {
@@ -90,8 +90,22 @@ function tileClickListener(x, y, name, which) {
 			}
 		}
         else if (actionMode == "sandbag") {
-            if(gameBoard[x][y].state === 'flooded'){
+            if(tile.state === 'flooded'){
                 tile.flip();
+                actionMode = tempMode;
+                actionCard.parent.discardCard( actionCard );
+            }
+        }
+        else if (actionMode == "helicoptertile") {
+            if(gameBoard[x][y].state !== 'sunk'){
+                //TODO actually do some helicoptery stuff
+                for (var i = 0; i < helicopterPlayers.length; i++) {
+                    helicopterPlayers[i].move(x, y);
+                    playerTile.removeChild(helicopterPlayers[i].sprite);
+                    tile.addChild(moveTarget.sprite);
+                    helicopterPlayers = [];
+                    checkTreasures();
+                }
                 actionMode = tempMode;
                 actionCard.parent.discardCard( actionCard );
             }
@@ -149,14 +163,17 @@ function pawnClickListener(index){
 				handleTurnEvent();
 			}
 		}
-	}else if(actionMode == "choose"){
+	} else if(actionMode == "choose"){
 		if(player.role == "Navigator"){
 			player.moveTarget.sprite.unhighlight();
 			console.log(players[index]);
 			player.moveTarget = players[index];
 			player.moveTarget.sprite.highlight();
 		}
-	}
+	} else if(actionMode === "helicopterpawn") {
+        helicopterPlayers.push(players[index]);
+        actionMode = "helicoptertile";//TODO add more players
+    }
 }
 
 function cardClickListener(card) {
@@ -182,8 +199,15 @@ function cardClickListener(card) {
 		actionMode = tempMode;
 	}
     else if (card.type === 'Sandbag') {
+        alert( "Select any flooded tile to shore up" );
         tempMode = actionMode;
         actionMode = "sandbag";
+        actionCard = card;
+    }
+    else if (card.type === 'HelicopterLift') {
+        alert( "Select any player on the board and then select a tile to move them to" );
+        tempMode = actionMode;
+        actionMode = "helicopterpawn";
         actionCard = card;
     }
 }
