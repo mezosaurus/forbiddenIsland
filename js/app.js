@@ -296,9 +296,10 @@ function drawPlayerHands(gameContainer) {
 function drawActionCounter() {
   stage.removeChild(actionCounterText);
   delete actionCounterText;
+  var turnText = turn + 1;
 
   actionCounterText = new PIXI.Text("", {font:"20px Arial", fill:"black"});
-  actionCounterText.text = "Player " + (turn + 1) + "'s turn        Actions left: " + turnActions + "\n";
+  actionCounterText.text = "Player " + turnText + "'s turn        Actions left: " + turnActions + "\n";
 
   actionCounterText.text += "\nClick the Treasures Deck then\n     the Flood Deck to end your turn";
   actionCounterText.text += "\nOr use an action card at any time";
@@ -511,7 +512,8 @@ function drawFloodDeck(gameContainer) {
 
         //Wait for user to see cards before ending turn
         setTimeout(function () {
-          endTurn();
+          if (!initFloodTiles && treasureDeckClicked)
+            endTurn();
         }, 500);
     }
     else
