@@ -40,11 +40,13 @@ function Tile(normalTexture, floodedTexture, x, y, name){
         this.interactive = false;
         var myPlayers = this.children;
         for(var i = 0; i < myPlayers.length; i++){
-            var player = myPlayers[i];
+            var player = players[myPlayers[i].index];
             player.calculateValidMoveTiles(player.x, player.y, player.validMoveTiles);
             for(var col = 0; col < 6; col++){
                 for(var row = 0; row<6; row++){
-                    if(player.validMoveTiles[col][row]);
+                    if(player.validMoveTiles[col][row]){
+
+                    }    
                 }
             }
         }
