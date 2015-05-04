@@ -66,6 +66,7 @@ function tileClickListener(x, y, name, which) {
 			console.log(validTiles);
 			if(validTiles[x][y]){
                 moveTarget.move(x, y);
+                handleTurnEvent();
                 playerTile.removeChild(moveTarget.sprite)
                 tile.addChild(moveTarget.sprite);
                 checkTreasures();
