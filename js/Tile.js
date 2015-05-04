@@ -37,7 +37,17 @@ function Tile(normalTexture, floodedTexture, x, y, name){
     this.sink = function(){
         this.state = 'sinking';
         this.buttonMode = false;
-        this.interactive - false;
+        this.interactive = false;
+        var myPlayers = this.children;
+        for(var i = 0; i < myPlayers.length; i++){
+            var player = myPlayers[i];
+            player.calculateValidMoveTiles(player.x, player.y, player.validMoveTiles);
+            for(var col = 0; col < 6; col++){
+                for(var row = 0; row<6; row++){
+                    if(player.validMoveTiles[col][row]);
+                }
+            }
+        }
     }
 
     this.highlight = function(){
