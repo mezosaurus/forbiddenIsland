@@ -3,30 +3,17 @@
  */
 var PlayerHand = function() {
   PIXI.DisplayObjectContainer.call(this);
-  this.hand = [];
-  for (var i = 0; i < 5; i++) {
-    this.hand[i] = null;
-  }
+  this.hand = [null, null, null, null, null];
 
   this.addCard = function(card) {
-    for (var i = 0; i < hand.length; i++) {
+    for (var i = 0; i < this.hand.length; i++) {
       if (this.hand[i] == null) {
-        card.position.x += i*80;
+        card.position.x = i*80;
         this.hand[i] = card;
         this.addChild(card);
+        break;
       }
     }
-    /*if (this.hand.length < 5)
-    {
-      //Make sure the cards appear in a row and not ontop of each other
-      if (this.hand.length > 0)
-      {
-        card.position.x += this.hand.length * 80;
-      }
-
-      this.hand.push(card);
-      this.addChild(card);
-    }*/
   };
 
   this.discardCard = function(card) {

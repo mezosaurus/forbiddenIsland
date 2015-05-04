@@ -96,7 +96,8 @@ function checkTreasures() {
     for (var type = 0; type < 3; type++) {
         var count = 0;
         for (var j = 0; j < players[turn].hand.hand.length; j++) {
-            if (players[turn].hand.hand[j].type == type) {
+        	var card = players[turn].hand.hand[j];
+            if (card && card.type == type) {
                 count++;
             }
         }
