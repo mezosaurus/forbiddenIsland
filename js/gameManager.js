@@ -8,6 +8,7 @@ $(function(){
   $("#turnModalStartBtn").on("click", function() {
     $("#turnModal").modal("hide");
     // set focus to move button in the action mode button group
+    actionMode = "move";
     document.getElementById("move").focus();
   });
   // Water rise ok button click event
