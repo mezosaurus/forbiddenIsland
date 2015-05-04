@@ -222,10 +222,24 @@ function cardClickListener(card) {
         actionCard = card;
     }
     else if (card.type === 'HelicopterLift') {
-        alert( "Select any player on the board and then select a tile to move them to" );
-        tempMode = actionMode;
-        actionMode = "helicopterpawn";
-        actionCard = card;
+        var onExit = true;
+        for (var i = 0; i < players.length; i++) {
+            if (players[i].x != helipadX || players[i].y != helipadY) {
+                onExit = false;
+                break;
+            }
+        }
+
+        if (onExit == true) {
+            // show win modal
+            $("#winGameModal").modal("show");
+        }
+        else {
+            alert( "Select any player on the board and then select a tile to move them to" );
+            tempMode = actionMode;
+            actionMode = "helicopterpawn";
+            actionCard = card;
+        }
     }
 }
 
@@ -313,20 +327,6 @@ function endTurn() {
 	if (turn > maxTurn) {
 		turn = 0;
 	}
-    
-    var onExit = true;
-    for (var i = 0; i < players.length; i++) {
-        if (players[i].x != helipadX || players[i].y != helipadY) {
-            onExit = false;
-            break;
-        }
-    }
-    
-    if (onExit == true)
-    {
-    	// show game over modal
-    	$("#winGameModal").modal("show");
-    }
     
 	// Start next turn
 	startTurn(turn);
