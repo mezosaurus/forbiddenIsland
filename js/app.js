@@ -472,7 +472,7 @@ function drawFloodDeck(gameContainer) {
   floodCards = shuffleCards(floodCards);
 
   floodSquare.click = floodSquare.touchstart = function(data) {
-    if (treasureDeckClicked)
+    if (treasureDeckClicked || initFloodTiles)
     {
         var addedCards = [];
         var cardWidth = width/2 - 50;
@@ -519,6 +519,10 @@ function drawFloodDeck(gameContainer) {
       alert("Must click treasure deck before using flood deck");
     }
   };
+
+  for (var i = 0; i < 3; i++)
+    floodSquare.click();
+  initFloodTiles = false;
 }
 
 /*
