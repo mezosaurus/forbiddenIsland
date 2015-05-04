@@ -161,7 +161,6 @@ function drawTileGrid(gameContainer, normalTexture, floodedTexture) {
 			// Push tile object onto gameboard 2D Array
 			gameBoard[i][j] = tile;
 			gameContainer.addChild(tile);
-      tile.flip();
 		}
 	}
 }
