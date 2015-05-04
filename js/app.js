@@ -356,6 +356,8 @@ function drawTreasureDeck(gameContainer) {
     if (!treasureDeckClicked)
     {
       //logic for checking if player wants to continue if they have actions left
+      var player = players[turn];
+      var hand = player.hand;
       var confirmAction = false;
       if (turnActions !== 0)
         confirmAction = confirm("You still have " + turnActions + " action(s) left\n" +
@@ -373,11 +375,31 @@ function drawTreasureDeck(gameContainer) {
         var card1 = drawCard();
         var card2 = drawCard();
 
-        if (card1.type != "WatersRise")
-          players[turn].hand.addCard(card1);
+        if (card1.type != "WatersRise") {
+          // Check to see if the player hand has room for both cards
+          // If not, put them in the holding area and enter discard mode
+          if (cardCount >= 4) {
+            card1.position.x = 545;
+            card1.position.y = 360;
+            stage.addChild(card1);
+          }
+          else {
+            hand.addCard(card1);
+          }
+        }
 
-        if (card2.type != "WatersRise")
-          players[turn].hand.addCard(card2);
+        if (card2.type != "WatersRise") {
+          // Check to see if the player hand has room for both cards
+          // If not, put them in the holding area and enter discard mode
+          if (cardCount >= 4) {
+            card2.position.x = 545;
+            card2.position.y = 430;
+            stage.addChild(card2);
+          }
+          else {
+            hand.addCard(card2);
+          }
+        }
 
         turnActions = 0;
         drawActionCounter();
