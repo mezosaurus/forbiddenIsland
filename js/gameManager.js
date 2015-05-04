@@ -88,6 +88,13 @@ function tileClickListener(x, y, name, which) {
 				player.calculateValidShoreTiles();
 			}
 		}
+        else if (actionMode == "sandbag") {
+            if(gameBoard[x][y].state === 'flooded'){
+                tile.flip();
+                actionMode = tempMode;
+                actionCard.parent.discardCard( actionCard );
+            }
+        }
 	}
 	// Get current player turn
 
@@ -156,6 +163,11 @@ function cardClickListener(card) {
 	if(actionMode == "give"){
 		player.giveTarget = card;
 	}
+    else if (card.type === 'Sandbag') {
+        tempMode = actionMode;
+        actionMode = "sandbag";
+        actionCard = card;
+    }
 }
 
 function shuffleCards(cards) {

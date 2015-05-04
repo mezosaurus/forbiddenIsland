@@ -489,15 +489,6 @@ function drawTreasures(gameContainer) {
   treasureContainer.position.x = 580 + treasureContainerWidth/2;
   treasureContainer.position.y = 150;
 
-  // Make a container box for the treasures
-  var treasureSquare = new PIXI.Graphics();
-  treasureSquare.beginFill(0xFFFF6E);
-  treasureSquare.lineStyle(5, 0xFFFFCC);
-  treasureSquare.drawRect(0, 0, treasureContainerWidth, treasureContainerHeight);
-  treasureSquare.hitArea = treasureSquare.getBounds();
-  treasureSquare.position.x = 0;
-  treasureSquare.position.y = 0;
-
   // Make some labels for treasure stacks
   var treasureText  = new PIXI.Text('Treasures', {font: "15px Arial"});
   treasureText.position.x = (treasureContainerWidth - treasureText.width)/2;
@@ -525,7 +516,6 @@ function drawTreasures(gameContainer) {
   treasures.push(treasure3);
 
   // Add everything to the containers
-  treasureContainer.addChild(treasureSquare);
   treasureContainer.addChild(treasure0);
   treasureContainer.addChild(treasure1);
   treasureContainer.addChild(treasure2);
