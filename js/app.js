@@ -457,7 +457,7 @@ function drawFloodDeck(gameContainer) {
         //Wait for user to see cards before ending turn
         setTimeout(function () {
           endTurn();
-        }, 3000);
+        }, 500);
     }
     else
     {
