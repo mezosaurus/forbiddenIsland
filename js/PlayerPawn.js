@@ -9,7 +9,6 @@ function PlayerPawn(texture, highlight, anchorX, anchorY){
     this.anchor.x = anchorX;
     this.anchor.y = anchorY;
     this.alpha = 1;
-    console.log(texture);
     
     this.mousedown = this.touchstart = function(data){
         if(this.state === "normal"){

@@ -47,20 +47,31 @@ function tileClickListener(x, y, name, which) {
 	if (which == 1 && turnActions > 0) {
 		// Left mouse event
 		var tile = gameBoard[x][y];
-		var player = players[turn].moveTarget;
+		var player = players[turn];
+		var moveTarget = players[turn].moveTarget;
 		var playerTile = gameBoard[player.x][player.y];
 		// Handle actions for each mode
 		if (actionMode == "move") {
-			if(player.validMoveTiles[x][y]){
-                player.move(x, y);
-                playerTile.removeChild(player.sprite)
-                tile.addChild(player.sprite);
+			var validTiles;
+			console.log(player.role);
+			console.log(player.moveTarget.role);
+			console.log(player.moveTarget);
+			if(player.role === moveTarget.role){
+				console.log("my role is the same as my move target");
+				validTiles = player.validMoveTiles;
+			}else
+			{
+				validTiles = player.moveTarget.validNavigatorTiles;
+			}
+			console.log(validTiles);
+			if(validTiles[x][y]){
+                moveTarget.move(x, y);
+                playerTile.removeChild(moveTarget.sprite)
+                tile.addChild(moveTarget.sprite);
                 checkTreasures();
             }
 		}
 		else if (actionMode == "shore") {
-			console.log(tile.state);
-			console.log(player.validShoreTiles[x][y]);
 			if(player.validShoreTiles[x][y]){
 				// If not engineer, decrement actions
 				if (player.role == "Engineer") {
@@ -77,6 +88,13 @@ function tileClickListener(x, y, name, which) {
 				player.calculateValidShoreTiles();
 			}
 		}
+        else if (actionMode == "sandbag") {
+            if(gameBoard[x][y].state === 'flooded'){
+                tile.flip();
+                actionMode = tempMode;
+                actionCard.parent.discardCard( actionCard );
+            }
+        }
 	}
 	// Get current player turn
 
@@ -124,17 +142,16 @@ function pawnClickListener(index){
 	if(actionMode == "give"){
 		if(player.validGiveTargets[index]){
 			if(card !== null && turnActions > 0){
-				console.log("I am giving")
 				var otherPlayer = players[index];
 				otherPlayer.hand.addCard(card);
 				player.hand.discardCard(card);
 				handleTurnEvent();
 			}
-			console.log("validGiveTarget");
 		}
 	}else if(actionMode == "choose"){
 		if(player.role == "Navigator"){
 			player.moveTarget.sprite.unhighlight();
+			console.log(players[index]);
 			player.moveTarget = players[index];
 			player.moveTarget.sprite.highlight();
 		}
@@ -144,9 +161,13 @@ function pawnClickListener(index){
 function cardClickListener(card) {
 	var player = players[turn];
 	if(actionMode == "give"){
-		console.log("adding give target");
 		player.giveTarget = card;
 	}
+    else if (card.type === 'Sandbag') {
+        tempMode = actionMode;
+        actionMode = "sandbag";
+        actionCard = card;
+    }
 }
 
 function shuffleCards(cards) {
@@ -175,7 +196,9 @@ function startTurn(playerNum) {
   var turnModalContent = $("turnModalContent");
   var player = players[playerNum];
   // Calculate valid move tiles
-  player.calculateValidMoveTiles();
+  player.initValidActionTiles();
+  player.calculateValidMoveTiles(player.x, player.y, player.validMoveTiles);
+  player.calculateValidNavigatorTiles();
   // Calculate valid shore tiles
   player.calculateValidShoreTiles();
   // Calculate valid give targets

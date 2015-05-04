@@ -53,3 +53,4 @@ var waterLevel = 0;
 var waterLevels = [2,2,3,3,3,4,4,5,5,"death"];
 // discard mode variables
 var tempMode = "discard";
+var actionCard;
