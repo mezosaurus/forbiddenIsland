@@ -651,6 +651,9 @@ function drawWaterMeter(gameContainer) {
   gameContainer.addChild(waterMeter);
 }
 
+/*
+ * funciton responsible for drawing cards and checking waterlevels
+ */
 function drawCard() {
   var card = treasureCards.pop();
   discardedTreasureCards.push(Object.create(card));
@@ -658,29 +661,6 @@ function drawCard() {
   if (card.type == "WatersRise")
   {
     $("#waterRiseModal").modal("show");
-    /*if (waterLevel != 5)
-    {
-      currentWaterLine.position.y = currentWaterLine.position.y - 30;
-      waterLevel++;
-
-      if (discardedFloodCards !== undefined || discardedFloodCards.length !== 0)
-      {
-        discardedFloodCards = shuffleCards(discardedFloodCards);
-        floodCards = [].concat(floodCards, discardedFloodCards);
-        alert(floodCards.length);
-        discardedFloodCards = [];
-      }
-      //alert("Waters Rise Card! Water is rising!");
-      if (waterLevel != 1 && waterLevel != 3)
-      {
-        currentWaterLevel++;
-      }
-    }
-
-    if (waterLevel == 5)
-    {
-      alert("GAME OVER, you died");
-    }*/
   }
   return card;
 }
