@@ -38,7 +38,7 @@ var PlayerHand = function() {
     var contains = false;
 
     for (var i =0; i < this.hand.length; i++) {
-       if (this.hand[i] && this.hand[i].type === card.type) {
+       if (this.hand[i] && this.hand[i] === card) {
           contains = true;
           break;
        }
