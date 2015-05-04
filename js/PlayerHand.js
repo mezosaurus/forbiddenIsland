@@ -22,7 +22,7 @@ var PlayerHand = function() {
   this.discardCard = function(card) {
     //Search the entire array for the card
     for (var i =0; i < this.hand.length; i++) {
-       if (this.hand[i] && this.hand[i].type === card.type) {
+       if (this.hand[i] && this.hand[i] === card) {
           //this.hand.splice(i,1);
           this.hand[i] = null;
           this.cardCount--;

@@ -1,12 +1,12 @@
 
 $(document).ready(function() {
 	startGame();
-	//createRoleSelects();
+	createRoleSelects();
 });
 
 function startGame() {
 	$("#myModal").modal('show');
-	createRoleSelects();
+	//createRoleSelects();
 
 	$("#playerSelect").on('change', function() {
 		numPlayers = this.value;
