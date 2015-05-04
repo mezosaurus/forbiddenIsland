@@ -29,7 +29,6 @@ function Player (sprite, hand, role, index) {
 	this.move = function (x, y) {
 		this.x = x;
 		this.y = y;
-        handleTurnEvent();
         
         this.initValidActionTiles();
 		this.calculateValidMoveTiles(this.x, this.y, this.validMoveTiles);
@@ -187,7 +186,6 @@ function Player (sprite, hand, role, index) {
                 }
             }
         }
-        console.log(points);
         for(var index = 0; index < points.length; index++){
             var point = points[index];
             this.calculateValidMoveTiles(point.x, point.y, this.validNavigatorTiles);

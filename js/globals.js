@@ -57,3 +57,4 @@ var actionCard;
 var holdCard1;
 var holdCard2;
 var holdCards = false;
+var helicopterPlayers = [];

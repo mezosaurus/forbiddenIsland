@@ -35,16 +35,40 @@ function Tile(normalTexture, floodedTexture, x, y, name){
 
 
     this.sink = function(){
-        this.state = 'sinking';
         this.buttonMode = false;
         this.interactive = false;
+        for(var i = 0; i < players.length; i++){
+            var player = players[i];
+            var newTile = null;
+            console.log("Player: " + player.x + " " + player.y);
+            console.log("Tile: " + this.xIndex + " " + this.yIndex);
+            if(player.x == this.xIndex  && player.y == this.yIndex){
+                console.log("I'm SINKING!!!");
+                player.initValidActionTiles();
+                player.calculateValidMoveTiles(player.x, player.y, player.validMoveTiles);
+                for(var col = 0; col < 6; col++){
+                    for(var row = 0; row<6; row++){
+                        if(player.validMoveTiles[col][row]){
+                            newTile = gameBoard[col][row];
+                        }    
+                    }
+                }
+                if(newTile == null){
+                    $("#endGameModal").modal("show");
+                }else{
+                    console.log("found new tile");
+                    player.move(newTile.xIndex, newTile.yIndex);
+                    this.removeChild(player.sprite);
+                    newTile.addChild(player.sprite);
+                }
+            }
+        }
 
         if (helipadX === this.xIndex && helipadY === this.yIndex)
         {
           $("#endGameModal").modal("show");
           gameStarted = false;
         }
-
         if (this.treasureType > -1)
         {
           for (var i = 0; i < 6; i++) {
@@ -61,6 +85,7 @@ function Tile(normalTexture, floodedTexture, x, y, name){
             }
           }
         }
+        this.state = 'sinking';
     }
 
     this.highlight = function(){
@@ -96,10 +121,11 @@ function Tile(normalTexture, floodedTexture, x, y, name){
 
         }
         else if(this.state === 'sinking'){
-            if(this.alpha > 0){
+            if(this.alpha > .01){
                 this.alpha -= .01;
             }
             else{
+                this.alpha = 0;
                 this.state = 'sunk';
             }
         }
