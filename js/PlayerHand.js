@@ -10,6 +10,7 @@ var PlayerHand = function() {
     for (var i = 0; i < this.hand.length; i++) {
       if (this.hand[i] == null) {
         card.position.x = i*80;
+        card.position.y = 0;
         this.hand[i] = card;
         this.cardCount++;
         this.addChild(card);
@@ -36,7 +37,7 @@ var PlayerHand = function() {
     var contains = false;
 
     for (var i =0; i < this.hand.length; i++) {
-       if (this.hand[i].type === card.type) {
+       if (this.hand[i] && this.hand[i].type === card.type) {
           contains = true;
           break;
        }

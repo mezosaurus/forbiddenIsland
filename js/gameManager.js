@@ -163,6 +163,23 @@ function cardClickListener(card) {
 	if(actionMode == "give"){
 		player.giveTarget = card;
 	}
+	else if (actionMode == "discard") {
+		var player = players[turn];
+		var hand = player.hand;
+		if (hand.hasCard(card)) {
+			hand.discardCard(card);
+			if (holdCard1) {
+				hand.addCard(holdCard1);
+			}
+			else if (holdCard2) {
+				hand.addCard(holdCard2);
+			}
+		}
+		else {
+			stage.removeChild(card);
+		}
+		actionMode = tempMode;
+	}
     else if (card.type === 'Sandbag') {
         tempMode = actionMode;
         actionMode = "sandbag";
